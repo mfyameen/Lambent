@@ -21,31 +21,23 @@ class PhotographyView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let inset = CGFloat(15)
-        let insets = UIEdgeInsets(top: inset + 20, left: inset, bottom: inset, right: inset)
-        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
-        let tableViewSize = tableView.sizeThatFits(contentArea.size)
-        tableView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: tableViewSize.width, height: tableViewSize.height)
-    }
-        
-
     class TableViewHandler: UITableView, UITableViewDelegate, UITableViewDataSource{
         let steps = PhotographySteps.steps
         let descriptions = PhotographySteps.descriptions
-        let view: UITableView
+        var view : UITableView
+        static var tableViewHeight = CGFloat()
+        var referenceCell = PhotographyCell()
+        var startAction: ()->() = { _ in }
         
         init(){
-            view = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 20, dy: 20), style: .grouped)
-            
+            view = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 20), style: .grouped)
             super.init(frame: CGRect.zero, style: .plain)
-            
             view.register(PhotographyCell.self, forCellReuseIdentifier: PhotographyCell.reuseIdentifier)
             view.dataSource = self
             view.delegate = self
         }
         
+      
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -62,15 +54,42 @@ class PhotographyView: UIView {
             cell.phrase.text = descriptions[indexPath.section]
             cell.phrase.numberOfLines = 0
             tableView.separatorStyle = .none
+            
+            if indexPath.section == 0 {
+                configureIntroductionCellLayout(cell)
+                cell.middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+            }else{
+               configureNonIntroductoryCellLayout(cell)
+            }
             return cell
+        }
+        
+        @objc private func pressStartButton(){
+            startAction()
+        }
+        
+        func configureIntroductionCellLayout(_ cell: PhotographyCell){
+            cell.leftButton.setTitle("", for: .normal)
+            cell.middleButton.setTitle("Start", for: .normal)
+            cell.rightButton.setTitle("", for: .normal)
+            cell.leftVerticalSeparator.layer.borderWidth = 0
+            cell.rightVerticalSeparator.layer.borderWidth = 0
+            cell.layoutSeparators([cell.horizontalSeparator])
+        }
+        
+        func configureNonIntroductoryCellLayout(_ cell: PhotographyCell){
+            cell.leftButton.setTitle("Intro", for: .normal)
+            cell.middleButton.setTitle("Demo", for: .normal)
+            cell.rightButton.setTitle("Practice", for: .normal)
+            cell.layoutSeparators([cell.horizontalSeparator, cell.leftVerticalSeparator, cell.rightVerticalSeparator])
         }
         
         func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
             cell.layer.cornerRadius = 8
             cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = CGFloat(1)
+            cell.layer.shadowColor = UIColor.gray.cgColor
+            cell.layer.shadowOpacity = 0.7
+            cell.layer.shadowRadius = CGFloat(1.5)
             cell.selectionStyle = .none
         }
         
@@ -84,8 +103,9 @@ class PhotographyView: UIView {
         
         
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           // return
-           return CGFloat(150)
+            TableViewHandler.tableViewHeight = 140
+            referenceCell.layoutSubviews()
+            return TableViewHandler.tableViewHeight
         }
     }
 }
