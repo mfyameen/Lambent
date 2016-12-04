@@ -9,6 +9,7 @@ extension UIView{
 
 class PhotographyView: UIView {
     private let tableView = TableViewHandler()
+    static var startAction: (UIViewController, Bool) -> Void = { _ in }
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -27,7 +28,6 @@ class PhotographyView: UIView {
         var view : UITableView
         static var tableViewHeight = CGFloat()
         var referenceCell = PhotographyCell()
-        var startAction: ()->() = { _ in }
         
         init(){
             view = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 20), style: .grouped)
@@ -65,7 +65,7 @@ class PhotographyView: UIView {
         }
         
         @objc private func pressStartButton(){
-            startAction()
+            startAction(TutorialViewController(), true)
         }
         
         func configureIntroductionCellLayout(_ cell: PhotographyCell){

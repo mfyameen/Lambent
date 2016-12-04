@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		176958C41DF47FE50060941A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176958C31DF47FE50060941A /* TutorialView.swift */; };
+		176958C81DF48A760060941A /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176958C71DF48A760060941A /* TutorialViewController.swift */; };
 		17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283531DF066F400E7BC29 /* AppDelegate.swift */; };
 		17C283561DF066F400E7BC29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283551DF066F400E7BC29 /* ViewController.swift */; };
 		17C2835B1DF066F400E7BC29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17C2835A1DF066F400E7BC29 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		176958C31DF47FE50060941A /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = ../TutorialView.swift; sourceTree = "<group>"; };
+		176958C71DF48A760060941A /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialViewController.swift; path = ../TutorialViewController.swift; sourceTree = "<group>"; };
 		17C283501DF066F400E7BC29 /* Photography.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photography.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C283531DF066F400E7BC29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17C283551DF066F400E7BC29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +62,8 @@
 		17C283521DF066F400E7BC29 /* Photography */ = {
 			isa = PBXGroup;
 			children = (
+				176958C31DF47FE50060941A /* TutorialView.swift */,
+				176958C71DF48A760060941A /* TutorialViewController.swift */,
 				17C283531DF066F400E7BC29 /* AppDelegate.swift */,
 				17C283551DF066F400E7BC29 /* ViewController.swift */,
 				17C283651DF0788600E7BC29 /* PhotographyView.swift */,
@@ -142,7 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				17C2836A1DF07F2000E7BC29 /* PhotographyCell.swift in Sources */,
+				176958C81DF48A760060941A /* TutorialViewController.swift in Sources */,
 				17C283661DF0788600E7BC29 /* PhotographyView.swift in Sources */,
+				176958C41DF47FE50060941A /* TutorialView.swift in Sources */,
 				17C283681DF07CA400E7BC29 /* PhotographySteps.swift in Sources */,
 				17C283561DF066F400E7BC29 /* ViewController.swift in Sources */,
 				17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */,
