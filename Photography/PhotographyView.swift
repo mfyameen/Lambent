@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 extension UIView{
@@ -9,13 +8,11 @@ extension UIView{
 
 class PhotographyView: UIView {
     private let tableView = TableViewHandler()
-    static var startAction: (UIViewController, Bool) -> Void = { _ in }
     
     override init(frame: CGRect){
         super.init(frame: frame)
         backgroundColor = UIColor(colorLiteralRed: 0.94, green: 0.94, blue: 0.96, alpha: 1)
         addSubview(tableView.view)
- 
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -23,74 +20,40 @@ class PhotographyView: UIView {
     }
     
     class TableViewHandler: UITableView, UITableViewDelegate, UITableViewDataSource{
-        let steps = PhotographySteps.steps
-        let descriptions = PhotographySteps.descriptions
-        var view : UITableView
+        private let steps = PhotographySteps.steps
+        private let descriptions = PhotographySteps.descriptions
+        var view: UITableView
+        private let cachedCellForSizing = PhotographyCell()
         static var tableViewHeight = CGFloat()
-        var referenceCell = PhotographyCell()
         
         init(){
-            view = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 20), style: .grouped)
+            view = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 5), style: .grouped)
             super.init(frame: CGRect.zero, style: .plain)
             view.register(PhotographyCell.self, forCellReuseIdentifier: PhotographyCell.reuseIdentifier)
             view.dataSource = self
             view.delegate = self
+            view.separatorStyle = .none
+            view.clipsToBounds = false
         }
         
-      
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
 
-        
         func numberOfSections(in tableView: UITableView) -> Int{
             return steps.count
         }
-       
-            
+        
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else{ fatalError()}
-            cell.title.text = steps[indexPath.section]
-            cell.phrase.text = descriptions[indexPath.section]
-            cell.phrase.numberOfLines = 0
-            tableView.separatorStyle = .none
-            
-            if indexPath.section == 0 {
-                configureIntroductionCellLayout(cell)
-                cell.middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
-            }else{
-               configureNonIntroductoryCellLayout(cell)
-            }
             return cell
         }
         
-        @objc private func pressStartButton(){
-            startAction(TutorialViewController(), true)
-        }
-        
-        func configureIntroductionCellLayout(_ cell: PhotographyCell){
-            cell.leftButton.setTitle("", for: .normal)
-            cell.middleButton.setTitle("Start", for: .normal)
-            cell.rightButton.setTitle("", for: .normal)
-            cell.leftVerticalSeparator.layer.borderWidth = 0
-            cell.rightVerticalSeparator.layer.borderWidth = 0
-            cell.layoutSeparators([cell.horizontalSeparator])
-        }
-        
-        func configureNonIntroductoryCellLayout(_ cell: PhotographyCell){
-            cell.leftButton.setTitle("Intro", for: .normal)
-            cell.middleButton.setTitle("Demo", for: .normal)
-            cell.rightButton.setTitle("Practice", for: .normal)
-            cell.layoutSeparators([cell.horizontalSeparator, cell.leftVerticalSeparator, cell.rightVerticalSeparator])
-        }
-        
         func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-            cell.layer.cornerRadius = 8
-            cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-            cell.layer.shadowColor = UIColor.gray.cgColor
-            cell.layer.shadowOpacity = 0.7
-            cell.layer.shadowRadius = CGFloat(1.5)
-            cell.selectionStyle = .none
+            guard let cell = cell as? PhotographyCell else { fatalError()}
+            let title = steps[indexPath.section]
+            let phrase = descriptions[indexPath.section]
+            cell.configureCell(title, phrase, indexPath)
         }
         
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -101,11 +64,12 @@ class PhotographyView: UIView {
             return 1
         }
         
-        
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            TableViewHandler.tableViewHeight = 140
-            referenceCell.layoutSubviews()
-            return TableViewHandler.tableViewHeight
+           let title = PhotographySteps.steps[indexPath.section]
+           let phrase = PhotographySteps.descriptions[indexPath.section]
+           cachedCellForSizing.configureCell(title, phrase, indexPath)
+           return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
         }
     }
 }
+
