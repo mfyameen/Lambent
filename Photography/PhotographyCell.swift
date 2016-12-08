@@ -14,18 +14,12 @@ class PhotographyCell: UITableViewCell{
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
     
     var pressButton: ()->() = { _ in}
-    
-//    var action: (()->())? {
-//        didSet {
-//            self.pressButton = action!
-//        }
-//    }
+
     static let reuseIdentifier = "Cell"
     
     override init (style: UITableViewCellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
-        middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         contentView.addSubviews([title, phrase, horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator, leftButton, middleButton, rightButton])
     }
     
@@ -66,8 +60,7 @@ class PhotographyCell: UITableViewCell{
         leftButton.setTitle("Intro", for: .normal)
         middleButton.setTitle("Demo", for: .normal)
         rightButton.setTitle("Practice", for: .normal)
-        
-       //action = nil
+        middleButton.isEnabled = false
     }
     
     func layoutSeparators(_ separators: [UIView]){
@@ -92,9 +85,8 @@ class PhotographyCell: UITableViewCell{
         self.selectionStyle = .none
         self.configureShadow(element: self)
         
-        if indexPath.section == 0 {
+        if title == "Get Started" {
             configureIntroductionCell(title, phrase)
-            //middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         }
         setNeedsLayout()
     }
@@ -102,7 +94,6 @@ class PhotographyCell: UITableViewCell{
     override func prepareForReuse() {
         super.prepareForReuse()
         commonInit()
-       // action = nil
     }
     
     @objc private func pressStartButton(){
@@ -110,6 +101,9 @@ class PhotographyCell: UITableViewCell{
     }
     
     func configureIntroductionCell(_ title: String, _ phrase: String){
+        middleButton.isEnabled = true
+        middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+        
         layoutSeparators([horizontalSeparator])
         leftVerticalSeparator.layer.borderWidth = 0
         rightVerticalSeparator.layer.borderWidth = 0

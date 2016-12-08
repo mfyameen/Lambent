@@ -3,7 +3,7 @@ import UIKit
 class TutorialView: UIView{
     private let container = UIView()
     private let pageControl = UIPageControl()
-    private let photographyView = PhotographyView.TableViewHandler()
+    private let photographyView = PhotographyView()
     private let photographyCell = PhotographyCell()
     private let scrollView = UIScrollView()
     private let toolBar = UIToolbar()

@@ -9,8 +9,7 @@ class ViewController: UIViewController {
          ViewControllerBinding.bind(view: photographyView, viewController: self)
     }
     
-    func pushTutorialViewController(){
-        print("goodbye")
+    func pushTutorialViewController() -> Void{
             navigationController?.pushViewController(TutorialViewController(), animated: true)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
         }
@@ -18,8 +17,6 @@ class ViewController: UIViewController {
 
     struct ViewControllerBinding{
         static func bind (view: PhotographyView, viewController: ViewController){
-            PhotographyView.startTutorial = viewController.pushTutorialViewController
+            view.startTutorial = viewController.pushTutorialViewController
         }
     }
-
-//PhotographyView.startTutorial works with static var
