@@ -13,20 +13,61 @@ class PhotographyCell: UITableViewCell{
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
     
-    static var startTutorial: ()->() = { _ in }
+    var pressButton: ()->() = { _ in}
+    
+//    var action: (()->())? {
+//        didSet {
+//            self.pressButton = action!
+//        }
+//    }
     static let reuseIdentifier = "Cell"
     
     override init (style: UITableViewCellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        title.font = UIFont.boldSystemFont(ofSize: 14)
-        phrase.font = UIFont.systemFont(ofSize: 12)
-        phrase.numberOfLines = 0
-        layoutButtons([leftButton, middleButton, rightButton])
+        commonInit()
+        middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         contentView.addSubviews([title, phrase, horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator, leftButton, middleButton, rightButton])
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let inset: CGFloat = 15
+        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
+        let separatorYOffset = bounds.maxY - 45
+        
+        let titleSize = title.sizeThatFits(contentArea.size)
+        title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
+        
+        let phraseSize = phrase.sizeThatFits(contentArea.size)
+        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
+      
+        horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
+        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 45)
+        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 45)
+        
+        leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
+        middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
+        rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
+    }
+    
+    func commonInit(){
+        title.font = UIFont.boldSystemFont(ofSize: 14)
+        phrase.font = UIFont.systemFont(ofSize: 12)
+        phrase.numberOfLines = 0
+        
+        layoutSeparators([horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator])
+        layoutButtons([leftButton, middleButton, rightButton])
+        
+        leftButton.setTitle("Intro", for: .normal)
+        middleButton.setTitle("Demo", for: .normal)
+        rightButton.setTitle("Practice", for: .normal)
+        
+       //action = nil
     }
     
     func layoutSeparators(_ separators: [UIView]){
@@ -44,28 +85,6 @@ class PhotographyCell: UITableViewCell{
         })
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let inset: CGFloat = 15
-        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
-        let separatorYLocation = bounds.maxY - 45
-        
-        let titleSize = title.sizeThatFits(contentArea.size)
-        title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
-        
-        let phraseSize = phrase.sizeThatFits(contentArea.size)
-        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYLocation)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
-      
-        horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYLocation, width: bounds.width, height: 1)
-        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYLocation, width: 1, height: 45)
-        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYLocation, width: 1, height: 45)
-        
-        leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
-        middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-        rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-    }
-    
     func configureCell(_ title: String, _ phrase: String, _ indexPath: IndexPath){
         self.title.text = title
         self.phrase.text = phrase
@@ -74,34 +93,32 @@ class PhotographyCell: UITableViewCell{
         self.configureShadow(element: self)
         
         if indexPath.section == 0 {
-            self.configureIntroductionCellLayout(title, phrase)
-            self.middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
-        }else{
-            self.configureNonIntroductoryCellLayout(title, phrase)
+            configureIntroductionCell(title, phrase)
+            //middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         }
         setNeedsLayout()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        commonInit()
+       // action = nil
+    }
+    
     @objc private func pressStartButton(){
-        PhotographyCell.startTutorial()
+       pressButton()
     }
     
-    func configureIntroductionCellLayout(_ title: String, _ phrase: String){
-        self.leftButton.setTitle("", for: .normal)
-        self.middleButton.setTitle("Start", for: .normal)
-        self.rightButton.setTitle("", for: .normal)
-        self.leftVerticalSeparator.layer.borderWidth = 0
-        self.rightVerticalSeparator.layer.borderWidth = 0
-        self.layoutSeparators([self.horizontalSeparator])
+    func configureIntroductionCell(_ title: String, _ phrase: String){
+        layoutSeparators([horizontalSeparator])
+        leftVerticalSeparator.layer.borderWidth = 0
+        rightVerticalSeparator.layer.borderWidth = 0
+        
+        leftButton.setTitle("", for: .normal)
+        middleButton.setTitle("Start", for: .normal)
+        rightButton.setTitle("", for: .normal)
     }
-    
-    func configureNonIntroductoryCellLayout(_ title: String, _ phrase: String){
-        self.leftButton.setTitle("Intro", for: .normal)
-        self.middleButton.setTitle("Demo", for: .normal)
-        self.rightButton.setTitle("Practice", for: .normal)
-        self.layoutSeparators([self.horizontalSeparator, self.leftVerticalSeparator, self.rightVerticalSeparator])
-    }
-    
+
     func configureShadow(element: UIView){
         element.layer.shadowOffset = CGSize(width: 0, height: 0)
         element.layer.shadowColor = UIColor.gray.cgColor

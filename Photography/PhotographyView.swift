@@ -8,11 +8,11 @@ extension UIView{
 
 class PhotographyView: UIView {
     private let tableView = TableViewHandler()
-    
+    static var startTutorial: ()-> Void = { _ in}
     override init(frame: CGRect){
-        super.init(frame: frame)
-        backgroundColor = UIColor(colorLiteralRed: 0.94, green: 0.94, blue: 0.96, alpha: 1)
-        addSubview(tableView.view)
+    super.init(frame: frame)
+    backgroundColor = UIColor(colorLiteralRed: 0.94, green: 0.94, blue: 0.96, alpha: 1)
+    addSubview(tableView.view)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,6 +46,15 @@ class PhotographyView: UIView {
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else{ fatalError()}
+            CellBinding.bind(view: cell, handler: {
+//                let alert = UIAlertView()
+//                alert.message = "Tapped cell at row \(indexPath.section)"
+//                alert.addButton(withTitle: "OK")
+//                alert.show()
+//                print(indexPath)
+               
+                PhotographyView.startTutorial()
+            })
             return cell
         }
         
@@ -70,6 +79,12 @@ class PhotographyView: UIView {
            cachedCellForSizing.configureCell(title, phrase, indexPath)
            return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
         }
+    }
+}
+
+struct CellBinding{
+    static func bind(view: PhotographyCell, handler: @escaping ()->()){
+        view.pressButton = handler
     }
 }
 
