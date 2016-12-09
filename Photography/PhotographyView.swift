@@ -6,10 +6,14 @@ extension UIView{
     }
 }
 
+struct CellBinding{
+    static func bind(view: PhotographyCell, handler: @escaping ()->()){
+        view.pressButton = handler
+    }
+}
+
 class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
-    private let steps = PhotographySteps.steps
-    private let descriptions = PhotographySteps.descriptions
-    
+    var tableViewContent: PhotographyModel?
     var startTutorial: ()->() = { _ in}
     
     private var view: UITableView
@@ -32,7 +36,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     }
     
     func numberOfSections(in tableView: UITableView) -> Int{
-        return steps.count
+        return tableViewContent?.steps.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
@@ -45,8 +49,8 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? PhotographyCell else { fatalError()}
-        let title = steps[indexPath.section]
-        let phrase = descriptions[indexPath.section]
+        let title = tableViewContent?.steps[indexPath.section] ?? ""
+        let phrase = tableViewContent?.descriptions[indexPath.section] ?? ""
         cell.configureCell(title, phrase, indexPath)
     }
     
@@ -59,17 +63,12 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let title = PhotographySteps.steps[indexPath.section]
-        let phrase = PhotographySteps.descriptions[indexPath.section]
+        let title = tableViewContent?.steps[indexPath.section] ?? ""
+        let phrase = tableViewContent?.descriptions[indexPath.section] ?? ""
         cachedCellForSizing.configureCell(title, phrase, indexPath)
         return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
     }
 }
 
 
-struct CellBinding{
-    static func bind(view: PhotographyCell, handler: @escaping ()->()){
-        view.pressButton = handler
-    }
-}
 
