@@ -1,38 +1,36 @@
 import UIKit
 
-struct ButtonBinding{
-    static func bind(view: TutorialView, handler: @escaping ()->()){
-        view.nextSection = handler
-    }
-}
+//struct ButtonBinding{
+//    static func bind(view: TutorialView, handler: @escaping ()->()){
+//        view.nextSection = handler
+//    }
+//}
 
 class TutorialView: UIView{
     var tutorialContent: PhotographyModel? {
         didSet{
-            let title = tutorialContent?.sectionTitles[currentPage] ?? ""
-            let content = tutorialContent?.content[currentPage] ?? ""
-            let steps = tutorialContent?.steps.count ?? 0
             var backButtonTitle: String?
             var nextButtonTitle: String?
-            
-            if currentPage > 0 && currentPage < steps {
-                backButtonTitle = tutorialContent?.steps[currentPage - 1] ?? ""
-                nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
-                configureToolBar(backButtonTitle, nextButtonTitle)
-            } else if currentPage <= 0{
+            let steps = tutorialContent?.steps.count ?? 0
+            let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
+            let content = tutorialContent?.content[currentPage ?? 0] ?? ""
+        
+            if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps {
+                backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1 ]
+                nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1]
+            } else if (currentPage ?? 0) <= 0{
                 backButtonTitle = nil
-                nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
-            } else if currentPage >= steps{
-                backButtonTitle = tutorialContent?.steps[currentPage - 1] ?? ""
+                nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1] ?? ""
+            } else if (currentPage ?? 0) >= steps{
+                backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1] ?? ""
                 nextButtonTitle = nil
             }
-           
-            configurePageControl(steps)
+
             configureContent(currentTitle: title, currentContent: content)
             configureToolBar(backButtonTitle, nextButtonTitle)
         }
     }
-    var nextSection: ()->() = { _ in}
+    var nextSection:(Int)->Void = { _ in}
     
     private let container = UIView()
     private let pageControl = UIPageControl()
@@ -45,10 +43,15 @@ class TutorialView: UIView{
     private var toolBarSize = CGSize()
     private var segmentedControl = UISegmentedControl()
     
-    private var currentPage = 0
-
+    var currentPage: Int?
+    
     override init (frame: CGRect){
         super.init(frame: frame)
+        currentPage = UserDefaults.standard.integer(forKey: "page#")
+        if currentPage == nil{
+            currentPage = 0
+        }
+        print(currentPage!)
         backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         container.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.00)
         container.layer.cornerRadius = 8
@@ -58,41 +61,56 @@ class TutorialView: UIView{
         content.numberOfLines = 0
 
         photographyCell.configureShadow(element: container)
-        configureSegmentedControl()
-        
+        configureSegmentedControl(currentPage ?? 0)
         addSubviews([container, segmentedControl, title, content, scrollView, toolBar, pageControl])
     }
     
     func configureContent(currentTitle: String, currentContent: String){
-        switch currentPage {
-        case 0:
+//        switch currentPage {
+//        case 0:
             title.text = currentTitle
             content.text = currentContent
-        case 1:
-            break
-        default: break
-        }
+//        case 1:
+//            break
+//        default: break
+//        }
     }
     
+    //Need to add back configure page control functionality
     func configurePageControl(_ steps: Int){
         pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
         pageControl.numberOfPages = steps
         pageControl.pageIndicatorTintColor = .white
     }
     
-    func configureSegmentedControl(){
+    func configureSegmentedControl(_ currentPage: Int){
         if currentPage != 0{
         segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
         segmentedControl.selectedSegmentIndex = 0
-        //segmentedControl.addTarget(self, action: "action", for: .valueChanged)
+        segmentedControl.addTarget(self, action: "action", for: .valueChanged)
         }
+    }
+    
+    @objc private func loadNextSection(){
+        currentPage = (currentPage ?? 0) + 1
+        nextSection(currentPage ?? 0)
+        //configureSegmentedControl(currentPage)
+        
+//        ButtonBinding.bind(view: self, handler: {
+//            
+////            self.currentPage += 1
+////            self.title.text = "asjfalksjf"
+////            self.content.text = "ajlskdfjaslf;kjas;lfkjsadflkajsdf;lkj"
+////            self.setNeedsLayout()
+////            print(self.currentPage)
+//        })
     }
     
     func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?){
         let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: nil)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let nextButton = UIBarButtonItem(title: nextButtonTitle, style: .plain, target: self, action: #selector(loadNextSection))
-        
+
         if currentPage == 0{
             toolBar.items = [flexibleSpace, nextButton]
         } else {
@@ -102,13 +120,6 @@ class TutorialView: UIView{
         toolBar.clipsToBounds = true
     }
     
-    @objc private func loadNextSection(){
-        print("hello")
-        nextSection()
-        ButtonBinding.bind(view: self, handler: {
-            print("hello")
-        })
-    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -122,7 +133,7 @@ class TutorialView: UIView{
         
         let segmentedHeight = segmentedControl.sizeThatFits(contentArea.size).height
         let segmentedWidth = contentArea.width - insets.left - insets.right
-        segmentedControl.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: contentArea.minY + 8, width: segmentedWidth, height: segmentedHeight)
+        segmentedControl.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: contentArea.minY + 20, width: segmentedWidth, height: segmentedHeight)
         
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + 40, width: titleSize.width, height: titleSize.height)
@@ -139,6 +150,7 @@ class TutorialView: UIView{
 
         scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.size.width, height: contentArea.size.height)
     }
+}
     
 //    class PageControlHandler: UIScrollView, UIScrollViewDelegate{
 //        
@@ -156,4 +168,4 @@ class TutorialView: UIView{
 //        }
 //
 //    }
-}
+//}

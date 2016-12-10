@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 //    }
     
     func pushTutorialViewController() -> Void{
-            navigationController?.pushViewController(TutorialViewController(), animated: true)
+        navigationController?.pushViewController(TutorialViewController(page: 0), animated: true)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
         }
     }
