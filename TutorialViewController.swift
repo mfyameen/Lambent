@@ -7,7 +7,6 @@ class TutorialViewController: UIViewController {
         let tutorialView = TutorialView()
         UserDefaults.standard.set(page, forKey: "page#")
         tutorialView.currentPage = page
-        print("vc: \(tutorialView.currentPage!)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,11 +25,16 @@ class TutorialViewController: UIViewController {
         navigationController?.pushViewController(TutorialViewController(page: page), animated: true)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
     }
+    
+    func pushPreviousTutorialViewController(_ page: Int) -> Void{
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 struct TutorialBinding{
     static func bind(view: TutorialView, viewController: TutorialViewController, model: PhotographyModel){
         view.tutorialContent = model
         view.nextSection = viewController.pushNextTutorialViewController
+        view.previousSection = viewController.pushNextTutorialViewController
     }
 }

@@ -1,12 +1,19 @@
 import UIKit
 
-//struct ButtonBinding{
-//    static func bind(view: TutorialView, handler: @escaping ()->()){
-//        view.nextSection = handler
-//    }
-//}
-
 class TutorialView: UIView{
+    private let container = UIView()
+    private let pageControl = UIPageControl()
+    private let photographyView = PhotographyView()
+    private let photographyCell = PhotographyCell()
+    private let scrollView = UIScrollView()
+    private let toolBar = UIToolbar()
+    private let title = UILabel()
+    private let content = UILabel()
+    private var toolBarSize = CGSize()
+    private var segmentedControl = UISegmentedControl()
+    
+    var currentPage: Int?
+    
     var tutorialContent: PhotographyModel? {
         didSet{
             var backButtonTitle: String?
@@ -31,19 +38,7 @@ class TutorialView: UIView{
         }
     }
     var nextSection:(Int)->Void = { _ in}
-    
-    private let container = UIView()
-    private let pageControl = UIPageControl()
-    private let photographyView = PhotographyView()
-    private let photographyCell = PhotographyCell()
-    private let scrollView = UIScrollView()
-    private let toolBar = UIToolbar()
-    private let title = UILabel()
-    private let content = UILabel()
-    private var toolBarSize = CGSize()
-    private var segmentedControl = UISegmentedControl()
-    
-    var currentPage: Int?
+    var previousSection: (Int)->Void = { _ in}
     
     override init (frame: CGRect){
         super.init(frame: frame)
@@ -51,7 +46,6 @@ class TutorialView: UIView{
         if currentPage == nil{
             currentPage = 0
         }
-        print(currentPage!)
         backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         container.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.00)
         container.layer.cornerRadius = 8
@@ -66,17 +60,11 @@ class TutorialView: UIView{
     }
     
     func configureContent(currentTitle: String, currentContent: String){
-//        switch currentPage {
-//        case 0:
             title.text = currentTitle
             content.text = currentContent
-//        case 1:
-//            break
-//        default: break
-//        }
     }
     
-    //Need to add back configure page control functionality
+    //Need to add configure page control functionality
     func configurePageControl(_ steps: Int){
         pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
         pageControl.numberOfPages = steps
@@ -87,28 +75,23 @@ class TutorialView: UIView{
         if currentPage != 0{
         segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: "action", for: .valueChanged)
+        //segmentedControl.addTarget(self, action: "action", for: .valueChanged)
         }
     }
     
     @objc private func loadNextSection(){
         currentPage = (currentPage ?? 0) + 1
         nextSection(currentPage ?? 0)
-        //configureSegmentedControl(currentPage)
-        
-//        ButtonBinding.bind(view: self, handler: {
-//            
-////            self.currentPage += 1
-////            self.title.text = "asjfalksjf"
-////            self.content.text = "ajlskdfjaslf;kjas;lfkjsadflkajsdf;lkj"
-////            self.setNeedsLayout()
-////            print(self.currentPage)
-//        })
+    }
+    
+    @objc private func loadPreviousSection(){
+        currentPage = (currentPage ?? 0) - 1
+        previousSection(currentPage ?? 0)
     }
     
     func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?){
-        let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: nil)
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: #selector(loadPreviousSection))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: #selector(loadPreviousSection))
         let nextButton = UIBarButtonItem(title: nextButtonTitle, style: .plain, target: self, action: #selector(loadNextSection))
 
         if currentPage == 0{
