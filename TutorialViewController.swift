@@ -1,12 +1,9 @@
 import UIKit
 
 class TutorialViewController: UIViewController {
-    
     init(page: Int){
         super.init(nibName: nil, bundle: nil)
-        let tutorialView = TutorialView()
         UserDefaults.standard.set(page, forKey: "page#")
-        tutorialView.currentPage = page
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -17,7 +14,7 @@ class TutorialViewController: UIViewController {
         let tutorialView = TutorialView()
         let photographyModel = PhotographyModel()
         view = tutorialView
-        title = "Get Started"
+        title = photographyModel.steps[UserDefaults.standard.integer(forKey: "page#")]
         TutorialBinding.bind(view: tutorialView, viewController: self, model: photographyModel )
     }
     
@@ -27,7 +24,7 @@ class TutorialViewController: UIViewController {
     }
     
     func pushPreviousTutorialViewController(_ page: Int) -> Void{
-        navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
 }
 
