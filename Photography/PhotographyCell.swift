@@ -88,7 +88,6 @@ class PhotographyCell: UITableViewCell{
         if title == "Get Started" {
             configureIntroductionCell(title, phrase)
         }
-        setNeedsLayout()
     }
     
     override func prepareForReuse() {
