@@ -1,5 +1,11 @@
 import UIKit
 
+struct tutorialBinding{
+    static func bind(view: TutorialView, handler: @escaping ()->()){
+        view.pressSelector = handler
+    }
+}
+
 class TutorialView: UIView{
     private let container = UIView()
     private let pageControl = UIPageControl()
@@ -22,23 +28,25 @@ class TutorialView: UIView{
             let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
             let content = tutorialContent?.content[currentPage ?? 0] ?? ""
         
-            if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps {
+            if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps - 1 {
                 backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1 ]
                 nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1]
             } else if (currentPage ?? 0) <= 0{
                 backButtonTitle = nil
                 nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1] ?? ""
-            } else if (currentPage ?? 0) >= steps{
+            } else if (currentPage ?? 0) >= steps - 1{
                 backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1] ?? ""
                 nextButtonTitle = nil
             }
-
+            
             configureContent(currentTitle: title, currentContent: content)
             configureToolBar(backButtonTitle, nextButtonTitle)
+            configurePageControl(steps)
         }
     }
     var nextSection:(Int)->Void = { _ in}
     var previousSection: (Int)->Void = { _ in}
+    var pressSelector: ()->() = { _ in}
     
     override init (frame: CGRect){
         super.init(frame: frame)
@@ -66,21 +74,40 @@ class TutorialView: UIView{
     
     //Need to add configure page control functionality
     func configurePageControl(_ steps: Int){
+        pageControl.isEnabled = false
         pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
         pageControl.numberOfPages = steps
         pageControl.pageIndicatorTintColor = .white
+        pageControl.currentPage = currentPage ?? 0
+
+    }
+    
+    @objc private func segmentedControlValueChanged(segment: UISegmentedControl){
+        print("hello")
+        pressSelector()
+    
+        tutorialBinding.bind(view: self, handler: { [weak self] in
+            switch segment.selectedSegmentIndex{
+            case 0: self?.configureContent(currentTitle: "0", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+            case 1: self?.configureContent(currentTitle: "1", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+            case 2: self?.configureContent(currentTitle: "2", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+            default: break
+            }
+        })
+
     }
     
     func configureSegmentedControl(_ currentPage: Int){
         if currentPage != 0{
-        segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
-        segmentedControl.selectedSegmentIndex = 0
-        //segmentedControl.addTarget(self, action: "action", for: .valueChanged)
+            segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
+            segmentedControl.selectedSegmentIndex = 0
+            segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(segment:)), for: .valueChanged)
         }
     }
     
     @objc private func loadNextSection(){
         currentPage = (currentPage ?? 0) + 1
+        //pageControl.isEnabled = true
         nextSection(currentPage ?? 0)
     }
     
@@ -91,9 +118,15 @@ class TutorialView: UIView{
     
     func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?){
         let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: #selector(loadPreviousSection))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: #selector(loadPreviousSection))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let nextButton = UIBarButtonItem(title: nextButtonTitle, style: .plain, target: self, action: #selector(loadNextSection))
-
+    
+        if nextButtonTitle == nil{
+            nextButton.isEnabled = false
+        } else if backButtonTitle == nil{
+            backButton.isEnabled = false
+        }
+        
         if currentPage == 0{
             toolBar.items = [flexibleSpace, nextButton]
         } else {
@@ -102,7 +135,7 @@ class TutorialView: UIView{
         toolBar.barTintColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         toolBar.clipsToBounds = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
