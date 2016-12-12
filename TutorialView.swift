@@ -1,10 +1,10 @@
 import UIKit
 
-struct tutorialBinding{
-    static func bind(view: TutorialView, handler: @escaping ()->()){
-        view.pressSelector = handler
-    }
-}
+//struct tutorialBinding{
+//    static func bind(view: TutorialView, handler: @escaping ()->()){
+//        view.pressSelector = handler
+//    }
+//}
 
 class TutorialView: UIView{
     private let container = UIView()
@@ -72,7 +72,6 @@ class TutorialView: UIView{
             content.text = currentContent
     }
     
-    //Need to add configure page control functionality
     func configurePageControl(_ steps: Int){
         pageControl.isEnabled = false
         pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
@@ -82,29 +81,40 @@ class TutorialView: UIView{
 
     }
     
-    @objc private func segmentedControlValueChanged(segment: UISegmentedControl){
-        print("hello")
+    @objc private func segmentedControlValueChanged(){
         pressSelector()
-    
-        tutorialBinding.bind(view: self, handler: { [weak self] in
-            switch segment.selectedSegmentIndex{
-            case 0: self?.configureContent(currentTitle: "0", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-            case 1: self?.configureContent(currentTitle: "1", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-            case 2: self?.configureContent(currentTitle: "2", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-            default: break
-            }
-        })
-
     }
     
+    
+    func updateValues(segment: UISegmentedControl){
+        switch segment.selectedSegmentIndex{
+        case 0: self.configureContent(currentTitle: "0", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+        case 1: self.configureContent(currentTitle: "1", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+        case 2: self.configureContent(currentTitle: "2", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+        default: break
+        }
+    
+    }
+
     func configureSegmentedControl(_ currentPage: Int){
         if currentPage != 0{
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
             segmentedControl.selectedSegmentIndex = 0
-            segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(segment:)), for: .valueChanged)
-        }
+            segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+            
+            
+//            tutorialBinding.bind(view: self, handler: {
+//                print("hello")
+//                //            switch segmentedControl.selectedSegmentIndex{
+//                //            case 0: self?.configureContent(currentTitle: "0", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+//                //            case 1: self?.configureContent(currentTitle: "1", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+//                //            case 2: self?.configureContent(currentTitle: "2", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+//                //            default: break
+//                //            }
+//            })
+//        }
     }
-    
+    }
     @objc private func loadNextSection(){
         currentPage = (currentPage ?? 0) + 1
         //pageControl.isEnabled = true
@@ -120,7 +130,7 @@ class TutorialView: UIView{
         let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: #selector(loadPreviousSection))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let nextButton = UIBarButtonItem(title: nextButtonTitle, style: .plain, target: self, action: #selector(loadNextSection))
-    
+
         if nextButtonTitle == nil{
             nextButton.isEnabled = false
         } else if backButtonTitle == nil{

@@ -14,7 +14,7 @@ struct CellBinding{
 
 class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     var tableViewContent: PhotographyModel?
-    var startTutorial: ()->() = { _ in}
+    var startTutorial: (Int)->() = { _ in}
     
     private var view: UITableView
     private let cachedCellForSizing = PhotographyCell()
@@ -42,7 +42,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else{ fatalError()}
         CellBinding.bind(view: cell, handler: {
-            self.startTutorial()
+            self.startTutorial(indexPath.section)
         })
         return cell
     }

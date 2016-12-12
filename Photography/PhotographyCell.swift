@@ -84,9 +84,14 @@ class PhotographyCell: UITableViewCell{
         self.layer.cornerRadius = 8
         self.selectionStyle = .none
         self.configureShadow(element: self)
-        
-        if title == "Get Started" {
+
+        if title == "Get Started"{
             configureIntroductionCell(title, phrase)
+        } else{
+            middleButton.isEnabled = true
+            leftButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+            middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+            rightButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         }
     }
     
