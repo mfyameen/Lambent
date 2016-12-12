@@ -45,7 +45,7 @@ class TutorialView: UIView{
         }
     }
     var nextSection:(Int)->Void = { _ in}
-    var previousSection: (Int)->Void = { _ in}
+    var previousSection: ()->() = { _ in}
     var pressSelector: ()->() = { _ in}
     
     override init (frame: CGRect){
@@ -117,13 +117,12 @@ class TutorialView: UIView{
     }
     @objc private func loadNextSection(){
         currentPage = (currentPage ?? 0) + 1
-        //pageControl.isEnabled = true
         nextSection(currentPage ?? 0)
     }
     
     @objc private func loadPreviousSection(){
         currentPage = (currentPage ?? 0) - 1
-        previousSection(currentPage ?? 0)
+        previousSection()
     }
     
     func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?){

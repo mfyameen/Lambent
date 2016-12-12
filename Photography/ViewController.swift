@@ -8,15 +8,15 @@ class ViewController: UIViewController {
         let photographyCell = PhotographyCell()
         view = photographyView
         title = "Learn Photography"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: photographyView, cell: photographyCell, viewController: self, model: photographyModel)
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        //still need to work on navigation controller disappearing and reappearing
-//        super.viewDidAppear(animated)
-//        navigationController?.hidesBarsOnSwipe = true
-//    }
 //    
+//    override func viewDidLoad() {
+//       navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
+//    }
+    
+   
 //    override func viewWillDisappear(_ animated: Bool) {
 //        super.viewWillDisappear(animated)
 //        navigationController?.hidesBarsOnSwipe = false
@@ -24,11 +24,8 @@ class ViewController: UIViewController {
     
     func pushTutorialViewController(page: Int) -> Void{
         navigationController?.pushViewController(TutorialViewController(page: page), animated: true)
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
-        
-        }
     }
-
+}
     struct ViewControllerBinding{
         static func bind (view: PhotographyView, cell: PhotographyCell, viewController: ViewController, model: PhotographyModel){
             view.tableViewContent = model
