@@ -2,7 +2,7 @@ import UIKit
 
 struct TutorialSetUp{
    var currentPage: Int
-   // var currentSegment: Int
+   var currentSegment: Int
 }
 
 class TutorialViewController: UIViewController{
@@ -20,7 +20,7 @@ class TutorialViewController: UIViewController{
         let tutorialView = TutorialView(setUp: setUp)
         let photographyModel = PhotographyModel()
         view = tutorialView
-        title = photographyModel.steps[UserDefaults.standard.integer(forKey: "page#")]
+        title = photographyModel.steps[setUp.currentPage]
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
         TutorialBinding.bind(view: tutorialView, viewController: self, model: photographyModel )
@@ -30,8 +30,8 @@ class TutorialViewController: UIViewController{
         _ = navigationController?.popToRootViewController(animated: true)
     }
 
-    func pushNextTutorialViewController(_ page: Int) -> Void{
-        let setUp = TutorialSetUp(currentPage: page)
+    func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void{
+        let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }
     

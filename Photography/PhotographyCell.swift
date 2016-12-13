@@ -13,7 +13,7 @@ class PhotographyCell: UITableViewCell{
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
     
-    var pressButton: (String?)->() = { _ in}
+    var pressButton: (Int?)->() = { _ in}
 
     static let reuseIdentifier = "Cell"
     
@@ -91,7 +91,7 @@ class PhotographyCell: UITableViewCell{
             middleButton.isEnabled = true
             leftButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
             middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
-            rightButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+            rightButton.addTarget(self, action: #selector(pressRightButton), for: .touchUpInside)
         }
     }
     
@@ -101,7 +101,7 @@ class PhotographyCell: UITableViewCell{
     }
     
     @objc private func pressRightButton(){
-        pressButton("Practice")
+        pressButton(2)
     }
     
     @objc private func pressStartButton(){

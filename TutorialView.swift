@@ -1,11 +1,5 @@
 import UIKit
 
-struct tutorialBinding{
-    static func bind(view: TutorialView, handler: @escaping ()->()){
-        view.pressSelector = handler
-    }
-}
-
 class TutorialView: UIView{
     private let container = UIView()
     private let pageControl = UIPageControl()
@@ -19,6 +13,7 @@ class TutorialView: UIView{
     private var segmentedControl = UISegmentedControl()
     private let setUp: TutorialSetUp
     var currentPage: Int?
+    var currentSegment: Int?
     
     var tutorialContent: PhotographyModel? {
         didSet{
@@ -26,8 +21,14 @@ class TutorialView: UIView{
             var nextButtonTitle: String?
             let steps = tutorialContent?.steps.count ?? 0
             let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
-            let content = tutorialContent?.content[currentPage ?? 0] ?? ""
-        
+            var content: String
+            
+            if (currentSegment ?? 0) > 0{
+                content = tutorialContent?.practice[currentPage ?? 0] ?? ""
+            } else{
+                content = tutorialContent?.content[currentPage ?? 0] ?? ""
+            }
+            
             if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps - 1 {
                 backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1 ]
                 nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1]
@@ -38,21 +39,22 @@ class TutorialView: UIView{
                 backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1] ?? ""
                 nextButtonTitle = nil
             }
-            
+
             configureContent(currentTitle: title, currentContent: content)
             configureToolBar(backButtonTitle, nextButtonTitle)
             configurePageControl(steps)
         }
     }
-    var nextSection:(Int)->Void = { _ in}
+    var nextSection:(Int, Int)->Void = { _ in}
     var previousSection: ()->() = { _ in}
     var pressSelector: ()->() = { _ in}
 
     init (setUp: TutorialSetUp){
         self.setUp = setUp
-        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         currentPage = setUp.currentPage
-
+        currentSegment = setUp.currentSegment
+        
         if currentPage == nil{
             currentPage = 0
         }
@@ -66,12 +68,15 @@ class TutorialView: UIView{
 
         photographyCell.configureShadow(element: container)
         configureSegmentedControl(currentPage ?? 0)
-        addSubviews([container, segmentedControl,title, content, toolBar, pageControl])
+        addSubviews([container, segmentedControl, title, content, toolBar, pageControl])
     }
     
     func configureContent(currentTitle: String?, currentContent: String){
-            title.text = currentTitle
-            content.text = currentContent
+        print(currentSegment)
+        print(currentPage)
+        title.text = currentTitle
+        content.text = currentContent
+        print(currentContent)
     }
     
     func configurePageControl(_ steps: Int){
@@ -84,30 +89,31 @@ class TutorialView: UIView{
     }
     
     @objc private func segmentedControlValueChanged(){
-        pressSelector()
+        displayAppropriateSegment(segment: segmentedControl.selectedSegmentIndex)
     }
 
     func configureSegmentedControl(_ currentPage: Int){
         if currentPage != 0{
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
-            segmentedControl.selectedSegmentIndex = 0
+            segmentedControl.selectedSegmentIndex = currentSegment ?? 0
+            
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-            
-            
-            tutorialBinding.bind(view: self, handler: {
-                switch self.segmentedControl.selectedSegmentIndex{
-                case 0: self.configureContent(currentTitle: nil, currentContent: self.tutorialContent?.content[currentPage] ?? "")
-                case 1: self.configureContent(currentTitle: nil, currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-                case 2: self.configureContent(currentTitle: nil, currentContent: self.tutorialContent?.practice[currentPage] ?? "")
-                default: break
-                }
-            })
+        }
+    }
+
+    func displayAppropriateSegment(segment: Int){
+
+        switch segment{
+        case 0: configureContent(currentTitle: nil, currentContent: tutorialContent?.content[currentPage ?? 0] ?? "")
+        case 1: configureContent(currentTitle: nil, currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+        case 2: configureContent(currentTitle: nil, currentContent: (tutorialContent?.practice[currentPage ?? 0]) ?? "")
+        default: break
         }
     }
     
     @objc private func loadNextSection(){
         currentPage = (currentPage ?? 0) + 1
-        nextSection(currentPage ?? 0)
+        nextSection(currentPage ?? 0, currentSegment ?? 0)
     }
     
     @objc private func loadPreviousSection(){
