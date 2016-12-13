@@ -1,5 +1,11 @@
 import UIKit
 
+enum SegmentControl: Int{
+    case intro = 0
+    case demo
+    case practice
+}
+
 class PhotographyCell: UITableViewCell{
     private let title = UILabel()
     private let phrase = UILabel()
@@ -90,8 +96,8 @@ class PhotographyCell: UITableViewCell{
         } else{
             middleButton.isEnabled = true
             leftButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
-            middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
-            rightButton.addTarget(self, action: #selector(pressRightButton), for: .touchUpInside)
+            middleButton.addTarget(self, action: #selector(pressDemoButton), for: .touchUpInside)
+            rightButton.addTarget(self, action: #selector(pressPracticeButton), for: .touchUpInside)
         }
     }
     
@@ -100,8 +106,12 @@ class PhotographyCell: UITableViewCell{
         commonInit()
     }
     
-    @objc private func pressRightButton(){
-        pressButton(2)
+    @objc private func pressDemoButton(){
+        pressButton(SegmentControl.demo.rawValue)
+    }
+    
+    @objc private func pressPracticeButton(){
+        pressButton(SegmentControl.practice.rawValue)
     }
     
     @objc private func pressStartButton(){

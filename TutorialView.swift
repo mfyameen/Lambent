@@ -12,6 +12,7 @@ class TutorialView: UIView{
     private var toolBarSize = CGSize()
     private var segmentedControl = UISegmentedControl()
     private let setUp: TutorialSetUp
+    private var contentHeight: CGFloat?
     var currentPage: Int?
     var currentSegment: Int?
     
@@ -21,15 +22,24 @@ class TutorialView: UIView{
             var nextButtonTitle: String?
             let steps = tutorialContent?.steps.count ?? 0
             let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
-            var content: String
+            var content: String?
             
-            if (currentSegment ?? 0) > 0{
-                content = tutorialContent?.practice[currentPage ?? 0] ?? ""
-            } else{
-                content = tutorialContent?.content[currentPage ?? 0] ?? ""
+            if let segment = currentSegment{
+                switch segment{
+                case SegmentControl.intro.rawValue:
+                    content = tutorialContent?.content[currentPage ?? 0] ?? ""
+                case SegmentControl.demo.rawValue:
+                    break
+                case SegmentControl.practice.rawValue:
+                    content = tutorialContent?.practice[currentPage ?? 0] ?? ""
+                default: break
+                }
             }
-            
-            configureContent(currentTitle: title, currentContent: content)
+//            
+//            if let segment = currentSegment{
+//                displayAppropriateSegment(segment: segment)
+//            }
+            configureContent(currentTitle: title, currentContent: content ?? "")
             (backButtonTitle, nextButtonTitle) = configureToolBarButtonTitles(steps: steps)
             configureToolBar(backButtonTitle, nextButtonTitle)
             configurePageControl(steps)
@@ -44,6 +54,7 @@ class TutorialView: UIView{
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
+        
         
         if currentPage == nil{
             currentPage = 0
@@ -62,11 +73,8 @@ class TutorialView: UIView{
     }
     
     func configureContent(currentTitle: String?, currentContent: String){
-        print(currentSegment)
-        print(currentPage)
         title.text = currentTitle
         content.text = currentContent
-        print(currentContent)
     }
     
     func configurePageControl(_ steps: Int){
@@ -86,17 +94,19 @@ class TutorialView: UIView{
         if currentPage != 0{
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
             segmentedControl.selectedSegmentIndex = currentSegment ?? 0
-            
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         }
     }
 
     func displayAppropriateSegment(segment: Int){
-
+        setNeedsLayout()
         switch segment{
-        case 0: configureContent(currentTitle: nil, currentContent: tutorialContent?.content[currentPage ?? 0] ?? "")
-        case 1: configureContent(currentTitle: nil, currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-        case 2: configureContent(currentTitle: nil, currentContent: (tutorialContent?.practice[currentPage ?? 0]) ?? "")
+        case SegmentControl.intro.rawValue:
+            configureContent(currentTitle: nil, currentContent: tutorialContent?.content[currentPage ?? 0] ?? "")
+        case SegmentControl.demo.rawValue:
+            configureContent(currentTitle: nil, currentContent: "")
+        case SegmentControl.practice.rawValue:
+            configureContent(currentTitle: nil, currentContent: (tutorialContent?.practice[currentPage ?? 0]) ?? "")
         default: break
         }
     }
@@ -154,7 +164,7 @@ class TutorialView: UIView{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let insets = UIEdgeInsets(top: 75, left: 18, bottom: 75, right: 18)
         let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
         container.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
