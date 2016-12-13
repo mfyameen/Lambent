@@ -1,10 +1,10 @@
 import UIKit
 
-//struct tutorialBinding{
-//    static func bind(view: TutorialView, handler: @escaping ()->()){
-//        view.pressSelector = handler
-//    }
-//}
+struct tutorialBinding{
+    static func bind(view: TutorialView, handler: @escaping ()->()){
+        view.pressSelector = handler
+    }
+}
 
 class TutorialView: UIView{
     private let container = UIView()
@@ -64,10 +64,10 @@ class TutorialView: UIView{
 
         photographyCell.configureShadow(element: container)
         configureSegmentedControl(currentPage ?? 0)
-        addSubviews([container, segmentedControl, title, content, scrollView, toolBar, pageControl])
+        addSubviews([container, segmentedControl,title, content, toolBar, pageControl])
     }
     
-    func configureContent(currentTitle: String, currentContent: String){
+    func configureContent(currentTitle: String?, currentContent: String){
             title.text = currentTitle
             content.text = currentContent
     }
@@ -84,17 +84,6 @@ class TutorialView: UIView{
     @objc private func segmentedControlValueChanged(){
         pressSelector()
     }
-    
-    
-    func updateValues(segment: UISegmentedControl){
-        switch segment.selectedSegmentIndex{
-        case 0: self.configureContent(currentTitle: "0", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-        case 1: self.configureContent(currentTitle: "1", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-        case 2: self.configureContent(currentTitle: "2", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-        default: break
-        }
-    
-    }
 
     func configureSegmentedControl(_ currentPage: Int){
         if currentPage != 0{
@@ -103,18 +92,17 @@ class TutorialView: UIView{
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
             
             
-//            tutorialBinding.bind(view: self, handler: {
-//                print("hello")
-//                //            switch segmentedControl.selectedSegmentIndex{
-//                //            case 0: self?.configureContent(currentTitle: "0", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-//                //            case 1: self?.configureContent(currentTitle: "1", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-//                //            case 2: self?.configureContent(currentTitle: "2", currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
-//                //            default: break
-//                //            }
-//            })
-//        }
+            tutorialBinding.bind(view: self, handler: {
+                switch self.segmentedControl.selectedSegmentIndex{
+                case 0: self.configureContent(currentTitle: nil, currentContent: self.tutorialContent?.content[currentPage] ?? "")
+                case 1: self.configureContent(currentTitle: nil, currentContent: "ijfal;skfja;sldfkjas;lfkjasdl;fk")
+                case 2: self.configureContent(currentTitle: nil, currentContent: self.tutorialContent?.practice[currentPage] ?? "")
+                default: break
+                }
+            })
+        }
     }
-    }
+    
     @objc private func loadNextSection(){
         currentPage = (currentPage ?? 0) + 1
         nextSection(currentPage ?? 0)
