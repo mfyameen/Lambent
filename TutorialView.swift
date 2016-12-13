@@ -22,8 +22,7 @@ class TutorialView: UIView{
             var nextButtonTitle: String?
             let steps = tutorialContent?.steps.count ?? 0
             let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
-            var content: String
-            content = configureAppropriateSegment(segment: currentSegment ?? 0)
+            let content = configureAppropriateSegment(segment: currentSegment ?? 0)
             configureContent(currentTitle: title, currentContent: content)
             (backButtonTitle, nextButtonTitle) = configureToolBarButtonTitles(steps: steps)
             configureToolBar(backButtonTitle, nextButtonTitle)
@@ -72,7 +71,9 @@ class TutorialView: UIView{
     }
     
     @objc private func segmentedControlValueChanged(){
-        updateAppropriateSegment(segment: segmentedControl.selectedSegmentIndex)
+        let content = configureAppropriateSegment(segment: segmentedControl.selectedSegmentIndex)
+        configureContent(currentTitle: nil, currentContent: content)
+        //updateAppropriateSegment(segment: segmentedControl.selectedSegmentIndex)
     }
 
     func configureSegmentedControl(_ currentPage: Int){
@@ -84,31 +85,17 @@ class TutorialView: UIView{
     }
     
     func configureAppropriateSegment(segment:Int) -> String {
-        if let segment = currentSegment{
-            switch segment{
-            case SegmentControl.intro.rawValue:
-              return tutorialContent?.content[currentPage ?? 0] ?? ""
-            case SegmentControl.demo.rawValue:
-                break
-            case SegmentControl.practice.rawValue:
-               return tutorialContent?.practice[currentPage ?? 0] ?? ""
-            default: break
-            }
-        }
-        return ""
-    }
-
-    func updateAppropriateSegment(segment: Int){
         setNeedsLayout()
+        
         switch segment{
         case SegmentControl.intro.rawValue:
-            configureContent(currentTitle: nil, currentContent: tutorialContent?.content[currentPage ?? 0] ?? "")
-        case SegmentControl.demo.rawValue:
-            configureContent(currentTitle: nil, currentContent: "")
+            return tutorialContent?.content[currentPage ?? 0] ?? ""
+        case SegmentControl.demo.rawValue: break
         case SegmentControl.practice.rawValue:
-            configureContent(currentTitle: nil, currentContent: (tutorialContent?.practice[currentPage ?? 0]) ?? "")
+            return tutorialContent?.practice[currentPage ?? 0] ?? ""
         default: break
         }
+        return ""
     }
     
     @objc private func loadNextSection(){

@@ -2,8 +2,8 @@ import UIKit
 
 enum SegmentControl: Int{
     case intro = 0
-    case demo
-    case practice
+    case demo = 1
+    case practice = 2
 }
 
 class PhotographyCell: UITableViewCell{
