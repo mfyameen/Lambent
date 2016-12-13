@@ -22,24 +22,9 @@ class TutorialView: UIView{
             var nextButtonTitle: String?
             let steps = tutorialContent?.steps.count ?? 0
             let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
-            var content: String?
-            
-            if let segment = currentSegment{
-                switch segment{
-                case SegmentControl.intro.rawValue:
-                    content = tutorialContent?.content[currentPage ?? 0] ?? ""
-                case SegmentControl.demo.rawValue:
-                    break
-                case SegmentControl.practice.rawValue:
-                    content = tutorialContent?.practice[currentPage ?? 0] ?? ""
-                default: break
-                }
-            }
-//            
-//            if let segment = currentSegment{
-//                displayAppropriateSegment(segment: segment)
-//            }
-            configureContent(currentTitle: title, currentContent: content ?? "")
+            var content: String
+            content = configureAppropriateSegment(segment: currentSegment ?? 0)
+            configureContent(currentTitle: title, currentContent: content)
             (backButtonTitle, nextButtonTitle) = configureToolBarButtonTitles(steps: steps)
             configureToolBar(backButtonTitle, nextButtonTitle)
             configurePageControl(steps)
@@ -87,7 +72,7 @@ class TutorialView: UIView{
     }
     
     @objc private func segmentedControlValueChanged(){
-        displayAppropriateSegment(segment: segmentedControl.selectedSegmentIndex)
+        updateAppropriateSegment(segment: segmentedControl.selectedSegmentIndex)
     }
 
     func configureSegmentedControl(_ currentPage: Int){
@@ -97,8 +82,23 @@ class TutorialView: UIView{
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         }
     }
+    
+    func configureAppropriateSegment(segment:Int) -> String {
+        if let segment = currentSegment{
+            switch segment{
+            case SegmentControl.intro.rawValue:
+              return tutorialContent?.content[currentPage ?? 0] ?? ""
+            case SegmentControl.demo.rawValue:
+                break
+            case SegmentControl.practice.rawValue:
+               return tutorialContent?.practice[currentPage ?? 0] ?? ""
+            default: break
+            }
+        }
+        return ""
+    }
 
-    func displayAppropriateSegment(segment: Int){
+    func updateAppropriateSegment(segment: Int){
         setNeedsLayout()
         switch segment{
         case SegmentControl.intro.rawValue:
