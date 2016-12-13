@@ -1,9 +1,15 @@
 import UIKit
 
+struct TutorialSetUp{
+   var currentPage: Int
+   // var currentSegment: Int
+}
+
 class TutorialViewController: UIViewController{
-    init(page: Int){
+    private let setUp: TutorialSetUp
+    init(setUp: TutorialSetUp){
+        self.setUp = setUp
         super.init(nibName: nil, bundle: nil)
-        UserDefaults.standard.set(page, forKey: "page#")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -11,7 +17,7 @@ class TutorialViewController: UIViewController{
     }
     
     override func loadView() {
-        let tutorialView = TutorialView()
+        let tutorialView = TutorialView(setUp: setUp)
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.steps[UserDefaults.standard.integer(forKey: "page#")]
@@ -25,7 +31,8 @@ class TutorialViewController: UIViewController{
     }
 
     func pushNextTutorialViewController(_ page: Int) -> Void{
-        _ = navigationController?.pushViewController(TutorialViewController(page: page), animated: true)
+        let setUp = TutorialSetUp(currentPage: page)
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }
     
     func pushPreviousTutorialViewController() -> Void{

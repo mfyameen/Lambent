@@ -13,7 +13,7 @@ class PhotographyCell: UITableViewCell{
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
     
-    var pressButton: ()->() = { _ in}
+    var pressButton: (String?)->() = { _ in}
 
     static let reuseIdentifier = "Cell"
     
@@ -100,8 +100,12 @@ class PhotographyCell: UITableViewCell{
         commonInit()
     }
     
+    @objc private func pressRightButton(){
+        pressButton("Practice")
+    }
+    
     @objc private func pressStartButton(){
-       pressButton()
+       pressButton(nil)
     }
     
     func configureIntroductionCell(_ title: String, _ phrase: String){

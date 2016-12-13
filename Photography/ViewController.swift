@@ -22,8 +22,8 @@ class ViewController: UIViewController {
 //        navigationController?.hidesBarsOnSwipe = false
 //    }
     
-    func pushTutorialViewController(page: Int) -> Void{
-        navigationController?.pushViewController(TutorialViewController(page: page), animated: true)
+    func pushTutorialViewController(setUp: TutorialSetUp) -> Void{
+        navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }
 }
     struct ViewControllerBinding{

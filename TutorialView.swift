@@ -17,7 +17,7 @@ class TutorialView: UIView{
     private let content = UILabel()
     private var toolBarSize = CGSize()
     private var segmentedControl = UISegmentedControl()
-    
+    private let setUp: TutorialSetUp
     var currentPage: Int?
     
     var tutorialContent: PhotographyModel? {
@@ -47,10 +47,12 @@ class TutorialView: UIView{
     var nextSection:(Int)->Void = { _ in}
     var previousSection: ()->() = { _ in}
     var pressSelector: ()->() = { _ in}
-    
-    override init (frame: CGRect){
-        super.init(frame: frame)
-        currentPage = UserDefaults.standard.integer(forKey: "page#")
+
+    init (setUp: TutorialSetUp){
+        self.setUp = setUp
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        currentPage = setUp.currentPage
+
         if currentPage == nil{
             currentPage = 0
         }

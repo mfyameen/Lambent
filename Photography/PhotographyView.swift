@@ -7,14 +7,14 @@ extension UIView{
 }
 
 struct CellBinding{
-    static func bind(view: PhotographyCell, handler: @escaping ()->()){
+    static func bind(view: PhotographyCell, handler: @escaping (String?)->()){
         view.pressButton = handler
     }
 }
 
 class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     var tableViewContent: PhotographyModel?
-    var startTutorial: (Int)->() = { _ in}
+    var startTutorial: (TutorialSetUp)->() = { _ in}
     
     private var view: UITableView
     private let cachedCellForSizing = PhotographyCell()
@@ -41,8 +41,9 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else{ fatalError()}
-        CellBinding.bind(view: cell, handler: {
-            self.startTutorial(indexPath.section)
+        let setUp = TutorialSetUp(currentPage: indexPath.section)
+        CellBinding.bind(view: cell, handler: { segmentedControl in
+            self.startTutorial(setUp)
         })
         return cell
     }
