@@ -29,18 +29,8 @@ class TutorialView: UIView{
                 content = tutorialContent?.content[currentPage ?? 0] ?? ""
             }
             
-            if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps - 1 {
-                backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1 ]
-                nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1]
-            } else if (currentPage ?? 0) <= 0{
-                backButtonTitle = nil
-                nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1] ?? ""
-            } else if (currentPage ?? 0) >= steps - 1{
-                backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1] ?? ""
-                nextButtonTitle = nil
-            }
-
             configureContent(currentTitle: title, currentContent: content)
+            (backButtonTitle, nextButtonTitle) = configureToolBarButtonTitles(steps: steps)
             configureToolBar(backButtonTitle, nextButtonTitle)
             configurePageControl(steps)
         }
@@ -139,6 +129,23 @@ class TutorialView: UIView{
         }
         toolBar.barTintColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         toolBar.clipsToBounds = true
+    }
+    
+    func configureToolBarButtonTitles(steps: Int) -> (backButtonTitle: String?, nextButtonTitle: String?){
+        var backButtonTitle: String?
+        var nextButtonTitle: String?
+        
+        if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps - 1 {
+            backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1 ]
+            nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1]
+        } else if (currentPage ?? 0) <= 0{
+            backButtonTitle = nil
+            nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1] ?? ""
+        } else if (currentPage ?? 0) >= steps - 1{
+            backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1] ?? ""
+            nextButtonTitle = nil
+        }
+        return (backButtonTitle, nextButtonTitle)
     }
 
     required init?(coder aDecoder: NSCoder) {
