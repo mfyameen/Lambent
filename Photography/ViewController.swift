@@ -5,21 +5,15 @@ class ViewController: UIViewController {
     override func loadView() {
         let photographyView = PhotographyView()
         let photographyModel = PhotographyModel()
-        let photographyCell = PhotographyCell()
         view = photographyView
         title = "Learn Photography"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
-        ViewControllerBinding.bind(view: photographyView, cell: photographyCell, viewController: self, model: photographyModel)
+        ViewControllerBinding.bind(view: photographyView, viewController: self, model: photographyModel)
     }
-//    
-//    override func viewDidLoad() {
-//       navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
-//    }
     
-   
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.hidesBarsOnSwipe = false
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.hidesBarsOnSwipe = true
 //    }
     
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void{
@@ -27,7 +21,7 @@ class ViewController: UIViewController {
     }
 }
     struct ViewControllerBinding{
-        static func bind (view: PhotographyView, cell: PhotographyCell, viewController: ViewController, model: PhotographyModel){
+        static func bind (view: PhotographyView, viewController: ViewController, model: PhotographyModel){
             view.tableViewContent = model
             view.startTutorial = viewController.pushTutorialViewController
         }

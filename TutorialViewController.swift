@@ -26,6 +26,11 @@ class TutorialViewController: UIViewController{
         TutorialBinding.bind(view: tutorialView, viewController: self, model: photographyModel )
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.hidesBarsOnSwipe = false
+//    }
+    
     func returnHome(){
         _ = navigationController?.popToRootViewController(animated: true)
     }

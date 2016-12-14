@@ -1,16 +1,16 @@
 import UIKit
 
-enum SegmentControl: Int{
-    case intro = 0
-    case demo = 1
-    case practice = 2
+enum SegmentControl: Int {
+    case intro
+    case demo
+    case practice
 }
 
-class PhotographyCell: UITableViewCell{
+class PhotographyCell: UITableViewCell {
     private let title = UILabel()
     private let phrase = UILabel()
-    private let middleButton = UIButton()
     private let leftButton = UIButton()
+    private let middleButton = UIButton()
     private let rightButton = UIButton()
     private let horizontalSeparator = UIView()
     private let leftVerticalSeparator = UIView()
@@ -19,11 +19,11 @@ class PhotographyCell: UITableViewCell{
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
     
-    var pressButton: (Int?)->() = { _ in}
-
+    var pressButton: (Int?)->() = { _ in }
+    
     static let reuseIdentifier = "Cell"
     
-    override init (style: UITableViewCellStyle, reuseIdentifier: String?){
+    override init (style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
         contentView.addSubviews([title, phrase, horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator, leftButton, middleButton, rightButton])
@@ -45,7 +45,7 @@ class PhotographyCell: UITableViewCell{
         
         let phraseSize = phrase.sizeThatFits(contentArea.size)
         phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
-      
+        
         horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
         leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 45)
         rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 45)
@@ -55,7 +55,7 @@ class PhotographyCell: UITableViewCell{
         rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
     }
     
-    func commonInit(){
+    func commonInit() {
         title.font = UIFont.boldSystemFont(ofSize: 14)
         phrase.font = UIFont.systemFont(ofSize: 12)
         phrase.numberOfLines = 0
@@ -69,14 +69,14 @@ class PhotographyCell: UITableViewCell{
         middleButton.isEnabled = false
     }
     
-    func layoutSeparators(_ separators: [UIView]){
-        separators.forEach({
+    func layoutSeparators(_ separators: [UIView]) {
+        separators.forEach ({
             $0.layer.borderWidth = 0.5
             $0.layer.borderColor = #colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
         })
     }
     
-    func layoutButtons(_ buttons: [UIButton]){
+    func layoutButtons(_ buttons: [UIButton]) {
         buttons.forEach({
             $0.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal)
             $0.setTitleColor(#colorLiteral(red: 0.5979364514, green: 0.8853133321, blue: 0.9850903153, alpha: 1), for: .highlighted)
@@ -84,16 +84,16 @@ class PhotographyCell: UITableViewCell{
         })
     }
     
-    func configureCell(_ title: String, _ phrase: String, _ indexPath: IndexPath){
+    func configureCell(_ title: String, _ phrase: String) {
         self.title.text = title
         self.phrase.text = phrase
         self.layer.cornerRadius = 8
         self.selectionStyle = .none
-        self.configureShadow(element: self)
-
-        if title == "Get Started"{
+        HelperMethods.configureShadow(element: self)
+       
+        if title == "Get Started" {
             configureIntroductionCell(title, phrase)
-        } else{
+        } else {
             middleButton.isEnabled = true
             leftButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
             middleButton.addTarget(self, action: #selector(pressDemoButton), for: .touchUpInside)
@@ -101,24 +101,24 @@ class PhotographyCell: UITableViewCell{
         }
     }
     
+    @objc private func pressStartButton() {
+        pressButton(SegmentControl.intro.rawValue)
+    }
+    
+    @objc private func pressDemoButton() {
+        pressButton(SegmentControl.demo.rawValue)
+    }
+    
+    @objc private func pressPracticeButton() {
+        pressButton(SegmentControl.practice.rawValue)
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         commonInit()
     }
-    
-    @objc private func pressDemoButton(){
-        pressButton(SegmentControl.demo.rawValue)
-    }
-    
-    @objc private func pressPracticeButton(){
-        pressButton(SegmentControl.practice.rawValue)
-    }
-    
-    @objc private func pressStartButton(){
-       pressButton(nil)
-    }
-    
-    func configureIntroductionCell(_ title: String, _ phrase: String){
+
+    func configureIntroductionCell(_ title: String, _ phrase: String) {
         middleButton.isEnabled = true
         middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         
@@ -130,18 +130,11 @@ class PhotographyCell: UITableViewCell{
         middleButton.setTitle("Start", for: .normal)
         rightButton.setTitle("", for: .normal)
     }
-
-    func configureShadow(element: UIView){
-        element.layer.shadowOffset = CGSize(width: 0, height: 0)
-        element.layer.shadowColor = UIColor.gray.cgColor
-        element.layer.shadowOpacity = 0.5
-        element.layer.shadowRadius = CGFloat(3)
-    }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         let phraseHeight: CGFloat = phrase.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         let titleHeight: CGFloat = title.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         return CGSize(width: size.width, height: phraseHeight + titleHeight + buttonHeight + 8 * 6)
     }
-
+    
 }
