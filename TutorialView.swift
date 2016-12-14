@@ -18,7 +18,7 @@ class TutorialView: UIView {
     var currentSegment: Int?
     
     var nextSection:(Int, Int)->Void = { _ in }
-    var previousSection: ()->() = { _ in }
+    var previousSection: (Int, Int)->() = { _ in }
     var pressSelector: ()->() = { _ in }
     
     var tutorialContent: PhotographyModel? {
@@ -39,8 +39,6 @@ class TutorialView: UIView {
         
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
-        
-        print(currentPage)
         
         backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         container.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.00)
@@ -115,7 +113,7 @@ class TutorialView: UIView {
     
     @objc private func loadPreviousSection() {
         currentPage = (currentPage ?? 0) - 1
-        previousSection()
+        previousSection(currentPage ?? 0, currentSegment ?? 0)
     }
     
     func configureToolBarButtonTitles(steps: Int) {

@@ -37,6 +37,7 @@ class TutorialViewController: UIViewController{
 
     func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void{
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
+        print("push page: \(setUp.currentPage)")
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }
     
@@ -50,6 +51,6 @@ struct TutorialBinding{
     static func bind(view: TutorialView, viewController: TutorialViewController, model: PhotographyModel){
         view.tutorialContent = model
         view.nextSection = viewController.pushNextTutorialViewController
-        view.previousSection = viewController.pushPreviousTutorialViewController
+        view.previousSection = viewController.pushNextTutorialViewController
     }
 }
