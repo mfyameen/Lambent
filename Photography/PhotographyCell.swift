@@ -55,7 +55,7 @@ class PhotographyCell: UITableViewCell {
         rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
     }
     
-    func commonInit() {
+    private func commonInit() {
         title.font = UIFont.boldSystemFont(ofSize: 14)
         phrase.font = UIFont.systemFont(ofSize: 12)
         phrase.numberOfLines = 0
@@ -69,14 +69,14 @@ class PhotographyCell: UITableViewCell {
         middleButton.isEnabled = false
     }
     
-    func layoutSeparators(_ separators: [UIView]) {
+    private func layoutSeparators(_ separators: [UIView]) {
         separators.forEach ({
             $0.layer.borderWidth = 0.5
             $0.layer.borderColor = #colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
         })
     }
     
-    func layoutButtons(_ buttons: [UIButton]) {
+    private func layoutButtons(_ buttons: [UIButton]) {
         buttons.forEach({
             $0.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal)
             $0.setTitleColor(#colorLiteral(red: 0.5979364514, green: 0.8853133321, blue: 0.9850903153, alpha: 1), for: .highlighted)
@@ -118,7 +118,7 @@ class PhotographyCell: UITableViewCell {
         commonInit()
     }
 
-    func configureIntroductionCell(_ title: String, _ phrase: String) {
+    private func configureIntroductionCell(_ title: String, _ phrase: String) {
         middleButton.isEnabled = true
         middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         
@@ -131,7 +131,7 @@ class PhotographyCell: UITableViewCell {
         rightButton.setTitle("", for: .normal)
     }
     
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
+   override func sizeThatFits(_ size: CGSize) -> CGSize {
         let phraseHeight: CGFloat = phrase.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         let titleHeight: CGFloat = title.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         return CGSize(width: size.width, height: phraseHeight + titleHeight + buttonHeight + 8 * 6)

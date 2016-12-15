@@ -10,22 +10,20 @@ class TutorialView: UIView {
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
     private let setUp: TutorialSetUp
-    private var backButtonTitle: String?
-    private var nextButtonTitle: String?
+    private var backButtonTitle: String? = nil
+    private var nextButtonTitle: String? = nil
     
-    var currentPage: Int?
-   
-    var currentSegment: Int?
+    var currentPage: Int
+    var currentSegment: Int
     
-    var nextSection:(Int, Int)->Void = { _ in }
-    var previousSection: (Int, Int)->() = { _ in }
+    var nextSection:(Int, Int)-> Void = { _ in }
     var pressSelector: ()->() = { _ in }
     
     var tutorialContent: PhotographyModel? {
         didSet {
             let steps = tutorialContent?.steps.count ?? 0
-            let title = tutorialContent?.sectionTitles[currentPage ?? 0] ?? ""
-            let content = configureAppropriateSegment(segment: currentSegment ?? 0)
+            let title = tutorialContent?.sectionTitles[currentPage] ?? ""
+            let content = configureAppropriateSegment(segment: currentSegment)
             
             configureContent(currentTitle: title, currentContent: content)
             configureToolBarButtonTitles(steps: steps)
@@ -34,12 +32,12 @@ class TutorialView: UIView {
         }
     }
     init (setUp: TutorialSetUp) {
-        self.setUp = setUp
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         
+        self.setUp = setUp
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    
         backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         container.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.00)
         container.layer.cornerRadius = 8
@@ -49,27 +47,27 @@ class TutorialView: UIView {
         content.numberOfLines = 0
         
         HelperMethods.configureShadow(element: container)
-        configureSegmentedControl(currentPage ?? 0)
+        configureSegmentedControl(currentPage)
         addSubviews([container, segmentedControl, image, title, content, toolBar, pageControl])
     }
     
-    func configureContent(currentTitle: String?, currentContent: String) {
+    private func configureContent(currentTitle: String?, currentContent: String) {
         title.text = currentTitle
         content.text = currentContent
     }
     
-    func configurePageControl(_ steps: Int) {
+    private func configurePageControl(_ steps: Int) {
         pageControl.isEnabled = false
         pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
         pageControl.numberOfPages = steps
         pageControl.pageIndicatorTintColor = .white
-        pageControl.currentPage = currentPage ?? 0
+        pageControl.currentPage = currentPage
     }
     
-    func configureSegmentedControl(_ currentPage: Int) {
+    private func configureSegmentedControl(_ currentPage: Int) {
         if currentPage != 0 {
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
-            segmentedControl.selectedSegmentIndex = currentSegment ?? 0
+            segmentedControl.selectedSegmentIndex = currentSegment
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         }
     }
@@ -79,18 +77,18 @@ class TutorialView: UIView {
         configureContent(currentTitle: nil, currentContent: content)
     }
     
-    func configureAppropriateSegment(segment:Int) -> String {
+    private func configureAppropriateSegment(segment:Int) -> String {
         setNeedsLayout()
         guard let segment = SegmentControl(rawValue: segment) else { return "" }
         switch segment {
-        case .intro: return tutorialContent?.content[currentPage ?? 0] ?? ""
+        case .intro: return tutorialContent?.content[currentPage] ?? ""
         case .demo: break
-        case .practice: return tutorialContent?.practice[currentPage ?? 0] ?? ""
+        case .practice: return tutorialContent?.practice[currentPage] ?? ""
         }
         return ""
     }
     
-    func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?) {
+    private func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?) {
         let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: #selector(loadPreviousSection))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let nextButton = UIBarButtonItem(title: nextButtonTitle, style: .plain, target: self, action: #selector(loadNextSection))
@@ -107,25 +105,23 @@ class TutorialView: UIView {
     }
     
     @objc private func loadNextSection() {
-        currentPage = (currentPage ?? 0) + 1
-        nextSection(currentPage ?? 0, currentSegment ?? 0)
+        currentPage = currentPage + 1
+        nextSection(currentPage, currentSegment)
     }
     
     @objc private func loadPreviousSection() {
-        currentPage = (currentPage ?? 0) - 1
-        previousSection(currentPage ?? 0, currentSegment ?? 0)
+        currentPage = currentPage - 1
+        nextSection(currentPage, currentSegment)
     }
     
-    func configureToolBarButtonTitles(steps: Int) {
-        if (currentPage ?? 0) > 0 && (currentPage ?? 0) < steps - 1 {
-            backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1 ]
-            nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1]
-        } else if (currentPage ?? 0) <= 0 {
-            backButtonTitle = nil
-            nextButtonTitle = tutorialContent?.steps[(currentPage ?? 0) + 1] ?? ""
-        } else if (currentPage ?? 0) >= steps - 1 {
-            backButtonTitle = tutorialContent?.steps[(currentPage ?? 0) - 1] ?? ""
-            nextButtonTitle = nil
+    private func configureToolBarButtonTitles(steps: Int) {
+        if (currentPage) > 0 && (currentPage) < steps - 1 {
+            backButtonTitle = tutorialContent?.steps[currentPage - 1 ]
+            nextButtonTitle = tutorialContent?.steps[currentPage + 1]
+        } else if (currentPage) <= 0 {
+            nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
+        } else if (currentPage) >= steps - 1 {
+            backButtonTitle = tutorialContent?.steps[currentPage - 1] ?? ""
         }
     }
     

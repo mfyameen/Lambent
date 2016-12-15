@@ -1,13 +1,13 @@
 import UIKit
 
-struct TutorialSetUp{
+struct TutorialSetUp {
    var currentPage: Int
    var currentSegment: Int
 }
 
-class TutorialViewController: UIViewController{
+class TutorialViewController: UIViewController {
     private let setUp: TutorialSetUp
-    init(setUp: TutorialSetUp){
+    init(setUp: TutorialSetUp) {
         self.setUp = setUp
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,26 +31,20 @@ class TutorialViewController: UIViewController{
 //        navigationController?.hidesBarsOnSwipe = false
 //    }
     
-    func returnHome(){
+    func returnHome() {
         _ = navigationController?.popToRootViewController(animated: true)
     }
 
-    func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void{
+    func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
-        print("push page: \(setUp.currentPage)")
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
-    }
-    
-    func pushPreviousTutorialViewController() -> Void{
-        _ = navigationController?.popViewController(animated: true)
     }
 }
 
 
-struct TutorialBinding{
+struct TutorialBinding {
     static func bind(view: TutorialView, viewController: TutorialViewController, model: PhotographyModel){
         view.tutorialContent = model
         view.nextSection = viewController.pushNextTutorialViewController
-        view.previousSection = viewController.pushNextTutorialViewController
     }
 }
