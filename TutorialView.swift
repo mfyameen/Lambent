@@ -4,7 +4,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private let container = UIView()
     private let pageControl = UIPageControl()
     private let scrollView = UIScrollView()
-    private let toolBar = UIToolbar()
+    private let customToolBar = UIView()
+    private let nextButton = UIButton()
+    private let backButton = UIButton()
     private let title = UILabel()
     private let imageView = UIImageView(image: UIImage(named: "flower"))
     private let content = UILabel()
@@ -12,8 +14,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private let slider = UISlider()
     private let demoInstructions = UILabel()
     private let setUp: TutorialSetUp
-    private var backButtonTitle: String? = nil
-    private var nextButtonTitle: String? = nil
     private var isDemoScreen = false
     private var lastContentOffset: CGFloat = 0
     
@@ -31,7 +31,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
 
             configureContent(currentTitle: title, currentContent: content)
             configureToolBarButtonTitles(steps: steps)
-            configureToolBar(backButtonTitle, nextButtonTitle)
             configurePageControl(steps)
         }
     }
@@ -56,7 +55,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         HelperMethods.configureShadow(element: container)
         configureSegmentedControl(currentPage)
         configureDemo()
-        addSubviews([container, scrollView, segmentedControl, slider, title, content, demoInstructions, imageView, toolBar, pageControl])
+        configureCustomToolBar()
+        addSubviews([container, scrollView, segmentedControl, slider, title, content, demoInstructions, imageView, customToolBar, nextButton, backButton, pageControl])
     }
     
     private func configureContent(currentTitle: String?, currentContent: String) {
@@ -75,18 +75,20 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (self.lastContentOffset > scrollView.contentOffset.y) {
-     
-            print("moving up")
+        if lastContentOffset > scrollView.contentOffset.x {
+            currentPage = currentPage + 1
+            pageControl.currentPage = pageControl.currentPage + 1
+            print("moving right")
         }
-        else if (self.lastContentOffset < scrollView.contentOffset.y) {
-            
-            print("moving down")
+        else if lastContentOffset < scrollView.contentOffset.x {
+            currentPage = currentPage - 1
+            pageControl.currentPage = pageControl.currentPage - 1
+            print("moving left")
         }
-        self.lastContentOffset = scrollView.contentOffset.x
+        nextSection(currentPage, currentSegment)
     }
     
-    private func configureDemo(){
+    private func configureDemo() {
         demoInstructions.font = UIFont.systemFont(ofSize: 12)
         demoInstructions.numberOfLines = 0
         demoInstructions.textAlignment = .center
@@ -151,30 +153,24 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         }
     }
     
-    private func configureToolBar(_ backButtonTitle: String?, _ nextButtonTitle: String?) {
-        let backButton = UIBarButtonItem(title: backButtonTitle, style: .plain, target: self, action: nil)
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let nextButton = UIBarButtonItem(title: nextButtonTitle, style: .plain, target: self, action: nil)
-        
-        if nextButtonTitle == nil {
-            nextButton.isEnabled = false
-        } else if backButtonTitle == nil {
-            backButton.isEnabled = false
-        }
-        toolBar.items = [backButton, flexibleSpace, nextButton]
-        toolBar.barTintColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
-        toolBar.clipsToBounds = true
+    private func configureCustomToolBar() {
+        nextButton.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal)
+        backButton.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal)
     }
     
     private func configureToolBarButtonTitles(steps: Int) {
+        var nextButtonTitle: String = ""
+        var backButtonTitle: String = ""
         if (currentPage) > 0 && (currentPage) < steps - 1 {
-            backButtonTitle = tutorialContent?.steps[currentPage - 1 ]
-            nextButtonTitle = tutorialContent?.steps[currentPage + 1]
+            backButtonTitle = tutorialContent?.steps[currentPage - 1 ] ?? ""
+            nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
         } else if (currentPage) <= 0 {
             nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
         } else if (currentPage) >= steps - 1 {
             backButtonTitle = tutorialContent?.steps[currentPage - 1] ?? ""
         }
+        backButton.setTitle(backButtonTitle, for: .normal)
+        nextButton.setTitle(nextButtonTitle, for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -210,8 +206,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         let pageControlSize = pageControl.sizeThatFits(contentArea.size)
         pageControl.frame = CGRect(x: contentArea.midX - pageControlSize.width/2, y: (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2, width: pageControlSize.width, height: pageControlSize.height)
         
-        let toolBarHeight = toolBar.sizeThatFits(contentArea.size).height
-        toolBar.frame = CGRect(x: contentArea.minX, y: (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2, width: contentArea.width, height: toolBarHeight)
+        let toolBarHeight: CGFloat = 44
+        customToolBar.frame = CGRect(x: contentArea.minX, y: (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2, width: contentArea.width, height: toolBarHeight)
+        
+        let backButtonWidth = backButton.sizeThatFits(contentArea.size).width
+        backButton.frame = CGRect(x: customToolBar.frame.minX, y: customToolBar.frame.minY, width: backButtonWidth, height: toolBarHeight)
+        
+        let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
+        nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
         
         scrollView.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY, width: contentArea.size.width, height: contentArea.size.height - segmentedControl.frame.maxY)
         scrollView.contentSize = contentArea.size
