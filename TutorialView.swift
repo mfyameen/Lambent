@@ -20,7 +20,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     var currentPage: Int
     var currentSegment: Int
     
-    var nextSection:(Int, Int)-> Void = { _ in }
+    var nextSection: (Int, Int)-> Void = { _ in }
     var pressSelector: ()->() = { _ in }
     
     var tutorialContent: PhotographyModel? {
@@ -43,6 +43,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
         
         backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
         container.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.00)
@@ -75,17 +76,23 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if lastContentOffset > scrollView.contentOffset.x {
-            currentPage = currentPage + 1
-            pageControl.currentPage = pageControl.currentPage + 1
-            print("moving right")
-        }
-        else if lastContentOffset < scrollView.contentOffset.x {
+        let scrollMinLimit = 0
+        let scrollMaxLimit = (tutorialContent?.steps.count ?? 0) - 1
+        if lastContentOffset > scrollView.contentOffset.x && currentPage > scrollMinLimit{
             currentPage = currentPage - 1
             pageControl.currentPage = pageControl.currentPage - 1
             print("moving left")
+            nextSection(currentPage, currentSegment)
         }
-        nextSection(currentPage, currentSegment)
+        else if lastContentOffset < scrollView.contentOffset.x && currentPage < scrollMaxLimit{
+            currentPage = currentPage + 1
+            pageControl.currentPage = pageControl.currentPage + 1
+            print("moving right")
+            nextSection(currentPage, currentSegment)
+        }
+        //nextSection(currentPage, currentSegment)
+        lastContentOffset = scrollView.contentOffset.y
+        print(lastContentOffset)
     }
     
     private func configureDemo() {
@@ -216,6 +223,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
         
         scrollView.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY, width: contentArea.size.width, height: contentArea.size.height - segmentedControl.frame.maxY)
-        scrollView.contentSize = contentArea.size
+        scrollView.contentSize = bounds.size
     }
 }
