@@ -7,7 +7,7 @@ extension UIView{
 }
 
 struct CellBinding {
-    static func bind(view: PhotographyCell, handler: @escaping (Int?)->()) {
+    static func bind(view: PhotographyCell, handler: @escaping (Int)->()) {
         view.pressButton = handler
     }
 }
@@ -46,7 +46,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
-            let setUp = TutorialSetUp(currentPage: indexPath.section, currentSegment: segmentedControl ?? 0)
+            let setUp = TutorialSetUp(currentPage: indexPath.section, currentSegment: segmentedControl)
             self?.startTutorial(setUp)
         })
         return cell
@@ -72,7 +72,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
         return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
     }
     
-    func setTitleAndPhrase(index: Int) {
+    private func setTitleAndPhrase(index: Int) {
         title = tableViewContent?.steps[index] ?? ""
         phrase = tableViewContent?.descriptions[index] ?? ""
     }

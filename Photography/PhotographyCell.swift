@@ -19,7 +19,7 @@ class PhotographyCell: UITableViewCell {
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
     
-    var pressButton: (Int?)->() = { _ in }
+    var pressButton: (Int)->() = { _ in }
     
     static let reuseIdentifier = "Cell"
     
