@@ -27,7 +27,13 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         didSet {
             let steps = tutorialContent?.steps.count ?? 0
             let title = tutorialContent?.sectionTitles[currentPage] ?? ""
-            let content = configureAppropriateSegment(segment: currentSegment)
+            var content: String
+            
+            if currentPage == 0 {
+                content = tutorialContent?.content[currentPage] ?? ""
+            } else {
+                content = configureAppropriateSegment(segment: currentSegment)
+            }
 
             configureContent(currentTitle: title, currentContent: content)
             configureToolBarButtonTitles(steps: steps)
@@ -60,7 +66,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         addSubviews([container, scrollView, segmentedControl, slider, title, content, demoInstructions, imageView, customToolBar, nextButton, backButton, pageControl])
     }
     
-    private func configureContent(currentTitle: String?, currentContent: String) {
+    private func configureContent(currentTitle: String?, currentContent: String?) {
         title.text = currentTitle
         content.text = currentContent
         if isDemoScreen {
@@ -81,18 +87,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         if lastContentOffset > scrollView.contentOffset.x && currentPage > scrollMinLimit{
             currentPage = currentPage - 1
             pageControl.currentPage = pageControl.currentPage - 1
-            print("moving left")
             nextSection(currentPage, currentSegment)
         }
         else if lastContentOffset < scrollView.contentOffset.x && currentPage < scrollMaxLimit{
             currentPage = currentPage + 1
             pageControl.currentPage = pageControl.currentPage + 1
-            print("moving right")
             nextSection(currentPage, currentSegment)
         }
-        //nextSection(currentPage, currentSegment)
         lastContentOffset = scrollView.contentOffset.y
-        print(lastContentOffset)
     }
     
     private func configureDemo() {
