@@ -32,6 +32,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
         view.delegate = self
         view.separatorStyle = .none
         view.clipsToBounds = false
+        view.showsVerticalScrollIndicator = false
         addSubview(self.view)
     }
     

@@ -12,6 +12,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
     private let slider = UISlider()
+    private let cameraValue = UILabel()
+    private let cameraSensor = UIView()
+    private let cameraSensorSize : CGFloat = 44
+    private let cameraSensorOpening = UIView()
+    private let cameraOpeningSize : CGFloat = 25
     private let demoInstructions = UILabel()
     private let setUp: TutorialSetUp
     private var isDemoScreen = false
@@ -63,7 +68,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         configureSegmentedControl(currentPage)
         configureDemo()
         configureCustomToolBar()
-        addSubviews([container, scrollView, segmentedControl, slider, title, content, demoInstructions, imageView, customToolBar, nextButton, backButton, pageControl])
+        addSubviews([container, scrollView, segmentedControl, slider, title, content, cameraSensor, cameraSensorOpening, cameraValue, demoInstructions, imageView, customToolBar, nextButton, backButton, pageControl])
     }
     
     private func configureContent(currentTitle: String?, currentContent: String?) {
@@ -74,10 +79,16 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
             imageView.isHidden = false
             slider.isHidden = false
             demoInstructions.isHidden = false
+            cameraValue.isHidden = false
+            cameraSensor.isHidden = false
+            cameraSensorOpening.isHidden = false
         } else {
             imageView.isHidden = true
             slider.isHidden = true
             demoInstructions.isHidden = true
+            cameraValue.isHidden = true
+            cameraSensor.isHidden = true
+            cameraSensorOpening.isHidden = true
         }
     }
     
@@ -107,6 +118,15 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         imageView.clipsToBounds = true
         imageView.isHidden = true
         
+        cameraValue.font = UIFont.systemFont(ofSize: 32)
+        cameraValue.text = "f2.8"
+        
+        cameraSensor.layer.cornerRadius = cameraSensorSize/2
+        cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
+        
+        cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
+   
         slider.isHidden = true
         slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
     }
@@ -198,6 +218,15 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         segmentedControl.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: contentArea.minY + 20, width: segmentedWidth, height: segmentedHeight)
         
         imageView.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY + 20, width: contentArea.width, height: contentArea.height * 0.60)
+        
+        let padding: CGFloat = 10
+        
+        cameraSensor.frame = CGRect(x: contentArea.midX - cameraSensorSize - padding, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraSensorSize/2, width: cameraSensorSize, height: cameraSensorSize)
+        
+        cameraSensorOpening.frame = CGRect(x: cameraSensor.frame.midX - cameraOpeningSize/2, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraOpeningSize/2, width: cameraOpeningSize, height: cameraOpeningSize)
+        
+        let cameraValueSize = cameraValue.sizeThatFits(contentArea.size)
+        cameraValue.frame = CGRect(x: contentArea.midX, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraValueSize.height/2, width: cameraValueSize.width, height: cameraValueSize.height)
         
         let sliderHeight = slider.sizeThatFits(contentArea.size).height
         slider.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: (imageView.frame.maxY + contentArea.maxY)/2 - sliderHeight/2, width: segmentedWidth, height: sliderHeight)
