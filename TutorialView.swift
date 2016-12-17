@@ -16,7 +16,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private let cameraSensor = UIView()
     private let cameraSensorSize : CGFloat = 44
     private let cameraSensorOpening = UIView()
-    private let cameraOpeningSize : CGFloat = 25
+    private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
     private let setUp: TutorialSetUp
     private var isDemoScreen = false
@@ -24,6 +24,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     
     var currentPage: Int
     var currentSegment: Int
+    let apertureValues = [2.8, 4, 5.6, 8, 11, 16, 22]
     
     var nextSection: (Int, Int)-> Void = { _ in }
     var pressSelector: ()->() = { _ in }
@@ -119,19 +120,56 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         imageView.isHidden = true
         
         cameraValue.font = UIFont.systemFont(ofSize: 32)
-        cameraValue.text = "f2.8"
+        cameraValue.text = "f2.4"
         
         cameraSensor.layer.cornerRadius = cameraSensorSize/2
         cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
         
         cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
         cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
-   
+        
+        slider.isContinuous = true
+        slider.value = 2.8
+        slider.minimumValue = 2.8
+        slider.maximumValue = 22
         slider.isHidden = true
         slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
     }
     
     @objc private func sliderValueChanged() {
+        let currentSliderValue = round(slider.value)
+        switch currentSliderValue {
+        case round(2.8):
+            cameraValue.text = "f2.8"
+            cameraOpeningSize = 38
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case 4:
+            cameraValue.text = "f4"
+            cameraOpeningSize = 34
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case round(5.6):
+            cameraValue.text = "f5.6"
+            cameraOpeningSize = 24
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case 8:
+            cameraValue.text = "f8"
+            cameraOpeningSize = 20
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case 11:
+            cameraValue.text = "f11"
+            cameraOpeningSize = 16
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case 16:
+            cameraValue.text = "f16"
+            cameraOpeningSize = 12
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case 22:
+            cameraValue.text = "f22"
+            cameraOpeningSize = 8
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        default: break
+        }
+        setNeedsLayout()
     }
     
     private func configurePageControl(_ steps: Int) {
