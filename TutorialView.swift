@@ -8,23 +8,16 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private let nextButton = UIButton()
     private let backButton = UIButton()
     private let title = UILabel()
-    private let imageView = UIImageView(image: UIImage(named: "flower"))
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
-    private let slider = UISlider()
-    private let cameraValue = UILabel()
-    private let cameraSensor = UIView()
-    private let cameraSensorSize : CGFloat = 44
-    private let cameraSensorOpening = UIView()
-    private var cameraOpeningSize: CGFloat = 38
-    private let demoInstructions = UILabel()
+    static var segmentedWidth = CGFloat()
     private let setUp: TutorialSetUp
     private var isDemoScreen = false
     private var lastContentOffset: CGFloat = 0
+    private var demo: DemoView
     
     var currentPage: Int
     var currentSegment: Int
-    let apertureValues = [2.8, 4, 5.6, 8, 11, 16, 22]
     
     var nextSection: (Int, Int)-> Void = { _ in }
     var pressSelector: ()->() = { _ in }
@@ -47,6 +40,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         }
     }
     init (setUp: TutorialSetUp) {
+        demo = DemoView(DemoType: title.text, content: nil)
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         self.setUp = setUp
@@ -67,29 +61,23 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         
         HelperMethods.configureShadow(element: container)
         configureSegmentedControl(currentPage)
-        configureDemo()
         configureCustomToolBar()
-        addSubviews([container, scrollView, segmentedControl, slider, title, content, cameraSensor, cameraSensorOpening, cameraValue, demoInstructions, imageView, customToolBar, nextButton, backButton, pageControl])
+
+       
+    addSubviews([container,  scrollView, demo, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
     }
     
     private func configureContent(currentTitle: String?, currentContent: String?) {
-        title.text = currentTitle
-        content.text = currentContent
         if isDemoScreen {
-            demoInstructions.text = currentContent
-            imageView.isHidden = false
-            slider.isHidden = false
-            demoInstructions.isHidden = false
-            cameraValue.isHidden = false
-            cameraSensor.isHidden = false
-            cameraSensorOpening.isHidden = false
+            demo.isHidden = false
+            content.isHidden = true
+            demo.currentSection = tutorialContent?.steps[currentPage] ?? ""
+            demo.instruction = currentContent ?? ""
         } else {
-            imageView.isHidden = true
-            slider.isHidden = true
-            demoInstructions.isHidden = true
-            cameraValue.isHidden = true
-            cameraSensor.isHidden = true
-            cameraSensorOpening.isHidden = true
+            demo.isHidden = true
+            content.isHidden = false
+            title.text = currentTitle
+            content.text = currentContent
         }
     }
     
@@ -109,68 +97,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         lastContentOffset = scrollView.contentOffset.y
     }
     
-    private func configureDemo() {
-        demoInstructions.font = UIFont.systemFont(ofSize: 12)
-        demoInstructions.numberOfLines = 0
-        demoInstructions.textAlignment = .center
-        demoInstructions.isHidden = true
-        
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.isHidden = true
-        
-        cameraValue.font = UIFont.systemFont(ofSize: 32)
-        cameraValue.text = "f2.4"
-        
-        cameraSensor.layer.cornerRadius = cameraSensorSize/2
-        cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
-        
-        cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
-        
-        slider.isContinuous = true
-        slider.value = 2.8
-        slider.minimumValue = 2.8
-        slider.maximumValue = 22
-        slider.isHidden = true
-        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
-    }
-    
-    @objc private func sliderValueChanged() {
-        let currentSliderValue = round(slider.value)
-        switch currentSliderValue {
-        case round(2.8):
-            cameraValue.text = "f2.8"
-            cameraOpeningSize = 38
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case 4:
-            cameraValue.text = "f4"
-            cameraOpeningSize = 34
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case round(5.6):
-            cameraValue.text = "f5.6"
-            cameraOpeningSize = 24
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case 8:
-            cameraValue.text = "f8"
-            cameraOpeningSize = 20
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case 11:
-            cameraValue.text = "f11"
-            cameraOpeningSize = 16
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case 16:
-            cameraValue.text = "f16"
-            cameraOpeningSize = 12
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case 22:
-            cameraValue.text = "f22"
-            cameraOpeningSize = 8
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        default: break
-        }
-        setNeedsLayout()
-    }
     
     private func configurePageControl(_ steps: Int) {
         pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
@@ -213,6 +139,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
             return tutorialContent?.content[currentPage] ?? ""
         case .demo:
             isDemoScreen = true
+            //return ""
             return tutorialContent?.demoInstructions[currentPage] ?? ""
         case .practice:
             isDemoScreen = false
@@ -228,12 +155,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private func configureToolBarButtonTitles(steps: Int) {
         var nextButtonTitle: String = ""
         var backButtonTitle: String = ""
-        if (currentPage) > 0 && (currentPage) < steps - 1 {
+        if currentPage > 0 && currentPage < steps - 1 {
             backButtonTitle = tutorialContent?.steps[currentPage - 1 ] ?? ""
             nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
-        } else if (currentPage) <= 0 {
+        } else if currentPage <= 0 {
             nextButtonTitle = tutorialContent?.steps[currentPage + 1] ?? ""
-        } else if (currentPage) >= steps - 1 {
+        } else if currentPage >= steps - 1 {
             backButtonTitle = tutorialContent?.steps[currentPage - 1] ?? ""
         }
         backButton.setTitle(backButtonTitle, for: .normal)
@@ -252,25 +179,10 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         container.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         
         let segmentedHeight = segmentedControl.sizeThatFits(contentArea.size).height
-        let segmentedWidth = contentArea.width - insets.left - insets.right
-        segmentedControl.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: contentArea.minY + 20, width: segmentedWidth, height: segmentedHeight)
+        TutorialView.segmentedWidth = contentArea.width - insets.left - insets.right
+        segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + 20, width: TutorialView.segmentedWidth, height: segmentedHeight)
         
-        imageView.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY + 20, width: contentArea.width, height: contentArea.height * 0.60)
-        
-        let padding: CGFloat = 10
-        
-        cameraSensor.frame = CGRect(x: contentArea.midX - cameraSensorSize - padding, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraSensorSize/2, width: cameraSensorSize, height: cameraSensorSize)
-        
-        cameraSensorOpening.frame = CGRect(x: cameraSensor.frame.midX - cameraOpeningSize/2, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraOpeningSize/2, width: cameraOpeningSize, height: cameraOpeningSize)
-        
-        let cameraValueSize = cameraValue.sizeThatFits(contentArea.size)
-        cameraValue.frame = CGRect(x: contentArea.midX, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraValueSize.height/2, width: cameraValueSize.width, height: cameraValueSize.height)
-        
-        let sliderHeight = slider.sizeThatFits(contentArea.size).height
-        slider.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: (imageView.frame.maxY + contentArea.maxY)/2 - sliderHeight/2, width: segmentedWidth, height: sliderHeight)
-        
-        let demoInstructionHeight = demoInstructions.sizeThatFits(contentArea.size).height
-        demoInstructions.frame = CGRect(x: contentArea.midX - segmentedWidth/2, y: (slider.frame.maxY + contentArea.maxY)/2 - demoInstructionHeight/2 , width: segmentedWidth, height: demoInstructionHeight)
+        demo.frame = CGRect(x: container.frame.minX, y: segmentedControl.frame.maxY + 20, width: contentArea.width, height: contentArea.height - segmentedHeight - 40)
         
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + 40, width: titleSize.width, height: titleSize.height)
