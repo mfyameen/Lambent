@@ -41,7 +41,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return tableViewContent?.steps.count ?? 0
+        return tableViewContent?.sections.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,7 +74,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     private func setTitleAndPhrase(index: Int) {
-        title = tableViewContent?.steps[index] ?? ""
+        title = tableViewContent?.sections[index] ?? ""
         phrase = tableViewContent?.descriptions[index] ?? ""
     }
 }

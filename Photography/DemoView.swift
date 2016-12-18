@@ -8,34 +8,32 @@ enum CameraSections: String {
 }
 
 class DemoView: UIView {
-    private let imageView = UIImageView(image: UIImage(named: "flower"))
+    private var imageView = UIImageView()
     private let slider = UISlider()
     private let cameraValue = UILabel()
+    private var newCameraValue: String?
     private let cameraSensor = UIView()
     private let cameraSensorSize : CGFloat = 44
     private let cameraSensorOpening = UIView()
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
-    var instruction: String {
+   
+    var instruction: String? {
         didSet {
             demoInstructions.text = instruction
         }
     }
+    
     var currentSection: String? {
         didSet {
             configureAppropriateCameraSection(currentSection ?? "")
         }
     }
     
-    init (DemoType: String?, content: String?) {
-        self.instruction = content ?? ""
+    init() {
         super.init(frame: CGRect.zero)
-        
         cameraValue.font = UIFont.systemFont(ofSize: 32)
-        
         configureDemoInstructions()
-        configureImage()
-        configureSlider()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
     
@@ -45,16 +43,20 @@ class DemoView: UIView {
     
     private func configureAppropriateCameraSection(_ section: String) {
         guard let section = CameraSections(rawValue: section) else { return }
+        setNeedsLayout()
         switch section {
         case .Aperture:
-            cameraValue.text = "f/2.8"
-            
+            cameraValue.text = newCameraValue ?? String(slider.value)
             cameraSensor.layer.cornerRadius = cameraSensorSize/2
             cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
-            
             cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
             cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
+            configureImage("flower")
+            configureSlider(min: 2.8, max: 22)
+            
         case .Shutter:
+            configureImage("bird")
+
             break
         case .ISO:
             break
@@ -63,23 +65,23 @@ class DemoView: UIView {
         }
     }
     
-    
     private func configureDemoInstructions() {
         demoInstructions.font = UIFont.systemFont(ofSize: 12)
         demoInstructions.numberOfLines = 0
         demoInstructions.textAlignment = .center
     }
     
-    private func configureImage() {
+    private func configureImage(_ image: String) {
+        imageView.image = UIImage(named: image)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
     }
     
-    private func configureSlider() {
+    private func configureSlider(min: Float, max: Float) {
         slider.isContinuous = true
-        slider.value = 2.8
-        slider.minimumValue = 2.8
-        slider.maximumValue = 22
+        slider.minimumValue = min
+        slider.maximumValue = max
+        cameraValue.text = newCameraValue ?? String(min)
         slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
     }
     
@@ -109,6 +111,7 @@ class DemoView: UIView {
             cameraOpeningSize = 8
         default: break
         }
+        newCameraValue = cameraValue.text
         cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
         setNeedsLayout()
     }

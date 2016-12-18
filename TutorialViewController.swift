@@ -20,7 +20,7 @@ class TutorialViewController: UIViewController {
         let tutorialView = TutorialView(setUp: setUp)
         let photographyModel = PhotographyModel()
         view = tutorialView
-        title = photographyModel.steps[setUp.currentPage]
+        title = photographyModel.sections[setUp.currentPage]
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
         TutorialBinding.bind(view: tutorialView, viewController: self, model: photographyModel )
