@@ -51,7 +51,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         configureSegmentedControl(currentPage)
         layoutToolBarButtons([nextButton, backButton])
 
-        addSubviews([container, scrollView, demo, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
+        addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
+        scrollView.addSubview(demo)
     }
     
     private func configureContainer() {
@@ -198,7 +199,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
         nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
         
-        scrollView.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY, width: contentArea.size.width, height: contentArea.size.height - segmentedControl.frame.maxY)
+        scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
+        
         scrollView.contentSize = bounds.size
+
     }
 }
