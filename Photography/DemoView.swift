@@ -7,7 +7,7 @@ enum CameraSections: String {
     case Focal = "Focal Length"
 }
 
-class DemoView: UIView {
+public class DemoView: UIView {
     private var imageView = UIImageView()
     private let slider = UISlider()
     private let cameraValue = UILabel()
@@ -17,6 +17,8 @@ class DemoView: UIView {
     private let cameraSensorOpening = UIView()
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
+    private var isAperture = false
+    private var isShutter = false
    
     var instruction: String? {
         didSet {
@@ -30,31 +32,30 @@ class DemoView: UIView {
         }
     }
     
-    init() {
+    public init() {
         super.init(frame: CGRect.zero)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
         configureDemoInstructions()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureAppropriateCameraSection(_ section: String) {
+    public func configureAppropriateCameraSection(_ section: String) {
         guard let section = CameraSections(rawValue: section) else { return }
         setNeedsLayout()
         switch section {
         case .Aperture:
-            cameraValue.text = newCameraValue ?? String(slider.value)
-            cameraSensor.layer.cornerRadius = cameraSensorSize/2
-            cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-            cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
+            isAperture = true
+            configureSensor()
             configureImage("flower")
             configureSlider(min: 2.8, max: 22)
         case .Shutter:
+            isShutter = true
             configureImage("bird")
+            configureSlider(min: 2, max: 125)
         case .ISO:
             break
         case .Focal:
@@ -78,13 +79,25 @@ class DemoView: UIView {
         slider.isContinuous = true
         slider.minimumValue = min
         slider.maximumValue = max
-        cameraValue.text = newCameraValue ?? String(min)
-        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+        
+        if isAperture {
+            cameraValue.text = newCameraValue ?? String(min)
+            slider.addTarget(self, action: #selector(apertureSliderChanged), for: .valueChanged)
+        } else if isShutter {
+            slider.addTarget(self, action: #selector(shutterSliderChanged), for: .valueChanged)
+        }
     }
     
-    @objc private func sliderValueChanged() {
-        let currentSliderValue = round(slider.value)
-        switch currentSliderValue {
+    private func configureSensor() {
+        cameraValue.text = newCameraValue ?? String(slider.value)
+        cameraSensor.layer.cornerRadius = cameraSensorSize/2
+        cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
+        cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
+    }
+    
+    @objc private func apertureSliderChanged() {
+        switch sliderValue() {
         case round(2.8):
             cameraValue.text = "f/2.8"
             cameraOpeningSize = 38
@@ -113,7 +126,24 @@ class DemoView: UIView {
         setNeedsLayout()
     }
     
-    override func layoutSubviews() {
+    @objc private func shutterSliderChanged() {
+        switch sliderValue() {
+        case 2: cameraValue.text = "1/2"
+        case 4: break
+        case 8: break
+        case 15: break
+        case 30: break
+        case 60: break
+        case 125: break
+        default: break
+        }
+    }
+    
+    private func sliderValue() -> Float {
+       return round(slider.value)
+    }
+    
+    override public func layoutSubviews() {
         super.layoutSubviews()
         let cameraPadding: CGFloat = 10
         let imagePadding: CGFloat = 40

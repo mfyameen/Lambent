@@ -151,15 +151,19 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         let minLimit = 0
         
         if currentPage > minLimit && currentPage < maxLimit {
-            backButtonTitle = tutorialContent?.sections[currentPage - 1 ] ?? ""
-            nextButtonTitle = tutorialContent?.sections[currentPage + 1] ?? ""
+            backButtonTitle = obtainSectionTitleFor(nextSection: -1)
+            nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
         } else if currentPage <= minLimit {
-            nextButtonTitle = tutorialContent?.sections[currentPage + 1] ?? ""
+            nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
         } else if currentPage >= maxLimit {
-            backButtonTitle = tutorialContent?.sections[currentPage - 1] ?? ""
+            backButtonTitle = obtainSectionTitleFor(nextSection: -1)
         }
         backButton.setTitle(backButtonTitle, for: .normal)
         nextButton.setTitle(nextButtonTitle, for: .normal)
+    }
+    
+    private func obtainSectionTitleFor(nextSection: Int) -> String {
+        return tutorialContent?.sections[currentPage + nextSection] ?? ""
     }
     
     required init?(coder aDecoder: NSCoder) {
