@@ -53,7 +53,6 @@ class DemoView: UIView {
             cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
             configureImage("flower")
             configureSlider(min: 2.8, max: 22)
-            
         case .Shutter:
             configureImage("bird")
         case .ISO:
@@ -116,24 +115,23 @@ class DemoView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let padding: CGFloat = 10
-        let inset: CGFloat = 18
+        let cameraPadding: CGFloat = 10
+        let imagePadding: CGFloat = 40
         
-        imageView.frame = CGRect(x: -inset, y: -inset, width: bounds.width, height: bounds.height * 0.6)
+        imageView.frame = CGRect(x: bounds.minX, y: bounds.minY + TutorialView.segmentedHeight + imagePadding, width: bounds.width, height: bounds.height * 0.6)
         
-        
-        cameraSensor.frame = CGRect(x: bounds.midX - cameraSensorSize - padding - inset, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraSensorSize/2, width: cameraSensorSize, height: cameraSensorSize)
+        cameraSensor.frame = CGRect(x: bounds.midX - cameraSensorSize - cameraPadding, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraSensorSize/2, width: cameraSensorSize, height: cameraSensorSize)
         
         cameraSensorOpening.frame = CGRect(x: cameraSensor.frame.midX - cameraOpeningSize/2, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraOpeningSize/2, width: cameraOpeningSize, height: cameraOpeningSize)
         
         let cameraValueSize = cameraValue.sizeThatFits(bounds.size)
-        cameraValue.frame = CGRect(x: bounds.midX - inset, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraValueSize.height/2, width: cameraValueSize.width, height: cameraValueSize.height)
+        cameraValue.frame = CGRect(x: bounds.midX, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraValueSize.height/2, width: cameraValueSize.width, height: cameraValueSize.height)
         
         let sliderWidth = TutorialView.segmentedWidth
         let sliderHeight = slider.sizeThatFits(bounds.size).height
-        slider.frame = CGRect(x: bounds.midX - sliderWidth/2 - inset, y: (imageView.frame.maxY + bounds.maxY)/2 - sliderHeight/2, width: sliderWidth, height: sliderHeight)
+        slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: (imageView.frame.maxY + bounds.maxY)/2 - sliderHeight/2, width: sliderWidth, height: sliderHeight)
         
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
-        demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2 - inset, y: (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2 - inset , width: sliderWidth, height: demoInstructionHeight)
+        demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2, width: sliderWidth, height: demoInstructionHeight)
     }
 }

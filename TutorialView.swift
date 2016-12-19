@@ -11,6 +11,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
     static var segmentedWidth = CGFloat()
+    static var segmentedHeight = CGFloat()
     private var isDemoScreen = false
     private var demo = DemoView()
     private let setUp: TutorialSetUp
@@ -174,11 +175,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         
         container.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         
-        let segmentedHeight = segmentedControl.sizeThatFits(contentArea.size).height
+        TutorialView.segmentedHeight = segmentedControl.sizeThatFits(contentArea.size).height
         TutorialView.segmentedWidth = contentArea.width - insets.left - insets.right
-        segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + padding, width: TutorialView.segmentedWidth, height: segmentedHeight)
-        
-        demo.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY + padding, width: contentArea.width, height: contentArea.height - segmentedHeight - padding)
+        segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + padding, width: TutorialView.segmentedWidth, height: TutorialView.segmentedHeight)
+
+        demo.frame = CGRect(x: 0, y: 0, width: contentArea.width, height: contentArea.height )
         
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + (padding * 2), width: titleSize.width, height: titleSize.height)
@@ -200,8 +201,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
         
         scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
-        
         scrollView.contentSize = bounds.size
-
     }
 }
