@@ -144,6 +144,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
             $0.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal) })
     }
     
+    
+    //maybe use first 
     private func configureToolBarButtonTitles(_ numberOfSections: Int) {
         var nextButtonTitle: String = ""
         var backButtonTitle: String = ""

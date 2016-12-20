@@ -28,7 +28,7 @@ public class DemoView: UIView {
     
     var currentSection: String? {
         didSet {
-            configureAppropriateCameraSection(currentSection ?? "")
+            _ = configureAppropriateCameraSection(currentSection ?? "")
         }
     }
     
@@ -43,23 +43,25 @@ public class DemoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configureAppropriateCameraSection(_ section: String) {
-        guard let section = CameraSections(rawValue: section) else { return }
+    public func configureAppropriateCameraSection(_ section: String) -> (UIImage?, UISlider?) {
+        guard let section = CameraSections(rawValue: section) else { return (nil, nil) }
         setNeedsLayout()
         switch section {
         case .Aperture:
             isAperture = true
             configureSensor()
-            configureImage("flower")
-            configureSlider(min: 2.8, max: 22)
+            let image = configureImage("flower")
+            let slider = configureSlider(min: 2.8, max: 22)
+            return (image, slider)
         case .Shutter:
             isShutter = true
-            configureImage("bird")
-            configureSlider(min: 2, max: 125)
+            let image = configureImage("bird")
+            let slider = configureSlider(min: 2, max: 125)
+            return (image, slider)
         case .ISO:
-            break
+            return (nil, nil)
         case .Focal:
-            break
+            return (nil, nil)
         }
     }
     
@@ -69,23 +71,26 @@ public class DemoView: UIView {
         demoInstructions.textAlignment = .center
     }
     
-    private func configureImage(_ image: String) {
-        imageView.image = UIImage(named: image)
+    private func configureImage(_ image: String?) -> UIImage? {
+        imageView.image = UIImage(named: image ?? "")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        return imageView.image
     }
     
-    private func configureSlider(min: Float, max: Float) {
+    private func configureSlider(min: Float, max: Float) -> UISlider {
         slider.isContinuous = true
         slider.minimumValue = min
         slider.maximumValue = max
-        
+    
         if isAperture {
             cameraValue.text = newCameraValue ?? String(min)
             slider.addTarget(self, action: #selector(apertureSliderChanged), for: .valueChanged)
         } else if isShutter {
             slider.addTarget(self, action: #selector(shutterSliderChanged), for: .valueChanged)
         }
+        
+        return slider
     }
     
     private func configureSensor() {
@@ -138,6 +143,9 @@ public class DemoView: UIView {
         default: break
         }
     }
+    
+    let ISO = [100, 200, 400, 800, 1600, 3200, 6400]
+    let focal = [24, 70, 135, 300]
     
     private func sliderValue() -> Float {
        return round(slider.value)
