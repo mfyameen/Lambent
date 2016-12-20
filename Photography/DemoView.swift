@@ -17,8 +17,6 @@ public class DemoView: UIView {
     private let cameraSensorOpening = UIView()
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
-    private var isAperture = false
-    private var isShutter = false
    
     var instruction: String? {
         didSet {
@@ -43,25 +41,20 @@ public class DemoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configureAppropriateCameraSection(_ section: String) -> (UIImage?, UISlider?) {
-        guard let section = CameraSections(rawValue: section) else { return (nil, nil) }
+    public func configureAppropriateCameraSection(_ section: String) -> (UIImage?) {
+        guard let section = CameraSections(rawValue: section) else { return nil }
+        configureSlider()
         setNeedsLayout()
         switch section {
         case .Aperture:
-            isAperture = true
             configureSensor()
-            let image = configureImage("flower")
-            let slider = configureSlider(min: 2.8, max: 22)
-            return (image, slider)
+            return configureImage("flower")
         case .Shutter:
-            isShutter = true
-            let image = configureImage("bird")
-            let slider = configureSlider(min: 2, max: 125)
-            return (image, slider)
+            return configureImage("bird")
         case .ISO:
-            return (nil, nil)
+            return nil
         case .Focal:
-            return (nil, nil)
+            return nil
         }
     }
     
@@ -78,19 +71,11 @@ public class DemoView: UIView {
         return imageView.image
     }
     
-    private func configureSlider(min: Float, max: Float) -> UISlider {
+    private func configureSlider() {
         slider.isContinuous = true
-        slider.minimumValue = min
-        slider.maximumValue = max
-    
-        if isAperture {
-            cameraValue.text = newCameraValue ?? String(min)
-            slider.addTarget(self, action: #selector(apertureSliderChanged), for: .valueChanged)
-        } else if isShutter {
-            slider.addTarget(self, action: #selector(shutterSliderChanged), for: .valueChanged)
-        }
-        
-        return slider
+        slider.minimumValue = 2
+        slider.maximumValue = 22
+        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
     }
     
     private func configureSensor() {
@@ -101,54 +86,32 @@ public class DemoView: UIView {
         cameraSensorOpening.backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
     }
     
-    @objc private func apertureSliderChanged() {
-        switch sliderValue() {
-        case round(2.8):
-            cameraValue.text = "f/2.8"
-            cameraOpeningSize = 38
-        case 4:
-            cameraValue.text = "f/4"
-            cameraOpeningSize = 34
-        case round(5.6):
-            cameraValue.text = "f/5.6"
-            cameraOpeningSize = 24
-        case 8:
-            cameraValue.text = "f/8"
-            cameraOpeningSize = 20
-        case 11:
-            cameraValue.text = "f/11"
-            cameraOpeningSize = 16
-        case 16:
-            cameraValue.text = "f/16"
-            cameraOpeningSize = 12
-        case 22:
-            cameraValue.text = "f/22"
-            cameraOpeningSize = 8
+    @objc private func sliderValueChanged() {
+        switch round(slider.value) {
+        case 3: configureSliderSetting(aperture: "f/2.8", shutter: "1/2", iso: "100", focal: nil, size: 38)
+        case 4: configureSliderSetting(aperture: "f/4", shutter: "1/4", iso: "200", focal: nil, size: 34)
+        case 6: configureSliderSetting(aperture: "f/5.6", shutter: "1/8", iso: "400", focal: nil, size: 24)
+        case 8: configureSliderSetting(aperture: "f/8", shutter: "1/15", iso: "800", focal: nil, size: 20)
+        case 11: configureSliderSetting(aperture: "f/11", shutter: "1/30", iso: "1600", focal: nil, size: 16)
+        case 16: configureSliderSetting(aperture: "f/16", shutter: "1/60", iso: "3200", focal: nil, size: 12)
+        case 22: configureSliderSetting(aperture: "f/22", shutter: "1/125", iso: "6400", focal: nil, size: 8)
         default: break
         }
         newCameraValue = cameraValue.text
-        cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
         setNeedsLayout()
     }
     
-    @objc private func shutterSliderChanged() {
-        switch sliderValue() {
-        case 2: cameraValue.text = "1/2"
-        case 4: break
-        case 8: break
-        case 15: break
-        case 30: break
-        case 60: break
-        case 125: break
-        default: break
+    private func configureSliderSetting(aperture: String, shutter: String, iso: String?, focal: String?, size: CGFloat) {
+        guard let section = CameraSections(rawValue: currentSection ?? "") else { return }
+        switch section {
+        case .Aperture:
+            cameraValue.text = aperture
+            cameraOpeningSize = size
+            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        case .Shutter: cameraValue.text = shutter
+        case .ISO: cameraValue.text = iso
+        case .Focal: break
         }
-    }
-    
-    let ISO = [100, 200, 400, 800, 1600, 3200, 6400]
-    let focal = [24, 70, 135, 300]
-    
-    private func sliderValue() -> Float {
-       return round(slider.value)
     }
     
     override public func layoutSubviews() {
