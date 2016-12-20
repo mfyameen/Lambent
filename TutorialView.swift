@@ -57,8 +57,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     }
     
     private func configureContainer() {
-        backgroundColor = #colorLiteral(red: 0.953121841, green: 0.9536409974, blue: 0.9688723683, alpha: 1)
-        container.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:1.00)
+        backgroundColor = UIColor.backgroundColor()
+        container.backgroundColor = UIColor.containerColor()
         container.layer.cornerRadius = 8
     }
 
@@ -100,7 +100,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     }
     
     private func configurePageControl(_ numberOfSections: Int) {
-        pageControl.currentPageIndicatorTintColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.00)
+        pageControl.currentPageIndicatorTintColor = UIColor.gray
         pageControl.numberOfPages = numberOfSections
         pageControl.pageIndicatorTintColor = .white
         pageControl.currentPage = currentPage
@@ -141,11 +141,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     
     private func layoutToolBarButtons(_ buttons: [UIButton]) {
         buttons.forEach ({
-            $0.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal) })
+            $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
     }
     
-    
-    //maybe use first 
     private func configureToolBarButtonTitles(_ numberOfSections: Int) {
         var nextButtonTitle: String = ""
         var backButtonTitle: String = ""

@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         //maybe move this to a better location?
-        navigationController.navigationBar.barTintColor = UIColor(red:0.94, green:0.94, blue:0.96, alpha:1.00)
+        navigationController.navigationBar.barTintColor = UIColor.backgroundColor()
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController.navigationBar.shadowImage = UIImage()
         

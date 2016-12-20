@@ -71,15 +71,17 @@ class PhotographyCell: UITableViewCell {
     
     private func layoutSeparators(_ separators: [UIView]) {
         separators.forEach ({
-            $0.layer.borderWidth = 0.5
-            $0.layer.borderColor = #colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
+            $0.layer.borderWidth = 1.5
+            $0.layer.borderColor = UIColor.backgroundColor().cgColor
+                //#colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
+                //UIColor.backgroundColor().cgColor
+                //#colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
         })
     }
     
     private func layoutButtons(_ buttons: [UIButton]) {
         buttons.forEach({
-            $0.setTitleColor(UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00), for: .normal)
-            $0.setTitleColor(#colorLiteral(red: 0.5979364514, green: 0.8853133321, blue: 0.9850903153, alpha: 1), for: .highlighted)
+            $0.setTitleColor(UIColor.buttonColor(), for: .normal)
             $0.titleLabel!.font = UIFont.systemFont(ofSize: 14)
         })
     }

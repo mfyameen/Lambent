@@ -26,7 +26,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     override init(frame: CGRect) {
         view = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 5), style: .grouped)
         super.init(frame: frame)
-        backgroundColor = UIColor(colorLiteralRed: 0.94, green: 0.94, blue: 0.96, alpha: 1)
+        backgroundColor = UIColor.backgroundColor()
         view.register(PhotographyCell.self, forCellReuseIdentifier: PhotographyCell.reuseIdentifier)
         view.dataSource = self
         view.delegate = self
