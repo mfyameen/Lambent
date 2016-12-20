@@ -48,10 +48,13 @@ public class DemoView: UIView {
         switch section {
         case .Aperture:
             configureSensor()
+            cameraValue.text = newCameraValue ?? "f/2.8"
             return configureImage("flower")
         case .Shutter:
+            cameraValue.text = newCameraValue ?? "1/2"
             return configureImage("bird")
         case .ISO:
+            cameraValue.text = newCameraValue ?? "100"
             return nil
         case .Focal:
             return nil
@@ -79,7 +82,6 @@ public class DemoView: UIView {
     }
     
     private func configureSensor() {
-        cameraValue.text = newCameraValue ?? String(slider.value)
         cameraSensor.layer.cornerRadius = cameraSensorSize/2
         cameraSensor.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
         cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
