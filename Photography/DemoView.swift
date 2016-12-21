@@ -24,10 +24,9 @@ public class DemoView: UIView {
         }
     }
     
-    var currentSection: String? {
+    public var currentSection: String? {
         didSet {
-            guard let section = CameraSections(rawValue: currentSection ?? "") else { return }
-            _ = configureAppropriateSectionWhenInitialized(section)
+            _ = configureAppropriateSectionWhenInitialized(currentSection ?? "")
         }
     }
 
@@ -42,7 +41,8 @@ public class DemoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configureAppropriateSectionWhenInitialized(_ section: CameraSections) -> UIImage? {
+    public func configureAppropriateSectionWhenInitialized(_ section: String) -> UIImage? {
+       guard let section = CameraSections(rawValue: section) else { return nil }
         configureSlider()
         setNeedsLayout()
         switch section {
@@ -57,7 +57,6 @@ public class DemoView: UIView {
             cameraValue.text = newCameraValue ?? "100"
             return nil
         case .Focal: return nil
-            
         }
     }
     
@@ -69,19 +68,16 @@ public class DemoView: UIView {
     
     private func configureImage(apertureImage: String?, shutterImage: String?, isoImage: String?, focalImage: String?) -> UIImage? {
         guard let section = CameraSections(rawValue: currentSection ?? "") else { return nil }
+    
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         switch section {
-        case .Aperture:
-            imageView.image = UIImage(named: apertureImage ?? "")
-        case .Shutter:
-            imageView.image = UIImage(named: shutterImage ?? "")
-        case .ISO:
-            imageView.image = UIImage(named: isoImage ?? "")
-        case .Focal:
-            imageView.image =  UIImage(named: focalImage ?? "")
+        case .Aperture: imageView.image = UIImage(named: apertureImage ?? "")
+        case .Shutter: imageView.image = UIImage(named: shutterImage ?? "")
+        case .ISO: imageView.image = UIImage(named: isoImage ?? "")
+        case .Focal: imageView.image =  UIImage(named: focalImage ?? "")
         }
-        return imageView.image
+       return imageView.image
     }
     
     private func configureSlider() {
@@ -102,24 +98,24 @@ public class DemoView: UIView {
         switch round(slider.value) {
         case 3:
             imageView.image = configureImage(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil )
-            configureSliderSetting(aperture: "f/2.8", shutter: "1/2", iso: "100", focal: nil, size: 38)
+            configureSliderSettings(aperture: "f/2.8", shutter: "1/2", iso: "100", focal: nil, size: 38)
         case 4:
             imageView.image = configureImage(apertureImage: "bird", shutterImage: "flower", isoImage: nil, focalImage: nil )
-            configureSliderSetting(aperture: "f/4", shutter: "1/4", iso: "200", focal: nil, size: 34)
+            configureSliderSettings(aperture: "f/4", shutter: "1/4", iso: "200", focal: nil, size: 34)
         case 6:
-             imageView.image = configureImage(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil )
-            configureSliderSetting(aperture: "f/5.6", shutter: "1/8", iso: "400", focal: nil, size: 24)
-        case 8: configureSliderSetting(aperture: "f/8", shutter: "1/15", iso: "800", focal: nil, size: 20)
-        case 11: configureSliderSetting(aperture: "f/11", shutter: "1/30", iso: "1600", focal: nil, size: 16)
-        case 16: configureSliderSetting(aperture: "f/16", shutter: "1/60", iso: "3200", focal: nil, size: 12)
-        case 22: configureSliderSetting(aperture: "f/22", shutter: "1/125", iso: "6400", focal: nil, size: 8)
+            imageView.image = configureImage(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil )
+            configureSliderSettings(aperture: "f/5.6", shutter: "1/8", iso: "400", focal: nil, size: 24)
+        case 8: configureSliderSettings(aperture: "f/8", shutter: "1/15", iso: "800", focal: nil, size: 20)
+        case 11: configureSliderSettings(aperture: "f/11", shutter: "1/30", iso: "1600", focal: nil, size: 16)
+        case 16: configureSliderSettings(aperture: "f/16", shutter: "1/60", iso: "3200", focal: nil, size: 12)
+        case 22: configureSliderSettings(aperture: "f/22", shutter: "1/125", iso: "6400", focal: nil, size: 8)
         default: break
         }
         newCameraValue = cameraValue.text
         setNeedsLayout()
     }
     
-    private func configureSliderSetting(aperture: String, shutter: String, iso: String?, focal: String?, size: CGFloat) {
+    private func configureSliderSettings(aperture: String, shutter: String, iso: String?, focal: String?, size: CGFloat) {
         guard let section = CameraSections(rawValue: currentSection ?? "") else { return }
         switch section {
         case .Aperture:

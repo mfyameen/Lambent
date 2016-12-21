@@ -2,16 +2,18 @@ import XCTest
 import Photography
 
 class DemoTests: XCTestCase {
-
+    
     func testApertureImageDisplayed() {
         let demo = DemoView()
-        let image = demo.configureAppropriateSectionWhenInitialized("Aperture")
-        XCTAssertEqual(UIImage(named: "flower"), image)
+        demo.currentSection = "Aperture"
+        let image = demo.configureAppropriateSectionWhenInitialized(demo.currentSection ?? "")
+        XCTAssertEqual(image, UIImage(named: "flower"))
     }
     
     func testShutterImageDisplayed() {
         let demo = DemoView()
-        let image = demo.configureAppropriateSectionWhenInitialized("Shutter Speed")
-        XCTAssertEqual(UIImage(named: "bird"), image)
+        demo.currentSection = "Shutter Speed"
+        let image = demo.configureAppropriateSectionWhenInitialized(demo.currentSection ?? "")
+        XCTAssertEqual(image, UIImage(named: "bird"))
     }
 }

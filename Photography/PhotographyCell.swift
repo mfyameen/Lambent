@@ -73,9 +73,6 @@ class PhotographyCell: UITableViewCell {
         separators.forEach ({
             $0.layer.borderWidth = 1.5
             $0.layer.borderColor = UIColor.backgroundColor().cgColor
-                //#colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
-                //UIColor.backgroundColor().cgColor
-                //#colorLiteral(red: 0.8861932158, green: 0.8862140179, blue: 0.8862028718, alpha: 1).cgColor
         })
     }
     
