@@ -20,7 +20,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     
     var tableViewContent: PhotographyModel?
-    var startTutorial: (TutorialSetUp)->() = { _ in}
+    var startTutorial: (TutorialSetUp)->() = { _ in }
     
     
     override init(frame: CGRect) {

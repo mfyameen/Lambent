@@ -18,23 +18,25 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     
     var currentPage: Int
     var currentSegment: Int
-    
+
     var nextSection: (Int, Int)-> Void = { _ in }
-    var pressSelector: ()->() = { _ in }
     
+    var prepareDemo: (String)->() = { _ in }
+    static var movedSlider: () ->() = { _ in }
+
     var tutorialContent: PhotographyModel? {
         didSet {
             let numberOfSections = tutorialContent?.sections.count ?? 0
             let title = tutorialContent?.sectionTitles[currentPage] ?? ""
             var content: String
-            
+
             //want to refactor this
             if currentPage == 0 {
                 content = tutorialContent?.introContent[currentPage] ?? ""
             } else {
                 content = configureAppropriateSegment(segment: currentSegment)
             }
-
+    
             configureContent(currentTitle: title, currentContent: content)
             configurePageControl(numberOfSections)
             configureToolBarButtonTitles(numberOfSections)
@@ -45,7 +47,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
         configureContainer()
         HelperMethods.configureShadow(element: container)
         configureScrollView()
@@ -70,7 +71,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         if isDemoScreen {
             demo.isHidden = false
             content.isHidden = true
-            demo.currentSection = tutorialContent?.sections[currentPage] ?? ""
+            prepareDemo(tutorialContent?.sections[currentPage] ?? "")
+            //demo.currentSection = tutorialContent?.sections[currentPage] ?? ""
             demo.instruction = currentContent
         } else {
             demo.isHidden = true

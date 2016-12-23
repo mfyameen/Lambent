@@ -13,6 +13,7 @@
 		177DD3401E060BC800605146 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD33F1E060BC800605146 /* DemoView.swift */; };
 		177DD34A1E07761E00605146 /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3491E07761E00605146 /* DemoTests.swift */; };
 		177DD3521E09C02000605146 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3511E09C02000605146 /* Colors.swift */; };
+		177DD3561E0ADA2D00605146 /* DemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3551E0ADA2D00605146 /* DemoModel.swift */; };
 		17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283531DF066F400E7BC29 /* AppDelegate.swift */; };
 		17C283561DF066F400E7BC29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283551DF066F400E7BC29 /* ViewController.swift */; };
 		17C2835B1DF066F400E7BC29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17C2835A1DF066F400E7BC29 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 		177DD3491E07761E00605146 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
 		177DD34B1E07761E00605146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		177DD3511E09C02000605146 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		177DD3551E0ADA2D00605146 /* DemoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModel.swift; sourceTree = "<group>"; };
 		17C283501DF066F400E7BC29 /* Photography.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photography.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C283531DF066F400E7BC29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17C283551DF066F400E7BC29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			children = (
 				176958C31DF47FE50060941A /* TutorialView.swift */,
 				177DD33F1E060BC800605146 /* DemoView.swift */,
+				177DD3551E0ADA2D00605146 /* DemoModel.swift */,
 				176958C71DF48A760060941A /* TutorialViewController.swift */,
 				17C283531DF066F400E7BC29 /* AppDelegate.swift */,
 				17C283551DF066F400E7BC29 /* ViewController.swift */,
@@ -232,6 +235,7 @@
 				172F513E1E01CFD60048E8E3 /* HelperMethods.swift in Sources */,
 				176958C81DF48A760060941A /* TutorialViewController.swift in Sources */,
 				17C283661DF0788600E7BC29 /* PhotographyView.swift in Sources */,
+				177DD3561E0ADA2D00605146 /* DemoModel.swift in Sources */,
 				177DD3401E060BC800605146 /* DemoView.swift in Sources */,
 				176958C41DF47FE50060941A /* TutorialView.swift in Sources */,
 				17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */,
@@ -415,6 +419,7 @@
 				177DD3501E07761E00605146 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		17C2834B1DF066F400E7BC29 /* Build configuration list for PBXProject "Photography" */ = {
 			isa = XCConfigurationList;

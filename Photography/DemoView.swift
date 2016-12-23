@@ -1,22 +1,15 @@
 import UIKit
 
-public enum CameraSections: String {
-    case Aperture = "Aperture"
-    case Shutter = "Shutter Speed"
-    case ISO = "ISO"
-    case Focal = "Focal Length"
-}
-
 public class DemoView: UIView {
     private let imageView = UIImageView()
     private let slider = UISlider()
     private let cameraValue = UILabel()
-    private var newCameraValue: String?
     private let cameraSensor = UIView()
     private let cameraSensorSize : CGFloat = 44
     private let cameraSensorOpening = UIView()
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
+    private var demoInformation: DemoSettings?
     
     var instruction: String? {
         didSet {
@@ -24,15 +17,16 @@ public class DemoView: UIView {
         }
     }
     
-    public var currentSection: String? {
-        didSet {
-            _ = configureAppropriateSectionWhenInitialized(currentSection ?? "")
-        }
+    func addStuff(demoStuff: DemoSettings){
+        demoInformation = demoStuff
+        print(demoStuff)
     }
 
     public init() {
         super.init(frame: CGRect.zero)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
+        configureImage(aperture: demoInformation?.apertureImage ?? "")
+        configureSlider()
         configureDemoInstructions()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
@@ -41,43 +35,10 @@ public class DemoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configureAppropriateSectionWhenInitialized(_ section: String) -> UIImage? {
-       guard let section = CameraSections(rawValue: section) else { return nil }
-        configureSlider()
-        setNeedsLayout()
-        switch section {
-        case .Aperture:
-            configureSensor()
-            cameraValue.text = newCameraValue ?? "f/2.8"
-            return configureImage(apertureImage: "flower", shutterImage: nil, isoImage: nil, focalImage: nil)
-        case .Shutter:
-            cameraValue.text = newCameraValue ?? "1/2"
-            return configureImage(apertureImage: nil, shutterImage: "bird", isoImage: nil, focalImage: nil)
-        case .ISO:
-            cameraValue.text = newCameraValue ?? "100"
-            return nil
-        case .Focal: return nil
-        }
-    }
-    
     private func configureDemoInstructions() {
         demoInstructions.font = UIFont.systemFont(ofSize: 12)
         demoInstructions.numberOfLines = 0
         demoInstructions.textAlignment = .center
-    }
-    
-    private func configureImage(apertureImage: String?, shutterImage: String?, isoImage: String?, focalImage: String?) -> UIImage? {
-        guard let section = CameraSections(rawValue: currentSection ?? "") else { return nil }
-    
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        switch section {
-        case .Aperture: imageView.image = UIImage(named: apertureImage ?? "")
-        case .Shutter: imageView.image = UIImage(named: shutterImage ?? "")
-        case .ISO: imageView.image = UIImage(named: isoImage ?? "")
-        case .Focal: imageView.image =  UIImage(named: focalImage ?? "")
-        }
-       return imageView.image
     }
     
     private func configureSlider() {
@@ -87,45 +48,26 @@ public class DemoView: UIView {
         slider.addTarget(self, action: #selector(configureAppropriateSectionWhenSliderValueChanged), for: .valueChanged)
     }
     
+    @objc private func configureAppropriateSectionWhenSliderValueChanged() {
+        TutorialView.movedSlider()
+    }
+    
     private func configureSensor() {
-        cameraSensor.layer.cornerRadius = cameraSensorSize/2
+        //cameraSensor.layer.cornerRadius = demoInformation.cameraSensorSize/2
         cameraSensor.backgroundColor = UIColor.sensorColor()
-        cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        //cameraSensorOpening.layer.cornerRadius = demoInformation.cameraOpeningSize/2
         cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
     }
     
-    @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        switch round(slider.value) {
-        case 3:
-            imageView.image = configureImage(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil )
-            configureSliderSettings(aperture: "f/2.8", shutter: "1/2", iso: "100", focal: nil, size: 38)
-        case 4:
-            imageView.image = configureImage(apertureImage: "bird", shutterImage: "flower", isoImage: nil, focalImage: nil )
-            configureSliderSettings(aperture: "f/4", shutter: "1/4", iso: "200", focal: nil, size: 34)
-        case 6:
-            imageView.image = configureImage(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil )
-            configureSliderSettings(aperture: "f/5.6", shutter: "1/8", iso: "400", focal: nil, size: 24)
-        case 8: configureSliderSettings(aperture: "f/8", shutter: "1/15", iso: "800", focal: nil, size: 20)
-        case 11: configureSliderSettings(aperture: "f/11", shutter: "1/30", iso: "1600", focal: nil, size: 16)
-        case 16: configureSliderSettings(aperture: "f/16", shutter: "1/60", iso: "3200", focal: nil, size: 12)
-        case 22: configureSliderSettings(aperture: "f/22", shutter: "1/125", iso: "6400", focal: nil, size: 8)
-        default: break
-        }
-        newCameraValue = cameraValue.text
-        setNeedsLayout()
-    }
-    
-    private func configureSliderSettings(aperture: String, shutter: String, iso: String?, focal: String?, size: CGFloat) {
-        guard let section = CameraSections(rawValue: currentSection ?? "") else { return }
-        switch section {
-        case .Aperture:
-            cameraValue.text = aperture
-            cameraOpeningSize = size
-            cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case .Shutter: cameraValue.text = shutter
-        case .ISO: cameraValue.text = iso
-        case .Focal: break
-        }
+    private func configureImage(aperture: String) {
+        let apertureImage = demoInformation?.apertureImage
+        let shutterImage = demoInformation?.shutterImage
+        let isoImage = demoInformation?.isoImage
+        let focalImage = demoInformation?.focalImage
+        print(apertureImage)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image =  UIImage(named: aperture)
     }
     
     override public func layoutSubviews() {

@@ -18,12 +18,14 @@ class TutorialViewController: UIViewController {
     
     override func loadView() {
         let tutorialView = TutorialView(setUp: setUp)
+        let demoView = DemoView()
+        let demoModel = DemoModel()
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage]
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
-        TutorialBinding.bind(view: tutorialView, viewController: self, model: photographyModel )
+        TutorialBinding.bind(tutorialView: tutorialView, demoView: demoView, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -43,8 +45,12 @@ class TutorialViewController: UIViewController {
 
 
 struct TutorialBinding {
-    static func bind(view: TutorialView, viewController: TutorialViewController, model: PhotographyModel){
-        view.tutorialContent = model
-        view.nextSection = viewController.pushNextTutorialViewController
+    static func bind(tutorialView: TutorialView, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
+        tutorialView.tutorialContent = photographyModel
+        tutorialView.nextSection = viewController.pushNextTutorialViewController
+        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
+        TutorialView.movedSlider = demoModel.letUsMove
+        demoModel.shareInformation = demoView.addStuff
+       // demoView.addInformation = demoModel.shareInformation
     }
 }

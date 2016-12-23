@@ -16,4 +16,11 @@ class DemoTests: XCTestCase {
         let image = demo.configureAppropriateSectionWhenInitialized(demo.currentSection ?? "")
         XCTAssertEqual(image, UIImage(named: "bird"))
     }
+    
+    func testCorrectImageDisplayedWhenSliderValueChanged() {
+        let demo = DemoView()
+        demo.currentSection = "Shutter Speed"
+        let image = demo.configureAppropriateSectionWhenInitialized(demo.currentSection ?? "")
+        XCTAssertEqual(image, UIImage(named: "bird"))
+    }
 }
