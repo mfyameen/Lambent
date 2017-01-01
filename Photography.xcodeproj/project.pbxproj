@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		172F513E1E01CFD60048E8E3 /* HelperMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172F513D1E01CFD60048E8E3 /* HelperMethods.swift */; };
+		1766336C1E0DD6BD00E2A05E /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */; };
 		176958C41DF47FE50060941A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176958C31DF47FE50060941A /* TutorialView.swift */; };
 		176958C81DF48A760060941A /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176958C71DF48A760060941A /* TutorialViewController.swift */; };
 		177DD3401E060BC800605146 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD33F1E060BC800605146 /* DemoView.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		172F513D1E01CFD60048E8E3 /* HelperMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperMethods.swift; sourceTree = "<group>"; };
+		1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
 		176958C31DF47FE50060941A /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = ../TutorialView.swift; sourceTree = "<group>"; };
 		176958C71DF48A760060941A /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialViewController.swift; path = ../TutorialViewController.swift; sourceTree = "<group>"; };
 		177DD33F1E060BC800605146 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
@@ -103,10 +105,11 @@
 			isa = PBXGroup;
 			children = (
 				176958C31DF47FE50060941A /* TutorialView.swift */,
+				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
+				17C283531DF066F400E7BC29 /* AppDelegate.swift */,
 				177DD33F1E060BC800605146 /* DemoView.swift */,
 				177DD3551E0ADA2D00605146 /* DemoModel.swift */,
 				176958C71DF48A760060941A /* TutorialViewController.swift */,
-				17C283531DF066F400E7BC29 /* AppDelegate.swift */,
 				17C283551DF066F400E7BC29 /* ViewController.swift */,
 				17C283651DF0788600E7BC29 /* PhotographyView.swift */,
 				17C283691DF07F2000E7BC29 /* PhotographyCell.swift */,
@@ -241,6 +244,7 @@
 				17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */,
 				17C283561DF066F400E7BC29 /* ViewController.swift in Sources */,
 				17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */,
+				1766336C1E0DD6BD00E2A05E /* TutorialModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

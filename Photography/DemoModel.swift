@@ -12,100 +12,77 @@ struct DemoSettings {
     var shutterImage: String?
     var isoImage: String?
     var focalImage: String?
-    var cameraText: String?
+    var apertureText: String?
+    var shutterText: String?
+    var isoText: String?
+    var focalText: String?
     var newCameraText: String?
     let cameraSensorSize = 44
     var cameraOpeningSize = 38
     var currentSection: String?
 }
 
-public class DemoModel {
-    private var apertureImage: String?
-    private var shutterImage: String?
-    private var isoImage: String?
-    private var focalImage: String?
-
-    private var currentSection: String?
+class DemoModel {
     private var demo = DemoSettings()
-    
-    var shareInformation: (DemoSettings) -> () = { _ in }
-    
-    func currentSection(currentSection: String) {
-        let section = currentSection
-        print(section)
+    private var sliderValue = 0 {
+        didSet {
+            shareInformation(demo)
+        }
     }
-    
-    func letUsMove() {
-       _ = configureAppropriateSectionWhenSliderValueChanged()
-    }
-    
-    init() {
-        
-    }
-    
-    private init(apertureImage: String?, shutterImage: String?, isoImage: String?, focalImage: String?) {
-        self.apertureImage = apertureImage
-        self.shutterImage = shutterImage
-        self.isoImage = isoImage
-        self.focalImage = focalImage
+    var shareInformation: (DemoSettings?) -> Void = { _ in }
+
+    func letUsMove(sliderValue: Int) {
+       _ = configureAppropriateSectionWhenSliderValueChanged(value: sliderValue)
     }
     
     func configureAppropriateSectionWhenInitialized(_ section: String) {
-        currentSection = section
         guard let section = CameraSections(rawValue: section) else { return }
-        print(section)
         switch section {
         case .Aperture:
             //configureSensor()
-            demo.cameraText = "f/2.8"
+            demo.apertureText = "f/2.8"
             demo.apertureImage = "flower"
             shareInformation(demo)
         case .Shutter:
-            demo.cameraText = "1/2"
+            demo.apertureText = "1/2"
             demo.shutterImage = "bird"
-            shareInformation(demo)
+            //shareInformation(demo)
         case .ISO:
-            demo.cameraText = "100"
+            demo.apertureText = "100"
         case .Focal: break
         }
     }
     
-    public func configureAppropriateSectionWhenSliderValueChanged() -> DemoModel {
-        //switch round(slider.value) {
-        switch 3 {
+    func configureAppropriateSectionWhenSliderValueChanged(value: Int) {
+        switch value {
         case 3:
-            configureSliderSettings(aperture: "f/2.8", shutter: "1/2", iso: "100", focal: nil, size: 38)
-            return DemoModel(apertureImage: "flower", shutterImage: "flower", isoImage: nil, focalImage: nil)
-        case 4:
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/2.8", shutterText: "1/2", isoText: "100", focalText: nil, newCameraText: nil, cameraOpeningSize: 38, currentSection: nil)
 
-            configureSliderSettings(aperture: "f/4", shutter: "1/4", iso: "200", focal: nil, size: 34)
-            return DemoModel(apertureImage: "bird", shutterImage: "flower", isoImage: nil, focalImage: nil)
+        case 4:
+            demo = DemoSettings(apertureImage: "bird", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/4", shutterText: "1/4", isoText: "200", focalText: nil, newCameraText: nil, cameraOpeningSize: 34, currentSection: nil)
+
         case 6:
-            configureSliderSettings(aperture: "f/5.6", shutter: "1/8", iso: "400", focal: nil, size: 24)
-            return DemoModel(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil)
-        case 8: configureSliderSettings(aperture: "f/8", shutter: "1/15", iso: "800", focal: nil, size: 20)
-        case 11: configureSliderSettings(aperture: "f/11", shutter: "1/30", iso: "1600", focal: nil, size: 16)
-        case 16: configureSliderSettings(aperture: "f/16", shutter: "1/60", iso: "3200", focal: nil, size: 12)
-        case 22: configureSliderSettings(aperture: "f/22", shutter: "1/125", iso: "6400", focal: nil, size: 8)
-        default: break
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/5.6", shutterText: "1/8", isoText: "400", focalText: nil, newCameraText: nil, cameraOpeningSize: 24, currentSection: nil)
+
+        case 8:
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/8", shutterText: "1/15", isoText: "800", focalText: nil, newCameraText: nil, cameraOpeningSize: 20, currentSection: nil)
+
+        case 11:
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/11", shutterText: "1/30", isoText: "1600", focalText: nil, newCameraText: nil, cameraOpeningSize: 16, currentSection: nil)
+
+        case 16:
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/16", shutterText: "1/60", isoText: "3200", focalText: nil, newCameraText: nil, cameraOpeningSize: 12, currentSection: nil)
+
+        case 22:
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/22", shutterText: "1/125", isoText: "6400", focalText: nil, newCameraText: nil, cameraOpeningSize: 8, currentSection: nil)
+
+        default:
+            demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/2.8", shutterText: "1/2", isoText: "100", focalText: nil, newCameraText: nil, cameraOpeningSize: 38, currentSection: nil)
+
         }
+        sliderValue = value
+
         //CameraText().newCameraText = CameraText().cameraText
 //        setNeedsLayout()
     }
-    
-    private func configureSliderSettings(aperture: String, shutter: String, iso: String?, focal: String?, size: Int){
-        guard let section = CameraSections(rawValue: currentSection ?? "") else { return }
-        switch section {
-        case .Aperture:
-            demo.cameraText = aperture
-            demo.cameraOpeningSize = size
-            //cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        case .Shutter:
-            demo.cameraText = shutter
-        case .ISO:
-            demo.cameraText = iso
-        case .Focal: break
-        }
-    }
-    
 }

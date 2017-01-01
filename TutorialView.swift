@@ -15,14 +15,18 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private var isDemoScreen = false
     private var demo = DemoView()
     private let setUp: TutorialSetUp
-    
+   
     var currentPage: Int
     var currentSegment: Int
 
     var nextSection: (Int, Int)-> Void = { _ in }
+    var setUpToolBar: (Int)->() = { _ in }
     
     var prepareDemo: (String)->() = { _ in }
-    static var movedSlider: () ->() = { _ in }
+    var keepMoving: ()->() = { _ in }
+    var sliderMoved: (Int) ->() = { _ in }
+    
+    var setUpInfo: (TutorialSettings) -> () = { _ in}
 
     var tutorialContent: PhotographyModel? {
         didSet {
@@ -36,10 +40,10 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
             } else {
                 content = configureAppropriateSegment(segment: currentSegment)
             }
-    
             configureContent(currentTitle: title, currentContent: content)
             configurePageControl(numberOfSections)
-            configureToolBarButtonTitles(numberOfSections)
+            setUpToolBar(numberOfSections)
+            //configureToolBarButtonTitles(numberOfSections)
         }
     }
     init (setUp: TutorialSetUp) {
@@ -47,6 +51,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
         configureContainer()
         HelperMethods.configureShadow(element: container)
         configureScrollView()
@@ -67,13 +72,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         title.font = UIFont.boldSystemFont(ofSize: 14)
         content.font = UIFont.systemFont(ofSize: 14)
         content.numberOfLines = 0
-        
         if isDemoScreen {
             demo.isHidden = false
             content.isHidden = true
             prepareDemo(tutorialContent?.sections[currentPage] ?? "")
             //demo.currentSection = tutorialContent?.sections[currentPage] ?? ""
-            demo.instruction = currentContent
+            //demo.instruction = currentContent
         } else {
             demo.isHidden = true
             content.isHidden = false
@@ -146,27 +150,27 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
             $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
     }
     
-    private func configureToolBarButtonTitles(_ numberOfSections: Int) {
-        var nextButtonTitle: String = ""
-        var backButtonTitle: String = ""
-        let maxLimit = numberOfSections - 1
-        let minLimit = 0
-        
-        if currentPage > minLimit && currentPage < maxLimit {
-            backButtonTitle = obtainSectionTitleFor(nextSection: -1)
-            nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
-        } else if currentPage <= minLimit {
-            nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
-        } else if currentPage >= maxLimit {
-            backButtonTitle = obtainSectionTitleFor(nextSection: -1)
-        }
-        backButton.setTitle(backButtonTitle, for: .normal)
-        nextButton.setTitle(nextButtonTitle, for: .normal)
-    }
-    
-    private func obtainSectionTitleFor(nextSection: Int) -> String {
-        return tutorialContent?.sections[currentPage + nextSection] ?? ""
-    }
+//    private func configureToolBarButtonTitles(_ numberOfSections: Int) {
+//        var nextButtonTitle: String = ""
+//        var backButtonTitle: String = ""
+//        let maxLimit = numberOfSections - 1
+//        let minLimit = 0
+//        
+//        if currentPage > minLimit && currentPage < maxLimit {
+//            backButtonTitle = obtainSectionTitleFor(nextSection: -1)
+//            nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
+//        } else if currentPage <= minLimit {
+//            nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
+//        } else if currentPage >= maxLimit {
+//            backButtonTitle = obtainSectionTitleFor(nextSection: -1)
+//        }
+//        backButton.setTitle(backButtonTitle, for: .normal)
+//        nextButton.setTitle(nextButtonTitle, for: .normal)
+//    }
+//    
+//    private func obtainSectionTitleFor(nextSection: Int) -> String {
+//        return tutorialContent?.sections[currentPage + nextSection] ?? ""
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -208,5 +212,10 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         
         scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         scrollView.contentSize = bounds.size
+    }
+    
+    func addInformation(information: TutorialSettings?) {
+        backButton.setTitle(information?.backButtonTitle, for: .normal)
+        nextButton.setTitle(information?.nextButtonTitle, for: .normal)
     }
 }

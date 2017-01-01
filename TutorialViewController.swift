@@ -18,6 +18,7 @@ class TutorialViewController: UIViewController {
     
     override func loadView() {
         let tutorialView = TutorialView(setUp: setUp)
+        let tutorialModel = TutorialModel(setUp: setUp)
         let demoView = DemoView()
         let demoModel = DemoModel()
         let photographyModel = PhotographyModel()
@@ -25,7 +26,7 @@ class TutorialViewController: UIViewController {
         title = photographyModel.sections[setUp.currentPage]
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
-        TutorialBinding.bind(tutorialView: tutorialView, demoView: demoView, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
+        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: demoView, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -36,6 +37,7 @@ class TutorialViewController: UIViewController {
     func returnHome() {
         _ = navigationController?.popToRootViewController(animated: true)
     }
+    
 
     func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
@@ -45,12 +47,25 @@ class TutorialViewController: UIViewController {
 
 
 struct TutorialBinding {
-    static func bind(tutorialView: TutorialView, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
-        tutorialView.tutorialContent = photographyModel
+    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
+        
         tutorialView.nextSection = viewController.pushNextTutorialViewController
-        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
-        TutorialView.movedSlider = demoModel.letUsMove
-        demoModel.shareInformation = demoView.addStuff
-       // demoView.addInformation = demoModel.shareInformation
+        
+        tutorialView.tutorialContent = photographyModel
+        tutorialModel.tutorialContent = photographyModel
+
+
+//        tutorialView.setUpToolBar = tutorialModel.configureToolBarButtonTitles
+//        tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.setUpInfo}()
+//        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
+
+
+//        DemoView.movedSlider = demoModel.letUsMove
+//        demoModel.shareInformation = { [weak demoView] in demoView!.addStuff}()
+        
+         demoView.movedSlider = tutorialView.sliderMoved
+        
+         demoModel.shareInformation = { [weak demoView] in demoView!.addStuff}()
+   
     }
 }

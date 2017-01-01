@@ -9,28 +9,29 @@ public class DemoView: UIView {
     private let cameraSensorOpening = UIView()
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
+    private var apertureImage: String?
     private var demoInformation: DemoSettings?
+
+   var movedSlider: (Int) ->() = { _ in }
     
     var instruction: String? {
         didSet {
             demoInstructions.text = instruction
         }
     }
-    
-    func addStuff(demoStuff: DemoSettings){
-        demoInformation = demoStuff
-        print(demoStuff)
-    }
 
-    public init() {
-        super.init(frame: CGRect.zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+//        addStuff(demoStuff: demoInformation)
+        cameraValue.text = "0"
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         cameraValue.font = UIFont.systemFont(ofSize: 32)
-        configureImage(aperture: demoInformation?.apertureImage ?? "")
         configureSlider()
         configureDemoInstructions()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,7 +50,7 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        TutorialView.movedSlider()
+        movedSlider(Int(slider.value))
     }
     
     private func configureSensor() {
@@ -59,16 +60,16 @@ public class DemoView: UIView {
         cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
     }
     
-    private func configureImage(aperture: String) {
-        let apertureImage = demoInformation?.apertureImage
-        let shutterImage = demoInformation?.shutterImage
-        let isoImage = demoInformation?.isoImage
-        let focalImage = demoInformation?.focalImage
-        print(apertureImage)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.image =  UIImage(named: aperture)
-    }
+//    private func configureImage(image: String) {
+////        let apertureImage = demoInformation?.apertureImage ?? "nothing"
+////        let shutterImage = demoInformation?.shutterImage ?? ""
+////        let isoImage = demoInformation?.isoImage ?? ""
+////        let focalImage = demoInformation?.focalImage ?? ""
+//       // print(apertureImage)
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.clipsToBounds = true
+//        imageView.image =  UIImage(named: image ?? "bird")
+//    }
     
     override public func layoutSubviews() {
         super.layoutSubviews()
@@ -91,4 +92,22 @@ public class DemoView: UIView {
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
         demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2, width: sliderWidth, height: demoInstructionHeight)
     }
+    
+    func addStuff(demoStuff: DemoSettings?){
+        demoInformation = demoStuff
+        let content = demoStuff?.apertureText
+      
+        imageView.image =  UIImage(named: demoStuff?.apertureImage ?? "bird")
+       
+
+      cameraValue.text = content ?? "aslfkjd"
+        setNeedsLayout()
+        setNeedsDisplay()
+        print(content)
+        print(demoStuff?.apertureImage ?? "")
+        print(demoStuff?.shutterImage)
+        print(demoStuff?.apertureText)
+        
+    }
+    
 }
