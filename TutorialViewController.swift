@@ -49,10 +49,15 @@ class TutorialViewController: UIViewController {
 struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
         
-        tutorialView.setUpToolBar = tutorialModel.configureToolBarButtonTitles
+        tutorialView.prepareContent = tutorialModel.configureContent
+        tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
+        tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement
+        tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
+        tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
         tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.addInformation}()
         
-        tutorialView.nextSection = viewController.pushNextTutorialViewController
+
+        tutorialModel.nextSection = viewController.pushNextTutorialViewController
         
         tutorialView.tutorialContent = photographyModel
 
