@@ -49,23 +49,24 @@ class TutorialViewController: UIViewController {
 struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
         
+        tutorialView.setUpToolBar = tutorialModel.configureToolBarButtonTitles
+        tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.addInformation}()
+        
         tutorialView.nextSection = viewController.pushNextTutorialViewController
         
         tutorialView.tutorialContent = photographyModel
-        tutorialModel.tutorialContent = photographyModel
 
 
 //        tutorialView.setUpToolBar = tutorialModel.configureToolBarButtonTitles
-//        tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.setUpInfo}()
+//        tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.addInformation}()
+        
 //        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
-
-
+//
+//
 //        DemoView.movedSlider = demoModel.letUsMove
 //        demoModel.shareInformation = { [weak demoView] in demoView!.addStuff}()
         
-         demoView.movedSlider = tutorialView.sliderMoved
-        
-         demoModel.shareInformation = { [weak demoView] in demoView!.addStuff}()
+
    
     }
 }

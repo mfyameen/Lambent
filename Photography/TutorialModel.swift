@@ -6,16 +6,13 @@ struct TutorialSettings {
 }
 
 class TutorialModel {
+    
     var currentPage: Int
     var currentSegment: Int
     private let setUp: TutorialSetUp
     var tutorial = TutorialSettings()
-    var tutorialContent: PhotographyModel? {
-        didSet {
-            let numberOfSections = tutorialContent?.sections.count ?? 0
-            configureToolBarButtonTitles(numberOfSections)
-        }
-    }
+
+    var tutorialContent = PhotographyModel()
     
     var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
@@ -38,9 +35,10 @@ class TutorialModel {
             tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
         }
         shareTutorialSettings(tutorial)
+        print(tutorial)
     }
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
-        return tutorialContent?.sections[currentPage + nextSection] ?? ""
+        return tutorialContent.sections[currentPage + nextSection]
     }
 }

@@ -15,7 +15,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private var isDemoScreen = false
     private var demo = DemoView()
     private let setUp: TutorialSetUp
-   
+    private var tutorialInformation: TutorialSettings?
+    
     var currentPage: Int
     var currentSegment: Int
 
@@ -24,8 +25,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     
     var prepareDemo: (String)->() = { _ in }
     var keepMoving: ()->() = { _ in }
-    var sliderMoved: (Int) ->() = { _ in }
-    
+
     var setUpInfo: (TutorialSettings) -> () = { _ in}
 
     var tutorialContent: PhotographyModel? {
@@ -51,7 +51,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
+        addInformation(information: tutorialInformation)
         configureContainer()
         HelperMethods.configureShadow(element: container)
         configureScrollView()
@@ -172,6 +172,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
 //        return tutorialContent?.sections[currentPage + nextSection] ?? ""
 //    }
     
+    func addInformation(information: TutorialSettings?) {
+        tutorialInformation = information
+        print(information?.backButtonTitle)
+        print(information?.nextButtonTitle)
+        backButton.setTitle(information?.backButtonTitle, for: .normal)
+        nextButton.setTitle(information?.nextButtonTitle, for: .normal)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -212,10 +220,5 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         
         scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         scrollView.contentSize = bounds.size
-    }
-    
-    func addInformation(information: TutorialSettings?) {
-        backButton.setTitle(information?.backButtonTitle, for: .normal)
-        nextButton.setTitle(information?.nextButtonTitle, for: .normal)
     }
 }

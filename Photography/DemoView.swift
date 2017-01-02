@@ -12,7 +12,7 @@ public class DemoView: UIView {
     private var apertureImage: String?
     private var demoInformation: DemoSettings?
 
-   var movedSlider: (Int) ->() = { _ in }
+   static var movedSlider: (Int) ->() = { _ in }
     
     var instruction: String? {
         didSet {
@@ -50,7 +50,7 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        movedSlider(Int(slider.value))
+        DemoView.movedSlider(Int(slider.value))
     }
     
     private func configureSensor() {
