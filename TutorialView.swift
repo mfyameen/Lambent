@@ -14,6 +14,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     static var segmentedHeight = CGFloat()
     private var demo = DemoView()
     private let setUp: TutorialSetUp
+    private var isDemo = false
     
     var currentPage: Int
     var currentSegment: Int
@@ -23,9 +24,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     var prepareToolBar: ()->() = { _ in }
     var preparePageControl: (Int)->() = { _ in }
     var prepareScrollView: (Float)->()  = { _ in }
-    var prepareSegment: (Int, Bool) -> (String, Bool) = { content, demoScreen in
-        return (String(content), demoScreen)
-    }
+    var prepareSegment: (Int) -> () = { _ in }
     
     var prepareDemo: (String)->() = { _ in }
     var keepMoving: ()->() = { _ in }
@@ -35,18 +34,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     var tutorialContent: PhotographyModel? {
         didSet {
             let numberOfSections = tutorialContent?.sections.count ?? 0
-            let title = tutorialContent?.sectionTitles[currentPage] ?? ""
-            var content: String
-            var isDemoScreen = false
-
-            //prepareContent()
-            //want to refactor this
-            if currentPage == 0 {
-                content = tutorialContent?.introContent[currentPage] ?? ""
-            } else {
-                (content, isDemoScreen) = prepareSegment(currentSegment, false)
-            }
-            configureContent(currentTitle: title, currentContent: content, demoScreen: isDemoScreen)
+            prepareContent()
             configurePageControl(numberOfSections)
             prepareToolBar()
         }
@@ -58,6 +46,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         configureContainer()
         HelperMethods.configureShadow(element: container)
+        if currentSegment == 1{
+            demo.isHidden = false
+        } else {
+        demo.isHidden = true
+        }
         configureScrollView()
         configureSegmentedControl(currentPage)
         layoutToolBarButtons([nextButton, backButton])
@@ -66,25 +59,31 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         scrollView.addSubview(demo)
     }
     
+    func addInformation(information: TutorialSettings?) {
+        content.text = information?.content
+        title.text = information?.title
+        isDemo = information?.isDemoScreen ?? false
+        backButton.setTitle(information?.backButtonTitle, for: .normal)
+        nextButton.setTitle(information?.nextButtonTitle, for: .normal)
+    }
+    
     private func configureContainer() {
         backgroundColor = UIColor.backgroundColor()
         container.backgroundColor = UIColor.containerColor()
         container.layer.cornerRadius = 8
     }
 
-    private func configureContent(currentTitle: String?, currentContent: String, demoScreen: Bool) {
+    private func configureContent() {
         title.font = UIFont.boldSystemFont(ofSize: 14)
         content.font = UIFont.systemFont(ofSize: 14)
         content.numberOfLines = 0
-        if demoScreen {
+        if isDemo {
             demo.isHidden = false
             content.isHidden = true
             prepareDemo(tutorialContent?.sections[currentPage] ?? "")
         } else {
             demo.isHidden = true
             content.isHidden = false
-            title.text = currentTitle
-            content.text = currentContent
         }
     }
     
@@ -120,8 +119,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     }
     
     @objc private func segmentedControlValueChanged() {
-        let (content, isDemoScreen)  = prepareSegment(segmentedControl.selectedSegmentIndex, false)
-        configureContent(currentTitle: nil, currentContent: content, demoScreen: isDemoScreen)
+        prepareSegment(segmentedControl.selectedSegmentIndex)
+        configureContent()
         setNeedsLayout()
     }
     
@@ -130,13 +129,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
             $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
     }
 
-    func addInformation(information: TutorialSettings?) {
-        backButton.setTitle(information?.backButtonTitle, for: .normal)
-        nextButton.setTitle(information?.nextButtonTitle, for: .normal)
-       // content.text = information?.content
-        print(content.text)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -3,7 +3,9 @@ import Foundation
 struct TutorialSettings {
     var backButtonTitle: String = ""
     var nextButtonTitle: String = ""
+    var title: String = ""
     var content: String = ""
+    var isDemoScreen: Bool = false
 }
 
 class TutorialModel {
@@ -24,15 +26,34 @@ class TutorialModel {
         self.setUp = setUp
     }
     
-    func configureContent() -> () {
+    func configureContent() {
         let numberOfSections = tutorialContent.sections.count
-        let title = tutorialContent.sectionTitles[currentPage]
-        var content: String
+        tutorial.title = tutorialContent.sectionTitles[currentPage]
         if currentPage == 0 {
-            content = tutorialContent.introContent[currentPage]
+           tutorial.content = tutorialContent.introContent[currentPage]
         } else {
-           (content, _) = configureAppropriateSegment(segment: currentSegment, isDemo: isDemoScreen)
+            configureAppropriateSegment(segment: currentSegment)
         }
+        shareTutorialSettings(tutorial)
+    }
+    
+    func configureAppropriateSegment(segment: Int) {
+        guard let segment = SegmentControl(rawValue: segment) else { return }
+        switch segment {
+        case .intro:
+            tutorial.isDemoScreen = false
+            tutorial.content = tutorialContent.introContent[currentPage]
+            print(tutorial.content)
+        case
+        .demo:
+            tutorial.isDemoScreen = true
+            tutorial.content = tutorialContent.demoContent[currentPage]
+            
+        case .practice:
+            tutorial.isDemoScreen = false
+            tutorial.content = tutorialContent.practiceContent[currentPage]
+        }
+        shareTutorialSettings(tutorial)
     }
     
     func configureToolBarButtonTitles()  {
@@ -74,21 +95,4 @@ class TutorialModel {
         }
         nextSection(currentPage, currentSegment)
     }
-    
-    func configureAppropriateSegment(segment: Int, isDemo: Bool) -> (String, Bool) {
-        guard let segment = SegmentControl(rawValue: segment) else { return ("", false) }
-        switch segment {
-        case .intro:
-            isDemoScreen = false
-            return (tutorialContent.introContent[currentPage], isDemoScreen)
-        case
-            .demo: isDemoScreen = true
-            return (tutorialContent.demoContent[currentPage], isDemoScreen)
-        case .practice:
-            isDemoScreen = false
-            return (tutorialContent.practiceContent[currentPage], isDemoScreen)
-        }
-    }
-    
-    
 }
