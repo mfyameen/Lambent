@@ -1,6 +1,6 @@
 import UIKit
 
-class TutorialView: UIScrollView, UIScrollViewDelegate{
+class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let container = UIView()
     private let pageControl = UIPageControl()
     private let scrollView = UIScrollView()
@@ -15,6 +15,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     private var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
+    private var hideSegmentedControl = false
+    private var numberOfSections = 0
     
     var currentPage: Int
     var currentSegment: Int
@@ -29,32 +31,33 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
     var prepareDemo: (String)->() = { _ in }
     var keepMoving: ()->() = { _ in }
 
-    var setUpInfo: (TutorialSettings) -> () = { _ in}
-
-    var tutorialContent: PhotographyModel? {
+    var tutorialContent: TutorialModel? {
         didSet {
-            let numberOfSections = tutorialContent?.sections.count ?? 0
             prepareContent()
-            configurePageControl(numberOfSections)
             prepareToolBar()
+            layoutPageControl(numberOfSections)
         }
     }
+    
     init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        configureContainer()
-        HelperMethods.configureShadow(element: container)
-        if currentSegment == 1{
+        
+        if currentSegment == 1 {
             demo.isHidden = false
         } else {
-        demo.isHidden = true
+            demo.isHidden = true
         }
-        configureScrollView()
-        configureSegmentedControl(currentPage)
+        
+        layoutContainer()
+        layoutScrollView()
+        layoutSegmentedControl()
+        layoutContent()
         layoutToolBarButtons([nextButton, backButton])
-
+        HelperMethods.configureShadow(element: container)
+        
         addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
         scrollView.addSubview(demo)
     }
@@ -63,54 +66,40 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         content.text = information?.content
         title.text = information?.title
         isDemo = information?.isDemoScreen ?? false
+        numberOfSections = information?.numberOfSections ?? 0
         backButton.setTitle(information?.backButtonTitle, for: .normal)
         nextButton.setTitle(information?.nextButtonTitle, for: .normal)
     }
-    
-    private func configureContainer() {
-        backgroundColor = UIColor.backgroundColor()
-        container.backgroundColor = UIColor.containerColor()
-        container.layer.cornerRadius = 8
-    }
 
     private func configureContent() {
-        title.font = UIFont.boldSystemFont(ofSize: 14)
-        content.font = UIFont.systemFont(ofSize: 14)
-        content.numberOfLines = 0
         if isDemo {
             demo.isHidden = false
             content.isHidden = true
-            prepareDemo(tutorialContent?.sections[currentPage] ?? "")
+            //prepareDemo(tutorialContent?.sections[currentPage] ?? "")
         } else {
             demo.isHidden = true
             content.isHidden = false
         }
     }
     
-    private func configureScrollView() {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        prepareScrollView(Float(scrollView.contentOffset.x))
+    }
+    
+    private func layoutContainer() {
+        backgroundColor = UIColor.backgroundColor()
+        container.backgroundColor = UIColor.containerColor()
+        container.layer.cornerRadius = 8
+    }
+    
+    private func layoutScrollView() {
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        prepareScrollView(Float(scrollView.contentOffset.x))
-    }
-    
-    private func configurePageControl(_ numberOfSections: Int) {
-        pageControl.currentPageIndicatorTintColor = UIColor.gray
-        pageControl.numberOfPages = numberOfSections
-        pageControl.pageIndicatorTintColor = .white
-        pageControl.currentPage = currentPage
-        pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
-    }
-    
-    @objc private func pageControlValueChanged() {
-        preparePageControl(pageControl.currentPage)
-    }
-    
-    private func configureSegmentedControl(_ currentPage: Int) {
+    private func layoutSegmentedControl() {
         if currentPage != 0 {
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
             segmentedControl.selectedSegmentIndex = currentSegment
@@ -124,11 +113,29 @@ class TutorialView: UIScrollView, UIScrollViewDelegate{
         setNeedsLayout()
     }
     
+    private func layoutPageControl(_ numberOfSections: Int) {
+        pageControl.currentPageIndicatorTintColor = UIColor.gray
+        pageControl.numberOfPages = numberOfSections
+        pageControl.pageIndicatorTintColor = .white
+        pageControl.currentPage = currentPage
+        pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
+    }
+    
+    @objc private func pageControlValueChanged() {
+        preparePageControl(pageControl.currentPage)
+    }
+    
+    private func layoutContent() {
+        title.font = UIFont.boldSystemFont(ofSize: 14)
+        content.font = UIFont.systemFont(ofSize: 14)
+        content.numberOfLines = 0
+    }
+    
     private func layoutToolBarButtons(_ buttons: [UIButton]) {
         buttons.forEach ({
             $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

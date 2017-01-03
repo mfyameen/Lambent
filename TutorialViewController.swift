@@ -56,14 +56,11 @@ struct TutorialBinding {
         tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
         tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.addInformation}()
         
+        tutorialView.tutorialContent = tutorialModel
 
+        
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         
-        tutorialView.tutorialContent = photographyModel
-
-
-//        tutorialView.setUpToolBar = tutorialModel.configureToolBarButtonTitles
-//        tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.addInformation}()
         
 //        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
 //

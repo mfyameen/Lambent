@@ -1,11 +1,12 @@
 import Foundation
 
 struct TutorialSettings {
-    var backButtonTitle: String = ""
-    var nextButtonTitle: String = ""
-    var title: String = ""
-    var content: String = ""
-    var isDemoScreen: Bool = false
+    var backButtonTitle = ""
+    var nextButtonTitle = ""
+    var title = ""
+    var content = ""
+    var isDemoScreen = false
+    var numberOfSections = 0
 }
 
 class TutorialModel {
@@ -22,19 +23,19 @@ class TutorialModel {
     
     init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage
+        print(currentPage)
         currentSegment = setUp.currentSegment
         self.setUp = setUp
+        tutorial.numberOfSections = tutorialContent.sections.count
     }
     
     func configureContent() {
-        let numberOfSections = tutorialContent.sections.count
         tutorial.title = tutorialContent.sectionTitles[currentPage]
         if currentPage == 0 {
            tutorial.content = tutorialContent.introContent[currentPage]
         } else {
             configureAppropriateSegment(segment: currentSegment)
         }
-        shareTutorialSettings(tutorial)
     }
     
     func configureAppropriateSegment(segment: Int) {
@@ -43,7 +44,6 @@ class TutorialModel {
         case .intro:
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.introContent[currentPage]
-            print(tutorial.content)
         case
         .demo:
             tutorial.isDemoScreen = true
