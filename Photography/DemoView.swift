@@ -5,12 +5,11 @@ public class DemoView: UIView {
     private let slider = UISlider()
     private let cameraValue = UILabel()
     private let cameraSensor = UIView()
-    private let cameraSensorSize : CGFloat = 44
     private let cameraSensorOpening = UIView()
+    private var cameraSensorSize: CGFloat = 44
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
     private var apertureImage: String?
-    private var demoInformation: DemoSettings?
 
    static var movedSlider: (Int) ->() = { _ in }
     
@@ -21,14 +20,17 @@ public class DemoView: UIView {
         demoInstructions.layer.borderColor = UIColor.blue.cgColor
         
         cameraValue.font = UIFont.systemFont(ofSize: 32)
-        configureSlider()
-        configureDemoInstructions()
+        layoutSlider()
+        layoutDemoInstructions()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
     
     func addInformation(demoInformation: DemoSettings?){
         layoutImage(image: demoInformation?.apertureImage ?? "")
+        cameraOpeningSize = CGFloat(demoInformation?.cameraOpeningSize ?? 0)
+        layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
         cameraValue.text = demoInformation?.apertureText
+        
         setNeedsLayout()
     }
 
@@ -42,13 +44,7 @@ public class DemoView: UIView {
         imageView.image =  UIImage(named: image)
     }
     
-    private func configureDemoInstructions() {
-        demoInstructions.font = UIFont.systemFont(ofSize: 12)
-        demoInstructions.numberOfLines = 0
-        demoInstructions.textAlignment = .center
-    }
-    
-    private func configureSlider() {
+    private func layoutSlider() {
         slider.isContinuous = true
         slider.minimumValue = 2
         slider.maximumValue = 22
@@ -60,24 +56,19 @@ public class DemoView: UIView {
         setNeedsLayout()
     }
     
-    private func configureSensor() {
-        //cameraSensor.layer.cornerRadius = demoInformation.cameraSensorSize/2
-        cameraSensor.backgroundColor = UIColor.sensorColor()
-        //cameraSensorOpening.layer.cornerRadius = demoInformation.cameraOpeningSize/2
-        cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
+    private func layoutDemoInstructions() {
+        demoInstructions.font = UIFont.systemFont(ofSize: 12)
+        demoInstructions.numberOfLines = 0
+        demoInstructions.textAlignment = .center
     }
     
-//    private func configureImage(image: String) {
-////        let apertureImage = demoInformation?.apertureImage ?? "nothing"
-////        let shutterImage = demoInformation?.shutterImage ?? ""
-////        let isoImage = demoInformation?.isoImage ?? ""
-////        let focalImage = demoInformation?.focalImage ?? ""
-//       // print(apertureImage)
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-//        imageView.image =  UIImage(named: image ?? "bird")
-//    }
-    
+    private func layoutSensor(cameraSensorSize: CGFloat, cameraOpeningSize: CGFloat) {
+        cameraSensor.layer.cornerRadius = cameraSensorSize/2
+        cameraSensor.backgroundColor = UIColor.sensorColor()
+        cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
+        cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
+    }
+ 
     override public func layoutSubviews() {
         super.layoutSubviews()
         let cameraPadding: CGFloat = 10

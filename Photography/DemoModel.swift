@@ -17,20 +17,15 @@ struct DemoSettings {
     var isoText: String?
     var focalText: String?
     var newCameraText: String?
-    let cameraSensorSize = 44
     var cameraOpeningSize = 38
     var currentSection: String?
+    //var demoInstructions: String?
 }
-
-//enum sliderValue
 
 class DemoModel {
     private var demo = DemoSettings()
-    private var sliderValue = 0 {
-        didSet {
-            shareInformation(demo)
-        }
-    }
+    //private var tutorial = PhotographyModel()
+
     var shareInformation: (DemoSettings?) -> Void = { _ in }
 
     func letUsMove(sliderValue: Int) {
@@ -73,11 +68,6 @@ class DemoModel {
             demo = DemoSettings(apertureImage: "flower", shutterImage: "bird", isoImage: nil, focalImage: nil, apertureText: "f/22", shutterText: "1/125", isoText: "6400", focalText: nil, newCameraText: nil, cameraOpeningSize: 8, currentSection: nil)
         default: break
         }
-        
-        sliderValue = value
         shareInformation(demo)
-
-        //CameraText().newCameraText = CameraText().cameraText
-//        setNeedsLayout()
     }
 }
