@@ -1,13 +1,13 @@
 import UIKit
 
-struct TutorialSetUp {
+public struct TutorialSetUp {
    var currentPage: Int
    var currentSegment: Int
 }
 
 class TutorialViewController: UIViewController {
     private let setUp: TutorialSetUp
-    init(setUp: TutorialSetUp) {
+    public init(setUp: TutorialSetUp) {
         self.setUp = setUp
         super.init(nibName: nil, bundle: nil)
     }
@@ -19,14 +19,13 @@ class TutorialViewController: UIViewController {
     override func loadView() {
         let tutorialView = TutorialView(setUp: setUp)
         let tutorialModel = TutorialModel(setUp: setUp)
-        let demoView = DemoView()
         let demoModel = DemoModel()
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage]
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
-        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: demoView, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
+        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -45,30 +44,27 @@ class TutorialViewController: UIViewController {
     }
 }
 
-
 struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
-        
+ 
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement
         tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
         tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
-        tutorialModel.shareTutorialSettings = { [weak tutorialView] in tutorialView!.addInformation}()
+        
+        tutorialModel.shareTutorialSettings = tutorialView.addInformation
         
         tutorialView.tutorialContent = tutorialModel
-
         
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         
         
 //        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
-//
-//
-//        DemoView.movedSlider = demoModel.letUsMove
-//        demoModel.shareInformation = { [weak demoView] in demoView!.addStuff}()
-        
-
+//        
+        DemoView.movedSlider = demoModel.letUsMove
+        demoModel.shareInformation = demoView.addInformation
+//        
    
     }
 }

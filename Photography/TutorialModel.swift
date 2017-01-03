@@ -9,7 +9,7 @@ struct TutorialSettings {
     var numberOfSections = 0
 }
 
-class TutorialModel {
+public class TutorialModel {
     private var isDemoScreen = false
     var currentPage: Int
     var currentSegment: Int
@@ -23,7 +23,6 @@ class TutorialModel {
     
     init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage
-        print(currentPage)
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         tutorial.numberOfSections = tutorialContent.sections.count
@@ -47,7 +46,7 @@ class TutorialModel {
         case
         .demo:
             tutorial.isDemoScreen = true
-            tutorial.content = tutorialContent.demoContent[currentPage]
+           // tutorial.content = tutorialContent.demoContent[currentPage]
             
         case .practice:
             tutorial.isDemoScreen = false

@@ -12,7 +12,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private var segmentedControl = UISegmentedControl()
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
-    private var demo = DemoView()
+    public var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
     private var hideSegmentedControl = false
@@ -50,7 +50,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         } else {
             demo.isHidden = true
         }
-        
+       
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
@@ -75,7 +75,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         if isDemo {
             demo.isHidden = false
             content.isHidden = true
-            //prepareDemo(tutorialContent?.sections[currentPage] ?? "")
+            prepareDemo("Aperture")
         } else {
             demo.isHidden = true
             content.isHidden = false

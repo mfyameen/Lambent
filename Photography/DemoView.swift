@@ -14,26 +14,32 @@ public class DemoView: UIView {
 
    static var movedSlider: (Int) ->() = { _ in }
     
-    var instruction: String? {
-        didSet {
-            demoInstructions.text = instruction
-        }
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        addStuff(demoStuff: demoInformation)
-        cameraValue.text = "0"
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
+        
+        demoInstructions.layer.borderWidth = 1
+        demoInstructions.layer.borderColor = UIColor.blue.cgColor
+        
         cameraValue.font = UIFont.systemFont(ofSize: 32)
         configureSlider()
         configureDemoInstructions()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
+    
+    func addInformation(demoInformation: DemoSettings?){
+        layoutImage(image: demoInformation?.apertureImage ?? "")
+        cameraValue.text = demoInformation?.apertureText
+        setNeedsLayout()
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func layoutImage(image: String) {
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image =  UIImage(named: image)
     }
     
     private func configureDemoInstructions() {
@@ -51,6 +57,7 @@ public class DemoView: UIView {
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
         DemoView.movedSlider(Int(slider.value))
+        setNeedsLayout()
     }
     
     private func configureSensor() {
@@ -92,22 +99,4 @@ public class DemoView: UIView {
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
         demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2, width: sliderWidth, height: demoInstructionHeight)
     }
-    
-    func addStuff(demoStuff: DemoSettings?){
-        demoInformation = demoStuff
-        let content = demoStuff?.apertureText
-      
-        imageView.image =  UIImage(named: demoStuff?.apertureImage ?? "bird")
-       
-
-      cameraValue.text = content ?? "aslfkjd"
-        setNeedsLayout()
-        setNeedsDisplay()
-        print(content)
-        print(demoStuff?.apertureImage ?? "")
-        print(demoStuff?.shutterImage)
-        print(demoStuff?.apertureText)
-        
-    }
-    
 }
