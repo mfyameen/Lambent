@@ -60,7 +60,7 @@ struct TutorialBinding {
         
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         
-        DemoView.movedSlider = demoModel.letUsMove
+        DemoView.movedSlider = demoModel.configureDemo
         demoModel.shareInformation = demoView.addInformation
     }
 }

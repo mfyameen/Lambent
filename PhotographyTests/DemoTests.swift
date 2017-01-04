@@ -5,10 +5,9 @@ class DemoTests: XCTestCase {
     
     func testApertureImageDisplayed() {
         let demo = DemoModel(setUp: nil)
-        var demoSettings = DemoSettings()
-        demoSettings = demo.configureCurrentSection("Aperture")
+        let demoSettings = demo.configureCurrentSection("Aperture")
         let image = demoSettings.image
-        XCTAssertEqual(image, UIImage(named: "flower"))
+        XCTAssertEqual(image, "flower")
     }
     
 //    func testShutterImageDisplayed() {

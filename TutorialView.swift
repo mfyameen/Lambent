@@ -27,13 +27,13 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var preparePageControl: (Int)->() = { _ in }
     var prepareScrollView: (Float)->()  = { _ in }
     var prepareSegment: (Int) -> () = { _ in }
-    
-    var prepareDemo: ()-> () = { _ in }
+    var prepareDemo: () -> () = { _ in }
     var keepMoving: ()->() = { _ in }
 
     var tutorialContent: TutorialModel? {
         didSet {
             prepareDemo()
+            print(demo)
             prepareContent()
             prepareToolBar()
             layoutPageControl(numberOfSections)
