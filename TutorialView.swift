@@ -28,11 +28,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var prepareScrollView: (Float)->()  = { _ in }
     var prepareSegment: (Int) -> () = { _ in }
     
-    var prepareDemo: ()->() = { _ in }
+    var prepareDemo: ()-> () = { _ in }
     var keepMoving: ()->() = { _ in }
 
     var tutorialContent: TutorialModel? {
         didSet {
+            prepareDemo()
             prepareContent()
             prepareToolBar()
             layoutPageControl(numberOfSections)
@@ -44,7 +45,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
         if currentSegment == 1 {
             demo.isHidden = false
         } else {
@@ -75,7 +75,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         if isDemo {
             demo.isHidden = false
             content.isHidden = true
-            prepareDemo()
         } else {
             demo.isHidden = true
             content.isHidden = false

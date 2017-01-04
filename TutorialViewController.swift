@@ -7,7 +7,7 @@ public struct TutorialSetUp {
 
 class TutorialViewController: UIViewController {
     private let setUp: TutorialSetUp
-    public init(setUp: TutorialSetUp) {
+    init(setUp: TutorialSetUp) {
         self.setUp = setUp
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,7 +36,6 @@ class TutorialViewController: UIViewController {
     func returnHome() {
         _ = navigationController?.popToRootViewController(animated: true)
     }
-    
 
     func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
@@ -46,7 +45,7 @@ class TutorialViewController: UIViewController {
 
 struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
- 
+        
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement
@@ -55,14 +54,11 @@ struct TutorialBinding {
         
         tutorialModel.shareTutorialSettings = tutorialView.addInformation
         
+        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
+        demoModel.shareInformation = demoView.addInformation
         tutorialView.tutorialContent = tutorialModel
         
-        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
-        
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
-        
-        
-//        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
         
         DemoView.movedSlider = demoModel.letUsMove
         demoModel.shareInformation = demoView.addInformation

@@ -7,15 +7,15 @@ public enum CameraSections: String {
     case Focal = "Focal Length"
 }
 
-struct DemoSettings {
-    var image: String?
-    var text: String?
-    var cameraOpeningSize: Int? = 38
-    var cameraSensorSize: Int? = 44
-    var instructions: String?
+public struct DemoSettings {
+    public var image: String?
+    public var text: String?
+    public var cameraOpeningSize: Int? = 38
+    public var cameraSensorSize: Int? = 44
+    public var instructions: String?
 }
 
-class DemoModel {
+public class DemoModel {
     private var demo = DemoSettings()
     private var tutorial = PhotographyModel()
     private var apertureImage: String?
@@ -30,15 +30,15 @@ class DemoModel {
     private var currentSection: String
     
     var shareInformation: (DemoSettings?) -> Void = { _ in }
-
-    init (setUp: TutorialSetUp) {
-        currentPage = setUp.currentPage
+    
+    public init (setUp: TutorialSetUp?) {
+        currentPage = setUp?.currentPage ?? 0
         currentSection = tutorial.sections[currentPage]
     }
     
     func letUsMove(sliderValue: Int) {
-       _ = configureSectionsWhenSliderValueChanged(value: sliderValue)
-        configureCurrentSection()
+       _ = configureSectionsWhenSliderValueChanged(sliderValue)
+        demo = configureCurrentSection(currentSection)
         shareInformation(demo)
     }
     
@@ -46,22 +46,25 @@ class DemoModel {
         guard let section = CameraSections(rawValue: currentSection) else { return }
         switch section {
         case .Aperture:
-            //configureSensor()
+//            return DemoSettings(image: "flower", text: "f/2.8", cameraOpeningSize: 38, cameraSensorSize: 44, instructions: "Play with the slider to see how aperture affects the above photo")
             demo.text = "f/2.8"
             demo.image = "flower"
             //demo.instructions = "Play with the slider to see how aperture affects the above photo"
             shareInformation(demo)
-        case .Shutter:
-            demo.text = "1/2"
-            demo.image = "waterfall2.8"
-            shareInformation(demo)
-        case .ISO:
-            demo.text = "100"
+        case .Shutter: break
+//            return DemoSettings(image: "waterfall2.8", text: "1/2", cameraOpeningSize: nil, cameraSensorSize: nil, instructions: "Play with the slider to see how shutter speed affects the above photo")
+//            demo.text = "1/2"
+//            demo.image = "waterfall2.8"
+//            shareInformation(demo)
+        case .ISO: break
+//            return DemoSettings(image: "flower", text: "100", cameraOpeningSize: nil, cameraSensorSize: nil, instructions: "Play with the slider to see how ISO affects the above photo")
+//            demo.text = "100"
         case .Focal: break
+//            return DemoSettings(image: "flower", text: nil , cameraOpeningSize: nil, cameraSensorSize: nil, instructions: "Play with the slider to see how focal length affects the above photo")
         }
     }
     
-    func configureSectionsWhenSliderValueChanged(value: Int) {
+    func configureSectionsWhenSliderValueChanged(_ value: Int) {
         switch value {
         case 3:
             apertureImage = "flower"; shutterImage = "waterfall2.8"; isoImage = nil; focalImage = nil
@@ -95,25 +98,17 @@ class DemoModel {
         }
     }
     
-    func configureCurrentSection() {
-        guard let currentSection = CameraSections(rawValue: currentSection) else { return }
+    public func configureCurrentSection(_ section: String) -> DemoSettings {
+        guard let currentSection = CameraSections(rawValue: section) else { return demo }
         switch currentSection {
         case .Aperture:
-            demo.image = apertureImage
-            demo.text = apertureText
-            demo.instructions = "Play with the slider to see how aperture affects the above photo"
-        case .Shutter: demo.image = shutterImage
-            demo.image = shutterImage
-            demo.text = shutterText
-            demo.instructions = "Play with the slider to see how shutter speed affects the above photo"
-        case .ISO: demo.image = isoImage
-            demo.image = isoImage
-            demo.text = isoText
-            demo.instructions = "Play with the slider to see how ISO affects the above photo"
-        case .Focal: demo.image = focalImage
-            demo.image = focalImage
-            demo.text = focalText
-            demo.instructions = "Play with the slider to see how focal length affects the above photo"
+             return DemoSettings(image: apertureImage, text: apertureText, cameraOpeningSize: demo.cameraOpeningSize, cameraSensorSize: demo.cameraSensorSize, instructions: "Play with the slider to see how aperture affects the above photo")
+        case .Shutter:
+            return DemoSettings(image: shutterImage, text: shutterText, cameraOpeningSize: nil, cameraSensorSize: nil, instructions: "Play with the slider to see how shutter speed affects the above photo")
+        case .ISO:
+         return DemoSettings(image: isoImage, text: isoText, cameraOpeningSize: nil, cameraSensorSize: nil, instructions: "Play with the slider to see how ISO affects the above photo")
+        case .Focal:
+         return DemoSettings(image: focalImage, text: focalText, cameraOpeningSize: nil, cameraSensorSize: nil, instructions: "Play with the slider to see how focal length affects the above photo")
         }
     }
 }
