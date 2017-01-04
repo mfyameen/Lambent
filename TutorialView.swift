@@ -28,7 +28,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var prepareScrollView: (Float)->()  = { _ in }
     var prepareSegment: (Int) -> () = { _ in }
     
-    var prepareDemo: (String)->() = { _ in }
+    var prepareDemo: ()->() = { _ in }
     var keepMoving: ()->() = { _ in }
 
     var tutorialContent: TutorialModel? {
@@ -75,7 +75,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         if isDemo {
             demo.isHidden = false
             content.isHidden = true
-            prepareDemo("Aperture")
+            prepareDemo()
         } else {
             demo.isHidden = true
             content.isHidden = false

@@ -13,7 +13,6 @@ public class TutorialModel {
     private var isDemoScreen = false
     var currentPage: Int
     var currentSegment: Int
-    private let setUp: TutorialSetUp
     var tutorial = TutorialSettings()
     var nextSection: (Int, Int)-> Void = { _ in }
 
@@ -24,7 +23,6 @@ public class TutorialModel {
     init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
-        self.setUp = setUp
         tutorial.numberOfSections = tutorialContent.sections.count
     }
     

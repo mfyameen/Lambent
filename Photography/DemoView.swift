@@ -15,10 +15,7 @@ public class DemoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        demoInstructions.layer.borderWidth = 1
-        demoInstructions.layer.borderColor = UIColor.blue.cgColor
-        
+    
         cameraValue.font = UIFont.systemFont(ofSize: 32)
         layoutSlider()
         layoutDemoInstructions()
@@ -26,11 +23,12 @@ public class DemoView: UIView {
     }
     
     func addInformation(demoInformation: DemoSettings?){
-        layoutImage(image: demoInformation?.apertureImage ?? "")
+        layoutImage(image: demoInformation?.image ?? "")
         cameraOpeningSize = CGFloat(demoInformation?.cameraOpeningSize ?? 0)
+        cameraSensorSize = CGFloat(demoInformation?.cameraSensorSize ?? 0)
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
-        cameraValue.text = demoInformation?.apertureText
-        
+        cameraValue.text = demoInformation?.text
+        demoInstructions.text = demoInformation?.instructions
         setNeedsLayout()
     }
 

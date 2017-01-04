@@ -19,7 +19,7 @@ class TutorialViewController: UIViewController {
     override func loadView() {
         let tutorialView = TutorialView(setUp: setUp)
         let tutorialModel = TutorialModel(setUp: setUp)
-        let demoModel = DemoModel()
+        let demoModel = DemoModel(setUp: setUp)
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage]
@@ -57,10 +57,12 @@ struct TutorialBinding {
         
         tutorialView.tutorialContent = tutorialModel
         
+        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
+        
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         
         
-        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
+//        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
         
         DemoView.movedSlider = demoModel.letUsMove
         demoModel.shareInformation = demoView.addInformation
