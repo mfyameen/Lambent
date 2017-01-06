@@ -17,7 +17,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private var isDemo = false
     private var hideSegmentedControl = false
     private var numberOfSections = 0
-    
+
     var currentPage: Int
     var currentSegment: Int
 
@@ -27,13 +27,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var preparePageControl: (Int)->() = { _ in }
     var prepareScrollView: (Float)->()  = { _ in }
     var prepareSegment: (Int) -> () = { _ in }
-    var prepareDemo: () -> () = { _ in }
+    var prepareDemo: (Int?) -> () = { _ in }
     var keepMoving: ()->() = { _ in }
 
     var tutorialContent: TutorialModel? {
         didSet {
-            prepareDemo()
-            print(demo)
+            if currentSegment == Segment.Demo.rawValue {
+                prepareDemo(0)
+            }
             prepareContent()
             prepareToolBar()
             layoutPageControl(numberOfSections)
@@ -41,11 +42,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     init (setUp: TutorialSetUp) {
-        currentPage = setUp.currentPage
-        currentSegment = setUp.currentSegment
+        currentPage = setUp.currentPage.rawValue
+        currentSegment = setUp.currentSegment.rawValue
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        if currentSegment == 1 {
+
+        if currentSegment == Segment.Demo.rawValue && currentPage != Page.Overview.rawValue {
             demo.isHidden = false
         } else {
             demo.isHidden = true
@@ -59,6 +61,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         HelperMethods.configureShadow(element: container)
         
         addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
+        
         scrollView.addSubview(demo)
     }
     
@@ -99,7 +102,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutSegmentedControl() {
-        if currentPage != 0 {
+        if currentPage != Page.Overview.rawValue {
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
             segmentedControl.selectedSegmentIndex = currentSegment
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)

@@ -10,25 +10,27 @@ public class DemoView: UIView {
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
     private var apertureImage: String?
-
-   static var movedSlider: (Int) ->() = { _ in }
+//    private var information: CameraSectionDemoSettings?
+//
+//     static var movedSlider: (Int?, String?) ->(CameraSectionDemoSettings) = { _ in return CameraSectionDemoSettings()}
+    
+   static var movedSlider: (Int?) ->() = { _ in }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
         cameraValue.font = UIFont.systemFont(ofSize: 32)
         layoutSlider()
         layoutDemoInstructions()
         addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
     
-    func addInformation(demoInformation: DemoSettings?){
-        layoutImage(image: demoInformation?.image ?? "")
-        cameraOpeningSize = CGFloat(demoInformation?.cameraOpeningSize ?? 0)
-        cameraSensorSize = CGFloat(demoInformation?.cameraSensorSize ?? 0)
+   public func addInformation(demoInformation: CameraSectionDemoSettings) {
+        layoutImage(image: demoInformation.image ?? "")
+        cameraOpeningSize = CGFloat(demoInformation.cameraOpeningSize ?? 0)
+        cameraSensorSize = CGFloat(demoInformation.cameraSensorSize ?? 0)
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
-        cameraValue.text = demoInformation?.text
-        demoInstructions.text = demoInformation?.instructions
+        cameraValue.text = demoInformation.text
+        demoInstructions.text = demoInformation.instructions
         setNeedsLayout()
     }
 
@@ -51,6 +53,8 @@ public class DemoView: UIView {
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
         DemoView.movedSlider(Int(slider.value))
+        //information = DemoView.movedSlider(Int(slider.value), nil)
+        //addInformation(demoInformation: information)
         setNeedsLayout()
     }
     

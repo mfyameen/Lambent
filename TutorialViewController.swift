@@ -1,8 +1,27 @@
 import UIKit
 
+public enum Page: Int {
+    case Overview = 0
+    case Aperture = 1
+    case Shutter = 2
+    case ISO = 3
+    case Focal = 4
+    case Modes = 5
+}
+
+public enum Segment: Int {
+    case Intro = 0
+    case Demo = 1
+    case Practice = 2
+}
+
 public struct TutorialSetUp {
-   var currentPage: Int
-   var currentSegment: Int
+   var currentPage: Page
+   var currentSegment: Segment
+    public init(currentPage: Page, currentSegment: Segment) {
+        self.currentPage = currentPage
+        self.currentSegment = currentSegment
+    }
 }
 
 class TutorialViewController: UIViewController {
@@ -22,7 +41,7 @@ class TutorialViewController: UIViewController {
         let demoModel = DemoModel(setUp: setUp)
         let photographyModel = PhotographyModel()
         view = tutorialView
-        title = photographyModel.sections[setUp.currentPage]
+        title = photographyModel.sections[setUp.currentPage.rawValue]
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
@@ -37,7 +56,7 @@ class TutorialViewController: UIViewController {
         _ = navigationController?.popToRootViewController(animated: true)
     }
 
-    func pushNextTutorialViewController(_ page: Int, _ segment: Int) -> Void {
+    func pushNextTutorialViewController(_ page: Page, _ segment: Segment) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }
@@ -45,18 +64,19 @@ class TutorialViewController: UIViewController {
 
 struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
-        
+       
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement
         tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
         tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
-        
+    
         tutorialModel.shareTutorialSettings = tutorialView.addInformation
         
-        tutorialView.prepareDemo = demoModel.configureAppropriateSectionWhenInitialized
+        tutorialView.prepareDemo = demoModel.configureDemo
         demoModel.shareInformation = demoView.addInformation
         tutorialView.tutorialContent = tutorialModel
+        
         
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         

@@ -79,7 +79,7 @@ class PhotographyCell: UITableViewCell {
     private func layoutButtons(_ buttons: [UIButton]) {
         buttons.forEach({
             $0.setTitleColor(UIColor.buttonColor(), for: .normal)
-            $0.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+            $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         })
     }
     
