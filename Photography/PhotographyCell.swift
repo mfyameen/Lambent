@@ -1,11 +1,5 @@
 import UIKit
 
-enum SegmentControl: Int {
-    case intro
-    case demo
-    case practice
-}
-
 class PhotographyCell: UITableViewCell {
     private let title = UILabel()
     private let phrase = UILabel()
@@ -18,6 +12,7 @@ class PhotographyCell: UITableViewCell {
     
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
+    var page: Int? = nil
     
     var pressButton: (Int)->() = { _ in }
     
@@ -56,6 +51,7 @@ class PhotographyCell: UITableViewCell {
     }
     
     private func commonInit() {
+      
         title.font = UIFont.boldSystemFont(ofSize: 14)
         phrase.font = UIFont.systemFont(ofSize: 12)
         phrase.numberOfLines = 0
@@ -89,7 +85,6 @@ class PhotographyCell: UITableViewCell {
         self.layer.cornerRadius = 8
         self.selectionStyle = .none
         HelperMethods.configureShadow(element: self)
-       
         if title == "Get Started" {
             configureIntroductionCell(title, phrase)
         } else {
@@ -101,15 +96,15 @@ class PhotographyCell: UITableViewCell {
     }
     
     @objc private func pressStartButton() {
-        pressButton(SegmentControl.intro.rawValue)
+        pressButton(Segment.intro.rawValue)
     }
     
     @objc private func pressDemoButton() {
-        pressButton(SegmentControl.demo.rawValue)
+        pressButton(Segment.demo.rawValue)
     }
     
     @objc private func pressPracticeButton() {
-        pressButton(SegmentControl.practice.rawValue)
+        pressButton(Segment.practice.rawValue)
     }
     
     override func prepareForReuse() {

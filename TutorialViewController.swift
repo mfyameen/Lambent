@@ -1,18 +1,18 @@
 import UIKit
 
 public enum Page: Int {
-    case Overview = 0
-    case Aperture = 1
-    case Shutter = 2
-    case ISO = 3
-    case Focal = 4
-    case Modes = 5
+    case overview = 0
+    case aperture = 1
+    case shutter = 2
+    case iso = 3
+    case focal = 4
+    case modes = 5
 }
 
 public enum Segment: Int {
-    case Intro = 0
-    case Demo = 1
-    case Practice = 2
+    case intro = 0
+    case demo = 1
+    case practice = 2
 }
 
 public struct TutorialSetUp {

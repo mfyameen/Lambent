@@ -48,7 +48,9 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
             guard let page = Page(rawValue: indexPath.section), let segment = Segment(rawValue: segmentedControl) else { return }
+            cell.page = indexPath.section
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
+            print("page: \(page), segment: \(segment)")
             self?.startTutorial(setUp)
         })
         return cell

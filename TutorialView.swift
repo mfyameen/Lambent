@@ -32,7 +32,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
 
     var tutorialContent: TutorialModel? {
         didSet {
-            if currentSegment == Segment.Demo.rawValue {
+            if currentSegment == Segment.demo.rawValue {
                 prepareDemo(0)
             }
             prepareContent()
@@ -47,7 +47,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
-        if currentSegment == Segment.Demo.rawValue && currentPage != Page.Overview.rawValue {
+        if currentSegment == Segment.demo.rawValue && currentPage != Page.overview.rawValue {
             demo.isHidden = false
         } else {
             demo.isHidden = true
@@ -102,7 +102,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutSegmentedControl() {
-        if currentPage != Page.Overview.rawValue {
+        if currentPage != Page.overview.rawValue {
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
             segmentedControl.selectedSegmentIndex = currentSegment
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)

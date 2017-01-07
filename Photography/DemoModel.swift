@@ -30,24 +30,23 @@ public struct CameraSectionDemoSettings {
 
 public class DemoModel {
     private var demoSettings = DemoSettings()
-    public var sectionSettings = CameraSectionDemoSettings()
+    private var sectionSettings = CameraSectionDemoSettings()
     private var tutorial = PhotographyModel()
 
     private var currentPage: Int
-    private var currentSection: String
     
     public var shareInformation: (CameraSectionDemoSettings) -> () = { _ in }
     
     public init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage.rawValue
-        currentSection = tutorial.sections[currentPage]
     }
     
     public func configureDemo(sliderValue: Int?) {
         guard let sliderValue = sliderValue else { return }
         demoSettings = configureSectionsWhenSliderValueChanged(sliderValue )
-        sectionSettings = configureCurrentSection(currentSection)
+        sectionSettings = configureCurrentSection(tutorial.sections[currentPage])
         shareInformation(sectionSettings)
+        print(sectionSettings)
     }
     
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {

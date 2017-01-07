@@ -37,7 +37,7 @@ public class TutorialModel {
     }
     
     func configureAppropriateSegment(segment: Int) {
-        guard let segment = SegmentControl(rawValue: segment) else { return }
+        guard let segment = Segment(rawValue: segment) else { return }
         switch segment {
         case .intro:
             tutorial.isDemoScreen = false
