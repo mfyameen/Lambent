@@ -30,8 +30,7 @@ public class TutorialModel {
         if currentPage == .overview {
            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
         } else {
-            guard let currentSegment = currentSegment else { return }
-            configureAppropriateSegment(segment: currentSegment.rawValue)
+            configureAppropriateSegment(segment: currentSegment?.rawValue ?? 4)
         }
         shareTutorialSettings(tutorial)
     }
@@ -48,6 +47,7 @@ public class TutorialModel {
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.practiceContent[currentPage.rawValue]
         }
+        shareTutorialSettings(tutorial)
     }
     
     public func configureToolBarButtonTitles()  {

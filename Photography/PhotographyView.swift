@@ -48,14 +48,8 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
-            guard let currentSegment = segmentedControl else {
-                let setUp = TutorialSetUp(currentPage: page, currentSegment: nil)
-                self?.startTutorial(setUp)
-                print("introductio: \(setUp)")
-                return
-            }
-            let setUp = TutorialSetUp(currentPage: page, currentSegment: currentSegment)
-            print("nonintroduction: \(setUp)")
+            let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
+            print(setUp)
             self?.startTutorial(setUp)
         })
         return cell
@@ -84,6 +78,7 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func setTitleAndPhrase(index: Int) {
         title = tableViewContent?.sections[index] ?? ""
         phrase = tableViewContent?.descriptions[index] ?? ""
+        //print(title,phrase)
     }
 }
 

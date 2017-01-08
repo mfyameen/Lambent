@@ -102,75 +102,75 @@ class TutorialTests: XCTestCase {
     }
     
     func testPageIncrementsWhenScrollingToTheRight() {
-        var page: Page?
+        var nextPage: Page?
   
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { page = $0.0 }
+        tutorial.nextSection = { nextPage = $0.0 }
         tutorial.configureScrollViewMovement(contentOffsetX: 10)
         
-        XCTAssertEqual(page, Page.shutter)
+        XCTAssertEqual(nextPage, Page.shutter)
     }
     
     func testPageDecrementsWhenScrollingToTheLeft() {
-        var page: Page?
+        var previousPage: Page?
         
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { page = $0.0 }
+        tutorial.nextSection = { previousPage = $0.0 }
         tutorial.configureScrollViewMovement(contentOffsetX: -10)
         
-        XCTAssertEqual(page, Page.aperture)
+        XCTAssertEqual(previousPage, Page.aperture)
     }
     
     func testPageOnlyScrollsToTheRightIfNextPageExists() {
-        var page: Page?
+        var nextPage: Page?
         
         let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .practice)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { page = $0.0 }
+        tutorial.nextSection = { nextPage = $0.0 }
         tutorial.configureScrollViewMovement(contentOffsetX: 10)
         
-        XCTAssertEqual(page, nil)
+        XCTAssertEqual(nextPage, nil)
     }
    
     func testPageOnlyScrollsToTheLeftIfPreviousPageExists() {
-        var page: Page?
+        var previousPage: Page?
         
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { page = $0.0 }
+        tutorial.nextSection = { previousPage = $0.0 }
         tutorial.configureScrollViewMovement(contentOffsetX: -10)
         
-        XCTAssertEqual(page, nil)
+        XCTAssertEqual(previousPage, nil)
     }
     
     func testPageIncrementsWhenRightSideOfPageControlPressed() {
-        var page: Page?
+        var nextPage: Page?
         
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { page = $0.0 }
+        tutorial.nextSection = { nextPage = $0.0 }
         tutorial.configurePageControlMovement(currentPageControlPage: 1)
         
-        XCTAssertEqual(page, Page.aperture)
+        XCTAssertEqual(nextPage, Page.aperture)
     }
     
     func testPageDecrementsWhenLeftSideOfPageControlPressed() {
-        var page: Page?
+        var previousPage: Page?
         
         let setUp = TutorialSetUp(currentPage: .focal, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { page = $0.0 }
+        tutorial.nextSection = { previousPage = $0.0 }
         tutorial.configurePageControlMovement(currentPageControlPage: 2)
         
-        XCTAssertEqual(page, Page.iso)
+        XCTAssertEqual(previousPage, Page.iso)
     }
     
 }

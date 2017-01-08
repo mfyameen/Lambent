@@ -3,6 +3,7 @@ import UIKit
 class PhotographyCell: UITableViewCell {
     private let title = UILabel()
     private let phrase = UILabel()
+    private let startButton = UIButton()
     private let leftButton = UIButton()
     private let middleButton = UIButton()
     private let rightButton = UIButton()
@@ -12,7 +13,7 @@ class PhotographyCell: UITableViewCell {
     
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
-    private var segment: Segment? = nil
+   // private var segment: Segment?
     
     var pressButton: (Segment?)->() = { _ in }
     
@@ -21,7 +22,7 @@ class PhotographyCell: UITableViewCell {
     override init (style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
-        contentView.addSubviews([title, phrase, horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator, leftButton, middleButton, rightButton])
+        contentView.addSubviews([title, phrase, horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator, startButton, leftButton, middleButton, rightButton])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +46,8 @@ class PhotographyCell: UITableViewCell {
         leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 45)
         rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 45)
         
+        
+        startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
         middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
@@ -57,13 +60,16 @@ class PhotographyCell: UITableViewCell {
         phrase.numberOfLines = 0
         
         layoutSeparators([horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator])
-        layoutButtons([leftButton, middleButton, rightButton])
+        layoutButtons([startButton, leftButton, middleButton, rightButton])
         
         leftButton.setTitle("Intro", for: .normal)
-        middleButton.setTitle("Demo", for: .normal)
+        startButton.setTitle("", for: .normal)
+        middleButton.setTitle("", for: .normal)
         rightButton.setTitle("Practice", for: .normal)
-        segment = nil
+        
         middleButton.isEnabled = false
+        startButton.isEnabled = false
+      //  segment = nil
     }
     
     private func layoutSeparators(_ separators: [UIView]) {
@@ -86,9 +92,12 @@ class PhotographyCell: UITableViewCell {
         self.layer.cornerRadius = 8
         self.selectionStyle = .none
         HelperMethods.configureShadow(element: self)
+
         if title == "Get Started" {
             configureIntroductionCell(title, phrase)
         } else {
+            startButton.isEnabled = false
+            middleButton.setTitle("Demo", for: .normal)
             middleButton.isEnabled = true
             leftButton.addTarget(self, action: #selector(pressIntroButton), for: .touchUpInside)
             middleButton.addTarget(self, action: #selector(pressDemoButton), for: .touchUpInside)
@@ -97,23 +106,19 @@ class PhotographyCell: UITableViewCell {
     }
     
     @objc private func pressStartButton() {
-        segment = nil
-        pressButton(segment)
+        pressButton(nil)
     }
     
     @objc private func pressIntroButton() {
-        segment = .intro
-        pressButton(segment)
+        pressButton(Segment.intro)
     }
     
     @objc private func pressDemoButton() {
-        segment = .demo
-        pressButton(segment)
+        pressButton(Segment.demo)
     }
     
     @objc private func pressPracticeButton() {
-        segment = .practice
-        pressButton(segment)
+        pressButton(Segment.practice)
     }
     
     override func prepareForReuse() {
@@ -122,15 +127,18 @@ class PhotographyCell: UITableViewCell {
     }
 
     private func configureIntroductionCell(_ title: String, _ phrase: String) {
-        middleButton.isEnabled = true
-        middleButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+        middleButton.isEnabled = false
+        startButton.isEnabled = true
+        startButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
         
         layoutSeparators([horizontalSeparator])
         leftVerticalSeparator.layer.borderWidth = 0
         rightVerticalSeparator.layer.borderWidth = 0
         
+        startButton.setTitle("Start", for: .normal)
         leftButton.setTitle("", for: .normal)
-        middleButton.setTitle("Start", for: .normal)
+        middleButton.setTitle("", for: .normal)
+       
         rightButton.setTitle("", for: .normal)
     }
     
