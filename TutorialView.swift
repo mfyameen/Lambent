@@ -70,6 +70,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         content.text = information?.content
         title.text = information?.title
         isDemo = information?.isDemoScreen ?? false
+        if isDemo {
+            prepareDemo(currentSegment)
+        }
         numberOfSections = information?.numberOfSections ?? 0
         backButton.setTitle(information?.backButtonTitle, for: .normal)
         nextButton.setTitle(information?.nextButtonTitle, for: .normal)
@@ -77,6 +80,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
 
     private func configureContent() {
         if isDemo {
+            
             demo.isHidden = false
             content.isHidden = true
         } else {

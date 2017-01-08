@@ -43,6 +43,7 @@ public class TutorialModel {
             tutorial.content = tutorialContent.introContent[currentPage.rawValue]
         case .demo:
             tutorial.isDemoScreen = true
+            
         case .practice:
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.practiceContent[currentPage.rawValue]

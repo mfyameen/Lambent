@@ -13,7 +13,6 @@ class PhotographyCell: UITableViewCell {
     
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
-   // private var segment: Segment?
     
     var pressButton: (Segment?)->() = { _ in }
     
@@ -66,10 +65,6 @@ class PhotographyCell: UITableViewCell {
         startButton.setTitle("", for: .normal)
         middleButton.setTitle("", for: .normal)
         rightButton.setTitle("Practice", for: .normal)
-        
-        middleButton.isEnabled = false
-        startButton.isEnabled = false
-      //  segment = nil
     }
     
     private func layoutSeparators(_ separators: [UIView]) {
