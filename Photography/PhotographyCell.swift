@@ -12,9 +12,9 @@ class PhotographyCell: UITableViewCell {
     
     private let buttonHeight: CGFloat = 45
     private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
-    var page: Int? = nil
+    private var segment: Segment? = nil
     
-    var pressButton: (Int)->() = { _ in }
+    var pressButton: (Segment?)->() = { _ in }
     
     static let reuseIdentifier = "Cell"
     
@@ -51,7 +51,7 @@ class PhotographyCell: UITableViewCell {
     }
     
     private func commonInit() {
-      
+        
         title.font = UIFont.boldSystemFont(ofSize: 14)
         phrase.font = UIFont.systemFont(ofSize: 12)
         phrase.numberOfLines = 0
@@ -62,6 +62,7 @@ class PhotographyCell: UITableViewCell {
         leftButton.setTitle("Intro", for: .normal)
         middleButton.setTitle("Demo", for: .normal)
         rightButton.setTitle("Practice", for: .normal)
+        segment = nil
         middleButton.isEnabled = false
     }
     
@@ -89,22 +90,30 @@ class PhotographyCell: UITableViewCell {
             configureIntroductionCell(title, phrase)
         } else {
             middleButton.isEnabled = true
-            leftButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+            leftButton.addTarget(self, action: #selector(pressIntroButton), for: .touchUpInside)
             middleButton.addTarget(self, action: #selector(pressDemoButton), for: .touchUpInside)
             rightButton.addTarget(self, action: #selector(pressPracticeButton), for: .touchUpInside)
         }
     }
     
     @objc private func pressStartButton() {
-        pressButton(Segment.intro.rawValue)
+        segment = nil
+        pressButton(segment)
+    }
+    
+    @objc private func pressIntroButton() {
+        segment = .intro
+        pressButton(segment)
     }
     
     @objc private func pressDemoButton() {
-        pressButton(Segment.demo.rawValue)
+        segment = .demo
+        pressButton(segment)
     }
     
     @objc private func pressPracticeButton() {
-        pressButton(Segment.practice.rawValue)
+        segment = .practice
+        pressButton(segment)
     }
     
     override func prepareForReuse() {

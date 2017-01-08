@@ -7,7 +7,7 @@ extension UIView{
 }
 
 struct CellBinding {
-    static func bind(view: PhotographyCell, handler: @escaping (Int)->()) {
+    static func bind(view: PhotographyCell, handler: @escaping (Segment?)->()) {
         view.pressButton = handler
     }
 }
@@ -47,10 +47,15 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
-            guard let page = Page(rawValue: indexPath.section), let segment = Segment(rawValue: segmentedControl) else { return }
-            cell.page = indexPath.section
-            let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
-            print("page: \(page), segment: \(segment)")
+            guard let page = Page(rawValue: indexPath.section) else { return }
+            guard let currentSegment = segmentedControl else {
+                let setUp = TutorialSetUp(currentPage: page, currentSegment: nil)
+                self?.startTutorial(setUp)
+                print("introductio: \(setUp)")
+                return
+            }
+            let setUp = TutorialSetUp(currentPage: page, currentSegment: currentSegment)
+            print("nonintroduction: \(setUp)")
             self?.startTutorial(setUp)
         })
         return cell

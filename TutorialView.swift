@@ -43,7 +43,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     
     init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage.rawValue
-        currentSegment = setUp.currentSegment.rawValue
+        //Need to fix value after nil coalescing
+        currentSegment = setUp.currentSegment?.rawValue ?? 4
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 

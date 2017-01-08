@@ -1,39 +1,39 @@
 import Foundation
 
-struct TutorialSettings {
-    var backButtonTitle = ""
-    var nextButtonTitle = ""
-    var title = ""
-    var content = ""
-    var isDemoScreen = false
-    var numberOfSections = 0
+public struct TutorialSettings {
+    public var backButtonTitle = ""
+    public var nextButtonTitle = ""
+    public var title = ""
+    public var content = ""
+    public var isDemoScreen = false
+    public var numberOfSections = 0
 }
 
 public class TutorialModel {
     private var isDemoScreen = false
-    var currentPage: Page
-    var currentSegment: Segment
-    var tutorial = TutorialSettings()
-    var nextSection: (Page, Segment)-> Void = { _ in }
-    var page: Int?
-
+    private var currentPage: Page
+    private var currentSegment: Segment?
+    private var tutorial = TutorialSettings()
     var tutorialContent = PhotographyModel()
     
-    var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
+    public var nextSection: (Page, Segment?)-> Void = { _ in }
+    public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
-    init (setUp: TutorialSetUp) {
+    public init (setUp: TutorialSetUp) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         tutorial.numberOfSections = tutorialContent.sections.count
     }
     
-    func configureContent() {
+   public func configureContent() {
         tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
-        if currentPage.rawValue == 0 {
+        if currentPage == .overview {
            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
         } else {
+            guard let currentSegment = currentSegment else { return }
             configureAppropriateSegment(segment: currentSegment.rawValue)
         }
+        shareTutorialSettings(tutorial)
     }
     
     func configureAppropriateSegment(segment: Int) {
@@ -48,20 +48,16 @@ public class TutorialModel {
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.practiceContent[currentPage.rawValue]
         }
-        shareTutorialSettings(tutorial)
     }
     
-    func configureToolBarButtonTitles()  {
-        let maxLimit = tutorialContent.sections.count - 1
-        let minLimit = 0
-
-        if currentPage.rawValue > minLimit && currentPage.rawValue < maxLimit {
+    public func configureToolBarButtonTitles()  {
+        if currentPage == .overview {
+            tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
+        } else if currentPage == .modes {
+            tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
+        } else {
             tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
-        } else if currentPage.rawValue <= minLimit {
-            tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
-        } else if currentPage.rawValue >= maxLimit {
-            tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
         }
         shareTutorialSettings(tutorial)
     }
@@ -70,7 +66,7 @@ public class TutorialModel {
         return tutorialContent.sections[currentPage.rawValue + nextSection]
     }
     
-    func configureScrollViewMovement(contentOffsetX: Float) {
+    public func configureScrollViewMovement(contentOffsetX: Float) {
         let scrollMinLimit = 0
         let scrollMaxLimit = tutorialContent.sections.count - 1
         if contentOffsetX < 0 && currentPage.rawValue > scrollMinLimit {
@@ -82,7 +78,7 @@ public class TutorialModel {
         }
     }
 
-    func configurePageControlMovement(currentPageControlPage: Int) {
+   public func configurePageControlMovement(currentPageControlPage: Int) {
         if currentPageControlPage > currentPage.rawValue {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
             nextSection(currentPage, currentSegment)

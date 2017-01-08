@@ -17,8 +17,8 @@ public enum Segment: Int {
 
 public struct TutorialSetUp {
    var currentPage: Page
-   var currentSegment: Segment
-    public init(currentPage: Page, currentSegment: Segment) {
+   var currentSegment: Segment?
+    public init(currentPage: Page, currentSegment: Segment?) {
         self.currentPage = currentPage
         self.currentSegment = currentSegment
     }
@@ -56,7 +56,7 @@ class TutorialViewController: UIViewController {
         _ = navigationController?.popToRootViewController(animated: true)
     }
 
-    func pushNextTutorialViewController(_ page: Page, _ segment: Segment) -> Void {
+    func pushNextTutorialViewController(_ page: Page, _ segment: Segment?) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }

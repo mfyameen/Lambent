@@ -43,10 +43,9 @@ public class DemoModel {
     
     public func configureDemo(sliderValue: Int?) {
         guard let sliderValue = sliderValue else { return }
-        demoSettings = configureSectionsWhenSliderValueChanged(sliderValue )
+        demoSettings = configureSectionsWhenSliderValueChanged(sliderValue)
         sectionSettings = configureCurrentSection(tutorial.sections[currentPage])
         shareInformation(sectionSettings)
-        print(sectionSettings)
     }
     
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {
