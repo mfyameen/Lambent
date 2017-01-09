@@ -35,7 +35,6 @@ public class DemoView: UIView {
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
         cameraValue.text = demoInformation.text
         demoInstructions.text = demoInformation.instructions
-    print(demoInformation)
     }
 
     required public init?(coder aDecoder: NSCoder) {

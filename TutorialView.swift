@@ -31,8 +31,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
 
     var tutorialContent: TutorialModel? {
         didSet {
-            prepareDemo(0)
             prepareContent()
+            prepareDemo(0)
             prepareToolBar()
             layoutPageControl(numberOfSections)
         }

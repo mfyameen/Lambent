@@ -26,16 +26,10 @@ public class TutorialModel {
     }
     
    public func configureContent() {
-//    if currentSegment == nil {
-//        tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
-//        tutorial.content = tutorialContent.introContent[currentPage.rawValue]
-//        shareTutorialSettings(tutorial)
-//    }
-//    configureAppropriateSegment(segment: currentSegment?.rawValue ?? 4)
-//    
-//    shareTutorialSettings(tutorial)
         if currentPage == .overview {
            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
+            tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
+            
         } else {
             configureAppropriateSegment(segment: currentSegment?.rawValue ?? 4)
         }
@@ -78,20 +72,20 @@ public class TutorialModel {
         let scrollMaxLimit = tutorialContent.sections.count - 1
         if contentOffsetX < 0 && currentPage.rawValue > scrollMinLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            nextSection(currentPage, currentSegment)
+            nextSection(currentPage, currentSegment ?? Segment.intro)
         } else if contentOffsetX > 0 && currentPage.rawValue < scrollMaxLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
-            nextSection(currentPage, currentSegment)
+            nextSection(currentPage, currentSegment ?? Segment.intro)
         }
     }
 
    public func configurePageControlMovement(currentPageControlPage: Int) {
         if currentPageControlPage > currentPage.rawValue {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
-            nextSection(currentPage, currentSegment)
+            nextSection(currentPage, currentSegment ?? Segment.intro)
         } else {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            nextSection(currentPage, currentSegment)
+            nextSection(currentPage, currentSegment ?? Segment.intro)
         }
     }
 }
