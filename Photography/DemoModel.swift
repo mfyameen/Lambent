@@ -5,6 +5,7 @@ enum CameraSections: String {
     case Shutter = "Shutter Speed"
     case ISO = "ISO"
     case Focal = "Focal Length"
+    case Modes = "Modes"
 }
 
 struct DemoSettings {
@@ -59,8 +60,10 @@ public class DemoModel {
         case .Shutter:
             return CameraSectionDemoSettings(image: demoSettings.shutterImage, text: demoSettings.shutterText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.shutterIcon, instructions: "Play with the slider to see how shutter speed affects the above photo")
         case .ISO:
-            return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: "Play with the slider to see how ISO affects the above photo")
+            return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: "Play with the slider to see how the ISO affects the above photo")
         case .Focal:
+            return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: "Play with the slider to see how focal length affects the above photo")
+        case .Modes:
             return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: "Play with the slider to see how focal length affects the above photo")
         }
     }

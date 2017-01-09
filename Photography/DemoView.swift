@@ -20,7 +20,7 @@ public class DemoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
-    
+   
         layoutSlider()
         layoutDemoInstructions()
         addSubviews([imageView, cameraValue, icon, cameraSensor, cameraSensorOpening, slider, demoInstructions])
@@ -35,6 +35,7 @@ public class DemoView: UIView {
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
         cameraValue.text = demoInformation.text
         demoInstructions.text = demoInformation.instructions
+    print(demoInformation)
     }
 
     required public init?(coder aDecoder: NSCoder) {

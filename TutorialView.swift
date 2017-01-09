@@ -15,11 +15,10 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     public var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
-    private var hideSegmentedControl = false
     private var numberOfSections = 0
 
-    var currentPage: Int
-    var currentSegment: Int
+    var currentPage: Page
+    var currentSegment: Segment?
 
     var nextSection: (Int, Int)-> Void = { _ in }
     var prepareContent: () -> () = { _ in }
@@ -32,9 +31,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
 
     var tutorialContent: TutorialModel? {
         didSet {
-            if currentSegment == Segment.demo.rawValue {
-                prepareDemo(0)
-            }
+            prepareDemo(0)
             prepareContent()
             prepareToolBar()
             layoutPageControl(numberOfSections)
@@ -42,23 +39,22 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     init (setUp: TutorialSetUp) {
-        currentPage = setUp.currentPage.rawValue
-        //Need to fix value after nil coalescing
-        currentSegment = setUp.currentSegment?.rawValue ?? 4
+        currentPage = setUp.currentPage
+        currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
-        if currentSegment == Segment.demo.rawValue && currentPage != Page.overview.rawValue {
+        if currentSegment == .demo && currentPage != .overview {
             demo.isHidden = false
         } else {
             demo.isHidden = true
         }
-       
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
         layoutContent()
         layoutToolBarButtons([nextButton, backButton])
+   
         HelperMethods.configureShadow(element: container)
         
         addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
@@ -70,17 +66,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         content.text = information?.content
         title.text = information?.title
         isDemo = information?.isDemoScreen ?? false
-        if isDemo {
-            prepareDemo(currentSegment)
-        }
         numberOfSections = information?.numberOfSections ?? 0
         backButton.setTitle(information?.backButtonTitle, for: .normal)
         nextButton.setTitle(information?.nextButtonTitle, for: .normal)
+        setNeedsLayout()
     }
 
     private func configureContent() {
         if isDemo {
-            
             demo.isHidden = false
             content.isHidden = true
         } else {
@@ -90,6 +83,16 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+       // print(scrollView.contentOffset.x)
+//        if currentPage == 5 && scrollView.contentOffset.x > 0 {
+//            scrollView.isScrollEnabled = false
+//            //scrollView.bounces = false
+//            scrollView.isDirectionalLockEnabled = true
+//            
+//        } else {
+//            scrollView.isScrollEnabled = true
+//            prepareScrollView(Float(scrollView.contentOffset.x))
+//        }
         prepareScrollView(Float(scrollView.contentOffset.x))
     }
     
@@ -101,15 +104,18 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     
     private func layoutScrollView() {
         scrollView.delegate = self
-        scrollView.isPagingEnabled = true
+//        if currentPage == 5 {
+//        scrollView.isScrollEnabled = false
+//        }
+        //scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
     }
     
     private func layoutSegmentedControl() {
-        if currentPage != Page.overview.rawValue {
+        if currentPage != .overview {
             segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
-            segmentedControl.selectedSegmentIndex = currentSegment
+            segmentedControl.selectedSegmentIndex = currentSegment?.rawValue ?? 0
             segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         }
     }
@@ -117,14 +123,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     @objc private func segmentedControlValueChanged() {
         prepareSegment(segmentedControl.selectedSegmentIndex)
         configureContent()
-        //setNeedsLayout()
+        setNeedsLayout()
     }
     
     private func layoutPageControl(_ numberOfSections: Int) {
         pageControl.currentPageIndicatorTintColor = UIColor.gray
         pageControl.numberOfPages = numberOfSections
         pageControl.pageIndicatorTintColor = .white
-        pageControl.currentPage = currentPage
+        pageControl.currentPage = currentPage.rawValue
         pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
     }
     

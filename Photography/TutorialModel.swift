@@ -26,7 +26,14 @@ public class TutorialModel {
     }
     
    public func configureContent() {
-        tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
+//    if currentSegment == nil {
+//        tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
+//        tutorial.content = tutorialContent.introContent[currentPage.rawValue]
+//        shareTutorialSettings(tutorial)
+//    }
+//    configureAppropriateSegment(segment: currentSegment?.rawValue ?? 4)
+//    
+//    shareTutorialSettings(tutorial)
         if currentPage == .overview {
            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
         } else {
@@ -43,7 +50,6 @@ public class TutorialModel {
             tutorial.content = tutorialContent.introContent[currentPage.rawValue]
         case .demo:
             tutorial.isDemoScreen = true
-            
         case .practice:
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.practiceContent[currentPage.rawValue]
@@ -73,7 +79,7 @@ public class TutorialModel {
         if contentOffsetX < 0 && currentPage.rawValue > scrollMinLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
             nextSection(currentPage, currentSegment)
-        } else if contentOffsetX > 0 && currentPage.rawValue < scrollMaxLimit{
+        } else if contentOffsetX > 0 && currentPage.rawValue < scrollMaxLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
             nextSection(currentPage, currentSegment)
         }

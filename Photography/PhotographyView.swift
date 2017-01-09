@@ -49,7 +49,6 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
-            print(setUp)
             self?.startTutorial(setUp)
         })
         return cell
@@ -78,7 +77,6 @@ class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
     private func setTitleAndPhrase(index: Int) {
         title = tableViewContent?.sections[index] ?? ""
         phrase = tableViewContent?.descriptions[index] ?? ""
-        //print(title,phrase)
     }
 }
 
