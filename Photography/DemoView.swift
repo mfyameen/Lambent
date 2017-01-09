@@ -2,6 +2,7 @@ import UIKit
 
 public class DemoView: UIView {
     private let imageView = UIImageView()
+    private let icon = UIImageView()
     private let slider = UISlider()
     private let cameraValue = UILabel()
     private let cameraSensor = UIView()
@@ -19,26 +20,28 @@ public class DemoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
+    
         layoutSlider()
         layoutDemoInstructions()
-        addSubviews([imageView, cameraValue, cameraSensor, cameraSensorOpening, slider, demoInstructions])
+        addSubviews([imageView, cameraValue, icon, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
     
    public func addInformation(demoInformation: CameraSectionDemoSettings) {
-        layoutImage(image: demoInformation.image ?? "")
+        layoutImage(imageView: imageView, image: demoInformation.image ?? "")
+        layoutImage(imageView: icon, image: demoInformation.icon ?? "")
+
         cameraOpeningSize = CGFloat(demoInformation.cameraOpeningSize ?? 0)
         cameraSensorSize = CGFloat(demoInformation.cameraSensorSize ?? 0)
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
         cameraValue.text = demoInformation.text
         demoInstructions.text = demoInformation.instructions
-        setNeedsLayout()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func layoutImage(image: String) {
+    private func layoutImage(imageView: UIImageView,image: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image =  UIImage(named: image)
@@ -82,8 +85,12 @@ public class DemoView: UIView {
         
         cameraSensorOpening.frame = CGRect(x: cameraSensor.frame.midX - cameraOpeningSize/2, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraOpeningSize/2, width: cameraOpeningSize, height: cameraOpeningSize)
         
+        let iconSize: CGFloat = 44
+        icon.frame = CGRect(x: bounds.midX - iconSize - cameraPadding, y: (imageView.frame.maxY + slider.frame.minY)/2 - iconSize/2, width: iconSize, height: iconSize)
+        
         let cameraValueSize = cameraValue.sizeThatFits(bounds.size)
         cameraValue.frame = CGRect(x: bounds.midX, y: (imageView.frame.maxY + slider.frame.minY)/2 - cameraValueSize.height/2, width: cameraValueSize.width, height: cameraValueSize.height)
+        
         
         let sliderWidth = TutorialView.segmentedWidth
         let sliderHeight = slider.sizeThatFits(bounds.size).height

@@ -117,7 +117,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     @objc private func segmentedControlValueChanged() {
         prepareSegment(segmentedControl.selectedSegmentIndex)
         configureContent()
-        setNeedsLayout()
+        //setNeedsLayout()
     }
     
     private func layoutPageControl(_ numberOfSections: Int) {
