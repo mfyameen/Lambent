@@ -43,7 +43,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-
+        
         if currentSegment == .demo && currentPage != .overview {
             demo.isHidden = false
         } else {
@@ -83,17 +83,22 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       // print(scrollView.contentOffset.x)
-//        if currentPage == 5 && scrollView.contentOffset.x > 0 {
-//            scrollView.isScrollEnabled = false
-//            //scrollView.bounces = false
-//            scrollView.isDirectionalLockEnabled = true
-//            
-//        } else {
-//            scrollView.isScrollEnabled = true
-//            prepareScrollView(Float(scrollView.contentOffset.x))
-//        }
-        prepareScrollView(Float(scrollView.contentOffset.x))
+
+        if currentPage != Page.modes {
+            scrollView.isScrollEnabled = true
+            prepareScrollView(Float(scrollView.contentOffset.x))
+            
+        } else if currentPage == Page.modes && scrollView.contentOffset.x > 0 {
+            scrollView.isScrollEnabled = false
+            
+
+        } else if currentPage == Page.modes && scrollView.contentOffset.x <= 0 {
+            scrollView.isScrollEnabled = true
+           
+            prepareScrollView(Float(scrollView.contentOffset.x))
+        }
+        scrollView.isScrollEnabled = true
+        //prepareScrollView(Float(scrollView.contentOffset.x))
     }
     
     private func layoutContainer() {
@@ -104,10 +109,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     
     private func layoutScrollView() {
         scrollView.delegate = self
-//        if currentPage == 5 {
-//        scrollView.isScrollEnabled = false
-//        }
-        //scrollView.isPagingEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
     }
@@ -171,9 +172,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + (padding * 2), width: titleSize.width, height: titleSize.height)
         
-        let contentHeight = content.sizeThatFits(contentArea.size).height
-        let contentWidth = contentArea.width - insets.left - insets.right
-        content.frame = CGRect(x: contentArea.midX - contentWidth/2, y: title.frame.maxY + (padding * 2), width: contentWidth, height: contentHeight)
+        let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, insets)
+        let contentSize = content.sizeThatFits(contentLabelArea.size)
+        content.frame = CGRect(x: contentArea.midX - contentSize.width/2, y: segmentedControl.frame.maxY + padding, width: contentSize.width, height: contentSize.height)
         
         let pageControlSize = pageControl.sizeThatFits(contentArea.size)
         pageControl.frame = CGRect(x: contentArea.midX - pageControlSize.width/2, y: (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2, width: pageControlSize.width, height: pageControlSize.height)
