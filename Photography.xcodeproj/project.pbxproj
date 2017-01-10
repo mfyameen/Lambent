@@ -23,6 +23,7 @@
 		17C283661DF0788600E7BC29 /* PhotographyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283651DF0788600E7BC29 /* PhotographyView.swift */; };
 		17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283671DF07CA400E7BC29 /* PhotographyModel.swift */; };
 		17C2836A1DF07F2000E7BC29 /* PhotographyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283691DF07F2000E7BC29 /* PhotographyCell.swift */; };
+		17CF63BF1E253AA800D987A7 /* TableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CF63BE1E253AA800D987A7 /* TableViewTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		17C283651DF0788600E7BC29 /* PhotographyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotographyView.swift; sourceTree = "<group>"; };
 		17C283671DF07CA400E7BC29 /* PhotographyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotographyModel.swift; sourceTree = "<group>"; };
 		17C283691DF07F2000E7BC29 /* PhotographyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotographyCell.swift; sourceTree = "<group>"; };
+		17CF63BE1E253AA800D987A7 /* TableViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				177DD3491E07761E00605146 /* DemoTests.swift */,
 				1766336D1E1B3B9800E2A05E /* TutorialTests.swift */,
+				17CF63BE1E253AA800D987A7 /* TableViewTests.swift */,
 				177DD34B1E07761E00605146 /* Info.plist */,
 			);
 			path = PhotographyTests;
@@ -230,6 +233,7 @@
 			files = (
 				177DD34A1E07761E00605146 /* DemoTests.swift in Sources */,
 				1766336E1E1B3B9800E2A05E /* TutorialTests.swift in Sources */,
+				17CF63BF1E253AA800D987A7 /* TableViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

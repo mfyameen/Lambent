@@ -1,6 +1,7 @@
 import Foundation
 
 public struct TutorialSettings {
+    public init() {}
     public var backButtonTitle = ""
     public var nextButtonTitle = ""
     public var title = ""

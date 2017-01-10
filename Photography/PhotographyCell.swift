@@ -28,32 +28,7 @@ class PhotographyCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let inset: CGFloat = 15
-        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
-        let separatorYOffset = bounds.maxY - 45
-        
-        let titleSize = title.sizeThatFits(contentArea.size)
-        title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
-        
-        let phraseSize = phrase.sizeThatFits(contentArea.size)
-        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
-        
-        horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
-        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 45)
-        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 45)
-        
-        
-        startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-        leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
-        middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-        rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-    }
-    
     private func commonInit() {
-        
         title.font = UIFont.boldSystemFont(ofSize: 14)
         phrase.font = UIFont.systemFont(ofSize: 12)
         phrase.numberOfLines = 0
@@ -84,10 +59,10 @@ class PhotographyCell: UITableViewCell {
     func configureCell(_ title: String, _ phrase: String) {
         self.title.text = title
         self.phrase.text = phrase
-        self.layer.cornerRadius = 8
-        self.selectionStyle = .none
+        layer.cornerRadius = 8
+        selectionStyle = .none
         HelperMethods.configureShadow(element: self)
-
+        
         if title == "Get Started" {
             configureIntroductionCell(title, phrase)
         } else {
@@ -98,6 +73,22 @@ class PhotographyCell: UITableViewCell {
             middleButton.addTarget(self, action: #selector(pressDemoButton), for: .touchUpInside)
             rightButton.addTarget(self, action: #selector(pressPracticeButton), for: .touchUpInside)
         }
+    }
+    
+    private func configureIntroductionCell(_ title: String, _ phrase: String) {
+        middleButton.isEnabled = false
+        startButton.isEnabled = true
+        startButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
+        
+        layoutSeparators([horizontalSeparator])
+        leftVerticalSeparator.layer.borderWidth = 0
+        rightVerticalSeparator.layer.borderWidth = 0
+        
+        startButton.setTitle("Start", for: .normal)
+        leftButton.setTitle("", for: .normal)
+        middleButton.setTitle("", for: .normal)
+        
+        rightButton.setTitle("", for: .normal)
     }
     
     @objc private func pressStartButton() {
@@ -120,27 +111,35 @@ class PhotographyCell: UITableViewCell {
         super.prepareForReuse()
         commonInit()
     }
-
-    private func configureIntroductionCell(_ title: String, _ phrase: String) {
-        middleButton.isEnabled = false
-        startButton.isEnabled = true
-        startButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
-        
-        layoutSeparators([horizontalSeparator])
-        leftVerticalSeparator.layer.borderWidth = 0
-        rightVerticalSeparator.layer.borderWidth = 0
-        
-        startButton.setTitle("Start", for: .normal)
-        leftButton.setTitle("", for: .normal)
-        middleButton.setTitle("", for: .normal)
-       
-        rightButton.setTitle("", for: .normal)
-    }
     
-   override func sizeThatFits(_ size: CGSize) -> CGSize {
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
         let phraseHeight: CGFloat = phrase.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         let titleHeight: CGFloat = title.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         return CGSize(width: size.width, height: phraseHeight + titleHeight + buttonHeight + 8 * 6)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let inset: CGFloat = 15
+        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
+        let separatorYOffset = bounds.maxY - 45
+        
+        let titleSize = title.sizeThatFits(contentArea.size)
+        title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
+        
+        let phraseSize = phrase.sizeThatFits(contentArea.size)
+        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
+        
+        horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
+        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 45)
+        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 45)
+        
+        
+        startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
+        leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
+        middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
+        rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
     }
     
 }
