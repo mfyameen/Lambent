@@ -10,25 +10,25 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let title = UILabel()
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
+    //TODO: remove segmentedWidth and SegmentedHeight as static properties
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
     public var demo = DemoView()
+    //TODO: remove setUp, currentPage, and currentSegment
     private let setUp: TutorialSetUp
     private var isDemo = false
     private var numberOfSections = 0
-
-    var currentPage: Page
-    var currentSegment: Segment?
-
-    var nextSection: (Int, Int)-> Void = { _ in }
+    
+    private var currentPage: Page
+    private var currentSegment: Segment?
+    
     var prepareContent: () -> () = { _ in }
     var prepareToolBar: ()->() = { _ in }
     var preparePageControl: (Int)->() = { _ in }
     var prepareScrollView: (Float)->()  = { _ in }
-    var prepareSegment: (Int) -> () = { _ in }
+    var prepareSegment: (Segment?) -> () = { _ in }
     var prepareDemo: (Int?) -> () = { _ in }
-    var keepMoving: ()->() = { _ in }
-
+    
     var tutorialContent: TutorialModel? {
         didSet {
             prepareContent()
@@ -44,57 +44,35 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        if currentSegment == .demo && currentPage != .overview {
-            demo.isHidden = false
-        } else {
-            demo.isHidden = true
-        }
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
         layoutContent()
+        layoutAppropriateContent()
         layoutToolBarButtons([nextButton, backButton])
-   
         HelperMethods.configureShadow(element: container)
         
         addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
-        
         scrollView.addSubview(demo)
     }
     
-    func addInformation(information: TutorialSettings?) {
-        content.text = information?.content
-        title.text = information?.title
-        isDemo = information?.isDemoScreen ?? false
-        numberOfSections = information?.numberOfSections ?? 0
-        backButton.setTitle(information?.backButtonTitle, for: .normal)
-        nextButton.setTitle(information?.nextButtonTitle, for: .normal)
-        setNeedsLayout()
+    func addInformation(information: TutorialSettings) {
+        content.text = information.content
+        title.text = information.title
+        isDemo = information.isDemoScreen
+        numberOfSections = information.numberOfSections
+        backButton.setTitle(information.backButtonTitle, for: .normal)
+        nextButton.setTitle(information.nextButtonTitle, for: .normal)
     }
 
-    private func configureContent() {
-        if isDemo {
-            demo.isHidden = false
-            content.isHidden = true
-        } else {
-            demo.isHidden = true
-            content.isHidden = false
-        }
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
         if currentPage != Page.modes {
             scrollView.isScrollEnabled = true
             prepareScrollView(Float(scrollView.contentOffset.x))
-            
         } else if currentPage == Page.modes && scrollView.contentOffset.x > 0 {
             scrollView.isScrollEnabled = false
-            
-
         } else if currentPage == Page.modes && scrollView.contentOffset.x <= 0 {
             scrollView.isScrollEnabled = true
-           
             prepareScrollView(Float(scrollView.contentOffset.x))
         }
         scrollView.isScrollEnabled = true
@@ -107,6 +85,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         container.layer.cornerRadius = 8
     }
     
+    //TODO: prevent slider from moving when scrolling on last screen
     private func layoutScrollView() {
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
@@ -122,8 +101,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     @objc private func segmentedControlValueChanged() {
-        prepareSegment(segmentedControl.selectedSegmentIndex)
-        configureContent()
+        currentSegment = Segment(rawValue: segmentedControl.selectedSegmentIndex)
+        prepareSegment(currentSegment)
+        layoutAppropriateContent()
         setNeedsLayout()
     }
     
@@ -143,6 +123,16 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         title.font = UIFont.boldSystemFont(ofSize: 14)
         content.font = UIFont.systemFont(ofSize: 14)
         content.numberOfLines = 0
+    }
+    
+    private func layoutAppropriateContent() {
+        if isDemo || currentSegment == .demo && currentPage != .overview {
+            demo.isHidden = false
+            content.isHidden = true
+        } else {
+            demo.isHidden = true
+            content.isHidden = false
+        }
     }
     
     private func layoutToolBarButtons(_ buttons: [UIButton]) {
@@ -166,7 +156,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         TutorialView.segmentedHeight = segmentedControl.sizeThatFits(contentArea.size).height
         TutorialView.segmentedWidth = contentArea.width - insets.left - insets.right
         segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + padding, width: TutorialView.segmentedWidth, height: TutorialView.segmentedHeight)
-
+        
         demo.frame = CGRect(x: 0, y: 0, width: contentArea.width, height: contentArea.height )
         
         let titleSize = title.sizeThatFits(contentArea.size)

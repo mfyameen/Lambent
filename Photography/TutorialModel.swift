@@ -10,11 +10,10 @@ public struct TutorialSettings {
 }
 
 public class TutorialModel {
-    private var isDemoScreen = false
     private var currentPage: Page
     private var currentSegment: Segment?
     private var tutorial = TutorialSettings()
-    var tutorialContent = PhotographyModel()
+    private var tutorialContent = PhotographyModel()
     
     public var nextSection: (Page, Segment?)-> Void = { _ in }
     public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
@@ -25,19 +24,18 @@ public class TutorialModel {
         tutorial.numberOfSections = tutorialContent.sections.count
     }
     
-   public func configureContent() {
+    public func configureContent() {
         if currentPage == .overview {
-           tutorial.content = tutorialContent.introContent[currentPage.rawValue]
+            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
             tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
-            
         } else {
-            configureAppropriateSegment(segment: currentSegment?.rawValue ?? 4)
+            configureAppropriateSegment(segment: currentSegment)
         }
         shareTutorialSettings(tutorial)
     }
     
-    func configureAppropriateSegment(segment: Int) {
-        guard let segment = Segment(rawValue: segment) else { return }
+    func configureAppropriateSegment(segment: Segment?) {
+        guard let segment = segment else { return }
         switch segment {
         case .intro:
             tutorial.isDemoScreen = false
@@ -78,8 +76,8 @@ public class TutorialModel {
             nextSection(currentPage, currentSegment ?? Segment.intro)
         }
     }
-
-   public func configurePageControlMovement(currentPageControlPage: Int) {
+    
+    public func configurePageControlMovement(currentPageControlPage: Int) {
         if currentPageControlPage > currentPage.rawValue {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
             nextSection(currentPage, currentSegment ?? Segment.intro)

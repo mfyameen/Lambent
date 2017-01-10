@@ -11,6 +11,8 @@ enum CameraSections: String {
 struct DemoSettings {
     var apertureImage: String = "flower"
     var apertureText: String = "f/2.8"
+    var cameraOpeningSize: Int? = 38
+    var cameraSensorSize: Int? = 44
     var shutterImage: String = "waterfall2.8"
     var shutterIcon: String = "shutter1.2"
     var shutterText: String = "1/2"
@@ -19,8 +21,6 @@ struct DemoSettings {
     var isoText: String = "100"
     var focalImage: String?
     var focalText: String?
-    var cameraOpeningSize: Int? = 38
-    var cameraSensorSize: Int? = 44
 }
 
 public struct CameraSectionDemoSettings {
@@ -35,8 +35,8 @@ public struct CameraSectionDemoSettings {
 public class DemoModel {
     private var demoSettings = DemoSettings()
     private var sectionSettings = CameraSectionDemoSettings()
-    private var tutorial = PhotographyModel()
-
+    private let tutorial = PhotographyModel()
+    
     private var currentPage: Int
     
     public var shareInformation: (CameraSectionDemoSettings) -> () = { _ in }
@@ -71,19 +71,19 @@ public class DemoModel {
     private func configureSectionsWhenSliderValueChanged(_ value: Int) -> DemoSettings {
         switch value {
         case 3:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/2.8", shutterImage: "waterfall2.8", shutterIcon: "shutter1.2", shutterText: "1/2", isoImage: "flower", isoIcon: "iso100", isoText: "100",focalImage: nil, focalText: nil, cameraOpeningSize: 38, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/2.8", cameraOpeningSize: 38, cameraSensorSize: 44, shutterImage: "waterfall2.8", shutterIcon: "shutter1.2", shutterText: "1/2", isoImage: "flower", isoIcon: "iso100", isoText: "100",focalImage: nil, focalText: nil)
         case 4:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/4", shutterImage: "waterfall4", shutterIcon: "shutter1.4", shutterText: "1/4", isoImage: "flower", isoIcon: "iso200", isoText: "200", focalImage: nil, focalText: nil, cameraOpeningSize: 34, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/4", cameraOpeningSize: 34, cameraSensorSize: 44, shutterImage: "waterfall4", shutterIcon: "shutter1.4", shutterText: "1/4", isoImage: "flower", isoIcon: "iso200", isoText: "200", focalImage: nil, focalText: nil)
         case 6:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/5.6", shutterImage: "waterfall6", shutterIcon: "shutter1.8", shutterText: "1/8", isoImage: nil, isoIcon: "iso400", isoText: "400", focalImage: nil, focalText: nil, cameraOpeningSize: 24, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/5.6", cameraOpeningSize: 24, cameraSensorSize: 44, shutterImage: "waterfall6", shutterIcon: "shutter1.8", shutterText: "1/8", isoImage: nil, isoIcon: "iso400", isoText: "400", focalImage: nil, focalText: nil)
         case 8:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/8", shutterImage: "waterfall8", shutterIcon: "shutter1.15", shutterText: "1/15", isoImage: nil, isoIcon: "iso800", isoText: "800", focalImage: nil, focalText: nil, cameraOpeningSize: 20, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/8", cameraOpeningSize: 20, cameraSensorSize: 44, shutterImage: "waterfall8", shutterIcon: "shutter1.15", shutterText: "1/15", isoImage: nil, isoIcon: "iso800", isoText: "800", focalImage: nil, focalText: nil)
         case 11:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/11", shutterImage: "waterfall11", shutterIcon: "shutter1.30", shutterText: "1/30", isoImage: nil, isoIcon: "iso1600", isoText: "1600", focalImage: nil, focalText: nil, cameraOpeningSize: 16, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/11", cameraOpeningSize: 16, cameraSensorSize: 44, shutterImage: "waterfall11", shutterIcon: "shutter1.30", shutterText: "1/30", isoImage: nil, isoIcon: "iso1600", isoText: "1600", focalImage: nil, focalText: nil)
         case 16:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/16", shutterImage: "waterfall16", shutterIcon: "shutter1.60", shutterText: "1/60", isoImage: nil, isoIcon: "iso3200", isoText: "3200", focalImage: nil, focalText: nil, cameraOpeningSize: 12, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/16", cameraOpeningSize: 12, cameraSensorSize: 44, shutterImage: "waterfall16", shutterIcon: "shutter1.60", shutterText: "1/60", isoImage: nil, isoIcon: "iso3200", isoText: "3200", focalImage: nil, focalText: nil)
         case 22:
-            return DemoSettings(apertureImage: "flower", apertureText: "f/22", shutterImage: "waterfall22", shutterIcon: "shutter1.125", shutterText: "1/125", isoImage: nil, isoIcon: "iso6400", isoText: "6400", focalImage: nil, focalText: nil, cameraOpeningSize: 8, cameraSensorSize: 44)
+            return DemoSettings(apertureImage: "flower", apertureText: "f/22", cameraOpeningSize: 8, cameraSensorSize: 44, shutterImage: "waterfall22", shutterIcon: "shutter1.125", shutterText: "1/125", isoImage: nil, isoIcon: "iso6400", isoText: "6400", focalImage: nil, focalText: nil)
         default:
             return demoSettings
         }
