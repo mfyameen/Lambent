@@ -12,10 +12,11 @@ struct CellBinding {
     }
 }
 
-public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource {
+public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     private let tableView: UITableView
     private let cachedCellForSizing = PhotographyCell()
     public var tableViewContent: PhotographyModel?
+    static var hideNavigationBar = false
     
     var startTutorial: (TutorialSetUp)->() = { _ in }
     
@@ -39,6 +40,16 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     public func numberOfSections(in tableView: UITableView) -> Int {
         return tableViewContent?.sections.count ?? 0
     }
+    
+//    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y > 0 {
+//           PhotographyView.hideNavigationBar = true
+//            print(PhotographyView.hideNavigationBar)
+//        } else {
+//            PhotographyView.hideNavigationBar = false
+//            print(PhotographyView.hideNavigationBar)
+//        }
+//    }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }

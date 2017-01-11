@@ -63,7 +63,14 @@ public class TutorialModel {
     }
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
-        return tutorialContent.sections[currentPage.rawValue + nextSection]
+        let sectionTitle = tutorialContent.sections[currentPage.rawValue + nextSection]
+        if sectionTitle == CameraSections.Focal.rawValue {
+            return "Focal"
+        } else if sectionTitle == CameraSections.Shutter.rawValue {
+            return "Shutter"
+        } else {
+            return sectionTitle
+        }
     }
     
     public func configureScrollViewMovement(contentOffsetX: Float) {

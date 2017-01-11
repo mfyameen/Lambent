@@ -29,8 +29,8 @@ class PhotographyCell: UITableViewCell {
     }
     
     private func commonInit() {
-        title.font = UIFont.boldSystemFont(ofSize: 14)
-        phrase.font = UIFont.systemFont(ofSize: 12)
+        title.font = UIFont.boldSystemFont(ofSize: 16)
+        phrase.font = UIFont.systemFont(ofSize: 14)
         phrase.numberOfLines = 0
         
         layoutSeparators([horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator])
@@ -52,7 +52,7 @@ class PhotographyCell: UITableViewCell {
     private func layoutButtons(_ buttons: [UIButton]) {
         buttons.forEach({
             $0.setTitleColor(UIColor.buttonColor(), for: .normal)
-            $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+            $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         })
     }
     
@@ -123,7 +123,7 @@ class PhotographyCell: UITableViewCell {
         let inset: CGFloat = 15
         let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
         let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
-        let separatorYOffset = bounds.maxY - 45
+        let separatorYOffset = bounds.maxY - 50
         
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
@@ -132,8 +132,8 @@ class PhotographyCell: UITableViewCell {
         phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
         
         horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
-        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 45)
-        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 45)
+        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 50)
+        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 50)
         
         
         startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)

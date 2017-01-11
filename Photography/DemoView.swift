@@ -50,7 +50,7 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        //Fix binding
+        //TODO: Fix binding
         DemoView.movedSlider(Int(slider.value))
         setNeedsLayout()
     }
@@ -73,7 +73,7 @@ public class DemoView: UIView {
         let cameraPadding: CGFloat = 10
         let imagePadding: CGFloat = 40
         
-        image.frame = CGRect(x: bounds.minX, y: bounds.minY + TutorialView.segmentedHeight + imagePadding, width: bounds.width, height: bounds.height * 0.6)
+        image.frame = CGRect(x: bounds.minX, y: bounds.minY + TutorialView.segmentedHeight + imagePadding, width: bounds.width, height: bounds.height * 0.5)
         
         cameraSensor.frame = CGRect(x: bounds.midX - cameraSensorSize - cameraPadding, y: (image.frame.maxY + slider.frame.minY)/2 - cameraSensorSize/2, width: cameraSensorSize, height: cameraSensorSize)
         

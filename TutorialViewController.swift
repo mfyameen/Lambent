@@ -42,15 +42,11 @@ class TutorialViewController: UIViewController {
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage.rawValue]
+        //navigationController?.hidesBarsOnSwipe = false
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.hidesBarsOnSwipe = false
-//    }
     
     func returnHome() {
         _ = navigationController?.popToRootViewController(animated: true)

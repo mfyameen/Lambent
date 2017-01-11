@@ -90,13 +90,12 @@ class TutorialTests: XCTestCase {
         var testObject = TutorialSettings()
         let setUp = TutorialSetUp(currentPage: .modes, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
-        let tutorialContent = PhotographyModel()
         
         tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
         tutorial.configureToolBarButtonTitles()
         
         XCTAssertEqual(testObject.nextButtonTitle, "")
-        XCTAssertEqual(testObject.backButtonTitle, tutorialContent.sections[Page.modes.rawValue - 1])
+        XCTAssertEqual(testObject.backButtonTitle, "Focal")
     }
     
     func testPageIncrementsWhenScrollingToTheRight() {
