@@ -19,8 +19,8 @@ struct DemoSettings {
     var isoImage: String? = "flower"
     var isoIcon: String = "iso100"
     var isoText: String = "100"
-    var focalImage: String?
-    var focalText: String?
+    var focalImage: String? = "flower"
+    var focalText: String? 
 }
 
 public struct CameraSectionDemoSettings {
@@ -56,15 +56,15 @@ public class DemoModel {
         guard let currentSection = CameraSections(rawValue: section ?? "") else { return sectionSettings }
         switch currentSection {
         case .Aperture:
-            return CameraSectionDemoSettings(image: demoSettings.apertureImage, text: demoSettings.apertureText, cameraOpeningSize: demoSettings.cameraOpeningSize, cameraSensorSize: demoSettings.cameraSensorSize, icon: nil, instructions: "Play with the slider to see how aperture affects the above photo")
+            return CameraSectionDemoSettings(image: demoSettings.apertureImage, text: demoSettings.apertureText, cameraOpeningSize: demoSettings.cameraOpeningSize, cameraSensorSize: demoSettings.cameraSensorSize, icon: nil, instructions: tutorial.demoInstructions[currentPage])
         case .Shutter:
-            return CameraSectionDemoSettings(image: demoSettings.shutterImage, text: demoSettings.shutterText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.shutterIcon, instructions: "Play with the slider to see how shutter speed affects the above photo")
+            return CameraSectionDemoSettings(image: demoSettings.shutterImage, text: demoSettings.shutterText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.shutterIcon, instructions: tutorial.demoInstructions[currentPage])
         case .ISO:
-            return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: "Play with the slider to see how the ISO affects the above photo")
+            return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: tutorial.demoInstructions[currentPage])
         case .Focal:
-            return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: "Play with the slider to see how focal length affects the above photo")
+            return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: tutorial.demoInstructions[currentPage])
         case .Modes:
-            return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: "Play with the slider to see how focal length affects the above photo")
+            return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: tutorial.demoInstructions[currentPage])
         }
     }
     

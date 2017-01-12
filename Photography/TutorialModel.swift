@@ -17,7 +17,7 @@ public class TutorialModel {
     private var tutorialContent = PhotographyModel()
     
     public var nextSection: (Page, Segment?)-> Void = { _ in }
-    var previousSection: (Page, Segment?)-> Void = { _ in}
+    public var previousSection: (Page, Segment?)-> Void = { _ in}
     public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
     public init (setUp: TutorialSetUp) {

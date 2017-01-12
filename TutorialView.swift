@@ -10,11 +10,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let title = UILabel()
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
-    //TODO: remove segmentedWidth and SegmentedHeight as static properties
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
     public var demo = DemoView()
-    //TODO: remove setUp, currentPage, and currentSegment
     private let setUp: TutorialSetUp
     private var isDemo = false
     private var numberOfSections = 0
@@ -66,16 +64,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if currentPage != Page.modes {
-//            scrollView.isScrollEnabled = true
-//            prepareScrollView(Float(scrollView.contentOffset.x))
-//        } else if currentPage == Page.modes && scrollView.contentOffset.x > 0 {
-//            scrollView.isScrollEnabled = false
-//        } else if currentPage == Page.modes && scrollView.contentOffset.x <= 0 {
-//            scrollView.isScrollEnabled = true
-//            prepareScrollView(Float(scrollView.contentOffset.x))
-//        }
-//        scrollView.isScrollEnabled = true
         prepareScrollView(Float(scrollView.contentOffset.x))
     }
     
@@ -90,6 +78,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
     private func layoutSegmentedControl() {

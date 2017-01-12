@@ -44,7 +44,7 @@ class PhotographyCell: UITableViewCell {
     
     private func layoutSeparators(_ separators: [UIView]) {
         separators.forEach ({
-            $0.layer.borderWidth = 1.5
+            $0.layer.borderWidth = 2
             $0.layer.borderColor = UIColor.backgroundColor().cgColor
         })
     }

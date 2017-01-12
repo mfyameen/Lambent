@@ -116,7 +116,7 @@ class TutorialTests: XCTestCase {
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { testObject = $0.0 }
+        tutorial.previousSection = { testObject = $0.0 }
         tutorial.configureScrollViewMovement(contentOffsetX: -10)
         
         XCTAssertEqual(testObject, Page.aperture)
@@ -164,7 +164,7 @@ class TutorialTests: XCTestCase {
         let setUp = TutorialSetUp(currentPage: .focal, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp)
         
-        tutorial.nextSection = { testObject = $0.0 }
+        tutorial.previousSection = { testObject = $0.0 }
         tutorial.configurePageControlMovement(currentPageControlPage: 2)
         
         XCTAssertEqual(testObject, Page.iso)
