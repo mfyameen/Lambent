@@ -66,17 +66,17 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if currentPage != Page.modes {
-            scrollView.isScrollEnabled = true
-            prepareScrollView(Float(scrollView.contentOffset.x))
-        } else if currentPage == Page.modes && scrollView.contentOffset.x > 0 {
-            scrollView.isScrollEnabled = false
-        } else if currentPage == Page.modes && scrollView.contentOffset.x <= 0 {
-            scrollView.isScrollEnabled = true
-            prepareScrollView(Float(scrollView.contentOffset.x))
-        }
-        scrollView.isScrollEnabled = true
-        //prepareScrollView(Float(scrollView.contentOffset.x))
+//        if currentPage != Page.modes {
+//            scrollView.isScrollEnabled = true
+//            prepareScrollView(Float(scrollView.contentOffset.x))
+//        } else if currentPage == Page.modes && scrollView.contentOffset.x > 0 {
+//            scrollView.isScrollEnabled = false
+//        } else if currentPage == Page.modes && scrollView.contentOffset.x <= 0 {
+//            scrollView.isScrollEnabled = true
+//            prepareScrollView(Float(scrollView.contentOffset.x))
+//        }
+//        scrollView.isScrollEnabled = true
+        prepareScrollView(Float(scrollView.contentOffset.x))
     }
     
     private func layoutContainer() {
@@ -177,8 +177,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         
         let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
         nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
-        
+       
         scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
-        scrollView.contentSize = bounds.size
+        scrollView.contentSize = CGSize(width: bounds.width, height: scrollView.frame.height)
     }
 }

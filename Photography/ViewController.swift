@@ -6,6 +6,7 @@ class ViewController: UIViewController {
         let photographyView = PhotographyView()
         let photographyModel = PhotographyModel()
         view = photographyView
+        view.backgroundColor = UIColor.backgroundColor()
         title = "Learn Photography"
         //navigationController?.hidesBarsOnSwipe = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)

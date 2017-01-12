@@ -9,6 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController(rootViewController: ViewController())
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
+        window?.backgroundColor = UIColor.backgroundColor()
         window?.makeKeyAndVisible()
         
         //maybe move this to a better location?

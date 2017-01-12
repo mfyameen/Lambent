@@ -17,6 +17,7 @@ public class TutorialModel {
     private var tutorialContent = PhotographyModel()
     
     public var nextSection: (Page, Segment?)-> Void = { _ in }
+    var previousSection: (Page, Segment?)-> Void = { _ in}
     public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
     public init (setUp: TutorialSetUp) {
@@ -78,7 +79,7 @@ public class TutorialModel {
         let scrollMaxLimit = tutorialContent.sections.count - 1
         if contentOffsetX < 0 && currentPage.rawValue > scrollMinLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            nextSection(currentPage, currentSegment ?? Segment.intro)
+            previousSection(currentPage, currentSegment ?? Segment.intro)
         } else if contentOffsetX > 0 && currentPage.rawValue < scrollMaxLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
             nextSection(currentPage, currentSegment ?? Segment.intro)
@@ -91,7 +92,7 @@ public class TutorialModel {
             nextSection(currentPage, currentSegment ?? Segment.intro)
         } else {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            nextSection(currentPage, currentSegment ?? Segment.intro)
+            previousSection(currentPage, currentSegment ?? Segment.intro)
         }
     }
 }

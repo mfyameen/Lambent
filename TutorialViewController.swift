@@ -43,6 +43,7 @@ class TutorialViewController: UIViewController {
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage.rawValue]
         //navigationController?.hidesBarsOnSwipe = false
+        
         let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         navigationItem.setLeftBarButton(backButton, animated: true)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
@@ -55,6 +56,19 @@ class TutorialViewController: UIViewController {
     func pushNextTutorialViewController(_ page: Page, _ segment: Segment?) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
+    }
+    
+    func pushPreviousTutorialViewController(_ page: Page, _ segment: Segment?) {
+        let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
+        
+        let transition = CATransition()
+        transition.duration = 0.35
+        transition.type = kCATransitionMoveIn
+        transition.subtype = kCATransitionFromLeft
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        navigationController?.view.layer.add(transition, forKey: nil)
+
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: false)
     }
 }
 
@@ -73,8 +87,9 @@ struct TutorialBinding {
         demoModel.shareInformation = demoView.addInformation
         tutorialView.tutorialContent = tutorialModel
         
-        
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
+        tutorialModel.previousSection = viewController.pushPreviousTutorialViewController
+    
         
         DemoView.movedSlider = demoModel.configureDemo
         demoModel.shareInformation = demoView.addInformation
