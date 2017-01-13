@@ -9,10 +9,11 @@ public extension UIColor {
     }
     
     public static func buttonColor() -> UIColor {
-        return UIColor(red:0.08, green:0.49, blue:0.98, alpha:1.00)
+        return UIColor(red:0.19, green:0.60, blue:0.94, alpha:1.00)
     }
     
     public static func sensorColor() -> UIColor {
         return UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.00)
     }
 }
+

@@ -13,12 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         //maybe move this to a better location?
-        navigationController.navigationBar.barTintColor = UIColor.backgroundColor()
         let titleAttributes =  [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18)]
         navigationController.navigationBar.titleTextAttributes = titleAttributes
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController.navigationBar.shadowImage = UIImage()
-        
         return true
     }
 }

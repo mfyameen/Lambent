@@ -6,7 +6,9 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let scrollView = UIScrollView()
     private let customToolBar = UIView()
     private let nextButton = UIButton()
+    private let nextButtonArrow = UIImageView()
     private let backButton = UIButton()
+    private let backButtonArrow = UIImageView()
     private let title = UILabel()
     private let content = UILabel()
     private var segmentedControl = UISegmentedControl()
@@ -41,16 +43,17 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
+      
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
         layoutContent()
         layoutAppropriateContent()
         layoutToolBarButtons([nextButton, backButton])
+        layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
         
-        addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, backButton, pageControl])
+        addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         scrollView.addSubview(demo)
     }
     
@@ -61,6 +64,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         numberOfSections = information.numberOfSections
         backButton.setTitle(information.backButtonTitle, for: .normal)
         nextButton.setTitle(information.nextButtonTitle, for: .normal)
+        if information.backArrowHidden {
+            backButtonArrow.isHidden = true
+        } else if information.nextArrowHidden {
+            nextButtonArrow.isHidden = true
+        }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -125,8 +133,16 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutToolBarButtons(_ buttons: [UIButton]) {
-        buttons.forEach ({
-            $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
+        buttons.forEach({ $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
+    }
+    
+    private func layoutToolBarArrows(_ images: [UIImageView]){
+        images.forEach({
+            let image = $0 == nextButtonArrow ? "nexticon" : "backicon"
+            $0.image = UIImage(named: image)
+            $0.contentMode = .scaleAspectFill
+            $0.clipsToBounds = true
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -161,12 +177,17 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let toolBarHeight: CGFloat = 44
         customToolBar.frame = CGRect(x: contentArea.minX, y: (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2, width: contentArea.width, height: toolBarHeight)
         
+        let arrowSize: CGFloat = 24
+        backButtonArrow.frame = CGRect(x: customToolBar.frame.minX, y: customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2 , width: arrowSize, height: arrowSize)
+
         let backButtonWidth = backButton.sizeThatFits(contentArea.size).width
-        backButton.frame = CGRect(x: customToolBar.frame.minX, y: customToolBar.frame.minY, width: backButtonWidth, height: toolBarHeight)
+        backButton.frame = CGRect(x: customToolBar.frame.minX + arrowSize, y: customToolBar.frame.minY, width: backButtonWidth, height: toolBarHeight)
+        
+        nextButtonArrow.frame = CGRect(x: customToolBar.frame.maxX - arrowSize, y: customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2 , width: arrowSize, height: arrowSize)
         
         let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
-        nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
-       
+        nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth - arrowSize, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
+        
         scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         scrollView.contentSize = CGSize(width: bounds.width, height: scrollView.frame.height)
     }

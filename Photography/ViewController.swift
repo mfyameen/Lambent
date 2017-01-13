@@ -7,7 +7,7 @@ class ViewController: UIViewController {
         let photographyModel = PhotographyModel()
         view = photographyView
         view.backgroundColor = UIColor.backgroundColor()
-        title = "Learn Photography"
+        title = "Capturing Light"
         //navigationController?.hidesBarsOnSwipe = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: photographyView, viewController: self, model: photographyModel)

@@ -4,6 +4,8 @@ public struct TutorialSettings {
     public init() {}
     public var backButtonTitle = ""
     public var nextButtonTitle = ""
+    public var nextArrowHidden = false
+    public var backArrowHidden = false
     public var title = ""
     public var content = ""
     public var isDemoScreen = false
@@ -54,8 +56,10 @@ public class TutorialModel {
     public func configureToolBarButtonTitles()  {
         if currentPage == .overview {
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
+            tutorial.backArrowHidden = true
         } else if currentPage == .modes {
             tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
+            tutorial.nextArrowHidden = true
         } else {
             tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
@@ -65,12 +69,11 @@ public class TutorialModel {
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
         let sectionTitle = tutorialContent.sections[currentPage.rawValue + nextSection]
-        if sectionTitle == CameraSections.Focal.rawValue {
-            return "Focal"
-        } else if sectionTitle == CameraSections.Shutter.rawValue {
-            return "Shutter"
-        } else {
-            return sectionTitle
+        guard let title = CameraSections(rawValue: sectionTitle) else { return "Intro" }
+        switch title {
+        case .focal: return "Focal"
+        case .shutter: return "Shutter"
+        default: return title.rawValue
         }
     }
     

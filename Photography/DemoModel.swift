@@ -1,11 +1,12 @@
 import Foundation
 
 enum CameraSections: String {
-    case Aperture = "Aperture"
-    case Shutter = "Shutter Speed"
-    case ISO = "ISO"
-    case Focal = "Focal Length"
-    case Modes = "Modes"
+    //case intro = "Intro"
+    case aperture = "Aperture"
+    case shutter = "Shutter Speed"
+    case iso = "ISO"
+    case focal = "Focal Length"
+    case modes = "Modes"
 }
 
 struct DemoSettings {
@@ -55,21 +56,21 @@ public class DemoModel {
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {
         guard let currentSection = CameraSections(rawValue: section ?? "") else { return sectionSettings }
         switch currentSection {
-        case .Aperture:
+        case .aperture:
             return CameraSectionDemoSettings(image: demoSettings.apertureImage, text: demoSettings.apertureText, cameraOpeningSize: demoSettings.cameraOpeningSize, cameraSensorSize: demoSettings.cameraSensorSize, icon: nil, instructions: tutorial.demoInstructions[currentPage])
-        case .Shutter:
+        case .shutter:
             return CameraSectionDemoSettings(image: demoSettings.shutterImage, text: demoSettings.shutterText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.shutterIcon, instructions: tutorial.demoInstructions[currentPage])
-        case .ISO:
+        case .iso:
             return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: tutorial.demoInstructions[currentPage])
-        case .Focal:
+        case .focal:
             return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: tutorial.demoInstructions[currentPage])
-        case .Modes:
+        case .modes:
             return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: tutorial.demoInstructions[currentPage])
         }
     }
     
-    private func configureSectionsWhenSliderValueChanged(_ value: Int) -> DemoSettings {
-        switch value {
+    private func configureSectionsWhenSliderValueChanged(_ sliderValue: Int) -> DemoSettings {
+        switch sliderValue {
         case 3:
             return DemoSettings(apertureImage: "flower", apertureText: "f/2.8", cameraOpeningSize: 38, cameraSensorSize: 44, shutterImage: "waterfall2.8", shutterIcon: "shutter1.2", shutterText: "1/2", isoImage: "flower", isoIcon: "iso100", isoText: "100",focalImage: nil, focalText: nil)
         case 4:

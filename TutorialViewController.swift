@@ -42,10 +42,15 @@ class TutorialViewController: UIViewController {
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage.rawValue]
-        //navigationController?.hidesBarsOnSwipe = false
+        let homeButton = UIButton()
+        let image = UIImage(named: "backicon")
+        homeButton.setImage(image, for: .normal)
+        homeButton.setTitle("Home", for: .normal)
+        homeButton.addTarget(self, action: #selector(returnHome), for: .touchUpInside)
+        homeButton.setTitleColor(UIColor.buttonColor(), for: .normal)
+        homeButton.sizeToFit()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: homeButton)
         
-        let backButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
-        navigationItem.setLeftBarButton(backButton, animated: true)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     

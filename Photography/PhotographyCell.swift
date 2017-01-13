@@ -129,7 +129,7 @@ class PhotographyCell: UITableViewCell {
         title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
         
         let phraseSize = phrase.sizeThatFits(contentArea.size)
-        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - (phraseSize.height/2) + 1, width: phraseSize.width, height: phraseSize.height)
+        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - phraseSize.height/2 - horizontalSeparator.frame.height, width: phraseSize.width, height: phraseSize.height)
         
         horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
         leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 50)

@@ -87,7 +87,7 @@ public class DemoView: UIView {
         
         
         let sliderWidth = TutorialView.segmentedWidth
-        let sliderHeight = slider.sizeThatFits(bounds.size).height
+        let sliderHeight: CGFloat = slider.sizeThatFits(bounds.size).height
         slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: (image.frame.maxY + bounds.maxY)/2 - sliderHeight/2, width: sliderWidth, height: sliderHeight)
         
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
