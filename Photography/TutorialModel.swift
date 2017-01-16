@@ -40,13 +40,18 @@ public class TutorialModel {
     
     func configureAppropriateSegment(segment: Segment?) {
         guard let segment = segment else { return }
-        switch segment {
-        case .intro:
+        switch (segment, currentPage) {
+        case (.intro, .modes): fallthrough
+        case (.demo, .modes): fallthrough
+        case (.practice, .modes):
+            tutorial.isDemoScreen = false
+            tutorial.content = tutorialContent.modesContent[segment.rawValue]
+        case (.intro, _):
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.introContent[currentPage.rawValue]
-        case .demo:
+        case (.demo, _):
             tutorial.isDemoScreen = true
-        case .practice:
+        case (.practice, _):
             tutorial.isDemoScreen = false
             tutorial.content = tutorialContent.practiceContent[currentPage.rawValue]
         }

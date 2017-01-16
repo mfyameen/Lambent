@@ -65,8 +65,7 @@ public class DemoModel {
             return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: tutorial.demoInstructions[currentPage])
         case .focal:
             return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.focalIcon, instructions: tutorial.demoInstructions[currentPage])
-        case .modes:
-            return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: nil, instructions: tutorial.demoInstructions[currentPage])
+        default: return sectionSettings
         }
     }
     

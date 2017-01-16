@@ -77,7 +77,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         container.layer.cornerRadius = 8
     }
     
-    //TODO: prevent slider from moving when scrolling on last screen
     private func layoutScrollView() {
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
@@ -85,24 +84,17 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        scrollView.isPagingEnabled = true
-//        if scrollView.contentOffset.x >= 0 && currentPage == .modes {
-//            scrollView.isPagingEnabled = false
-//        } else {
-//            scrollView.isPagingEnabled = true
-//            prepareScrollView(Float(scrollView.contentOffset.x))
-//        }
-      
       prepareScrollView(Float(scrollView.contentOffset.x))
-      //scrollView.isScrollEnabled = true
     }
     
     private func layoutSegmentedControl() {
-        if currentPage != .overview {
-            segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
-            segmentedControl.selectedSegmentIndex = currentSegment?.rawValue ?? 0
-            segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        switch currentPage {
+        case .overview: segmentedControl.isHidden = true
+        case .modes: segmentedControl = UISegmentedControl(items: ["Aperture", "Shutter", "Manual"])
+        default: segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
         }
+        segmentedControl.selectedSegmentIndex = currentSegment?.rawValue ?? 0
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
     @objc private func segmentedControlValueChanged() {
@@ -131,7 +123,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutAppropriateContent() {
-        if isDemo || currentSegment == .demo && currentPage != .overview {
+        if isDemo || currentSegment == .demo && currentPage != .overview && currentPage != .modes {
             demo.isHidden = false
             content.isHidden = true
         } else {

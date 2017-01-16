@@ -53,8 +53,9 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? PhotographyCell else { fatalError() }
+        guard let page = Page(rawValue: indexPath.section) else { return }
         let (title, phrase) = setTitleAndPhrase(index: indexPath.section)
-        cell.configureCell(title, phrase)
+        cell.configureCell(title, phrase, page)
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -66,8 +67,9 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let page = Page(rawValue: indexPath.section) else { return 0 }
         let (title, phrase) = setTitleAndPhrase(index: indexPath.section)
-        cachedCellForSizing.configureCell(title, phrase)
+        cachedCellForSizing.configureCell(title, phrase, page)
         return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
     }
     

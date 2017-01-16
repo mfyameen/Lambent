@@ -38,7 +38,7 @@ class PhotographyCell: UITableViewCell {
         
         leftButton.setTitle("Intro", for: .normal)
         startButton.setTitle("", for: .normal)
-        middleButton.setTitle("", for: .normal)
+        middleButton.setTitle("Demo", for: .normal)
         rightButton.setTitle("Practice", for: .normal)
     }
     
@@ -56,18 +56,17 @@ class PhotographyCell: UITableViewCell {
         })
     }
     
-    func configureCell(_ title: String, _ phrase: String) {
+    func configureCell(_ title: String, _ phrase: String, _ page: Page) {
         self.title.text = title
         self.phrase.text = phrase
         layer.cornerRadius = 8
         selectionStyle = .none
         HelperMethods.configureShadow(element: self)
-        
-        if title == "Get Started" {
-            configureIntroductionCell(title, phrase)
-        } else {
+        switch page {
+        case .overview: configureIntroductionCell()
+        case .modes: configureModeCell(); fallthrough
+        default:
             startButton.isEnabled = false
-            middleButton.setTitle("Demo", for: .normal)
             middleButton.isEnabled = true
             leftButton.addTarget(self, action: #selector(pressIntroButton), for: .touchUpInside)
             middleButton.addTarget(self, action: #selector(pressDemoButton), for: .touchUpInside)
@@ -75,7 +74,7 @@ class PhotographyCell: UITableViewCell {
         }
     }
     
-    private func configureIntroductionCell(_ title: String, _ phrase: String) {
+    private func configureIntroductionCell() {
         middleButton.isEnabled = false
         startButton.isEnabled = true
         startButton.addTarget(self, action: #selector(pressStartButton), for: .touchUpInside)
@@ -87,8 +86,13 @@ class PhotographyCell: UITableViewCell {
         startButton.setTitle("Start", for: .normal)
         leftButton.setTitle("", for: .normal)
         middleButton.setTitle("", for: .normal)
-        
         rightButton.setTitle("", for: .normal)
+    }
+    
+    private func configureModeCell() {
+        leftButton.setTitle("Aperture", for: .normal)
+        middleButton.setTitle("Shutter", for: .normal)
+        rightButton.setTitle("Manual", for: .normal)
     }
     
     @objc private func pressStartButton() {
