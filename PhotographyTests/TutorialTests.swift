@@ -65,12 +65,11 @@ class TutorialTests: XCTestCase {
         var testObject: String?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
         let tutorial = TutorialModel(setUp: setUp)
-        let tutorialContent = PhotographyModel()
         
         tutorial.shareTutorialSettings = { testObject = $0.backButtonTitle }
         tutorial.configureToolBarButtonTitles()
         
-        XCTAssertEqual(testObject, tutorialContent.sections[Page.aperture.rawValue - 1])
+        XCTAssertEqual(testObject, "Intro")
     }
     
     func testOnlyNextButtonDisplayedWhenOverviewPage() {

@@ -43,7 +43,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-      
+
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
@@ -70,10 +70,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
             nextButtonArrow.isHidden = true
         }
     }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        prepareScrollView(Float(scrollView.contentOffset.x))
-    }
     
     private func layoutContainer() {
         backgroundColor = UIColor.backgroundColor()
@@ -86,7 +82,19 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        scrollView.isPagingEnabled = true
+//        if scrollView.contentOffset.x >= 0 && currentPage == .modes {
+//            scrollView.isPagingEnabled = false
+//        } else {
+//            scrollView.isPagingEnabled = true
+//            prepareScrollView(Float(scrollView.contentOffset.x))
+//        }
+      
+      prepareScrollView(Float(scrollView.contentOffset.x))
+      //scrollView.isScrollEnabled = true
     }
     
     private func layoutSegmentedControl() {
@@ -162,10 +170,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         TutorialView.segmentedWidth = contentArea.width - insets.left - insets.right
         segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + padding, width: TutorialView.segmentedWidth, height: TutorialView.segmentedHeight)
         
-        demo.frame = CGRect(x: 0, y: 0, width: contentArea.width, height: contentArea.height )
+        demo.frame = CGRect(x: 0, y: 0, width: contentArea.width, height: contentArea.height)
         
+        //Use attributed strings to get rid of title
         let titleSize = title.sizeThatFits(contentArea.size)
-        title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + (padding * 2), width: titleSize.width, height: titleSize.height)
+        title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + padding, width: titleSize.width, height: titleSize.height)
         
         let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, insets)
         let contentSize = content.sizeThatFits(contentLabelArea.size)
@@ -175,7 +184,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         pageControl.frame = CGRect(x: contentArea.midX - pageControlSize.width/2, y: (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2, width: pageControlSize.width, height: pageControlSize.height)
         
         let toolBarHeight: CGFloat = 44
-        customToolBar.frame = CGRect(x: contentArea.minX, y: (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2, width: contentArea.width, height: toolBarHeight)
+        let toolBarTop = (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2
+        customToolBar.frame = CGRect(x: contentArea.minX, y: toolBarTop, width: contentArea.width, height: toolBarHeight)
         
         let arrowSize: CGFloat = 24
         backButtonArrow.frame = CGRect(x: customToolBar.frame.minX, y: customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2 , width: arrowSize, height: arrowSize)

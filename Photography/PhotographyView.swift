@@ -41,16 +41,6 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
         return tableViewContent?.sections.count ?? 0
     }
     
-//    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y > 0 {
-//           PhotographyView.hideNavigationBar = true
-//            print(PhotographyView.hideNavigationBar)
-//        } else {
-//            PhotographyView.hideNavigationBar = false
-//            print(PhotographyView.hideNavigationBar)
-//        }
-//    }
-    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in

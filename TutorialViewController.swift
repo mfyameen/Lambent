@@ -50,7 +50,7 @@ class TutorialViewController: UIViewController {
         homeButton.setTitleColor(UIColor.buttonColor(), for: .normal)
         homeButton.sizeToFit()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: homeButton)
-        
+       // navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     
@@ -79,23 +79,17 @@ class TutorialViewController: UIViewController {
 
 struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
-       
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement
         tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
         tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
-    
         tutorialModel.shareTutorialSettings = tutorialView.addInformation
-        
         tutorialView.prepareDemo = demoModel.configureDemo
         demoModel.shareInformation = demoView.addInformation
         tutorialView.tutorialContent = tutorialModel
-        
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         tutorialModel.previousSection = viewController.pushPreviousTutorialViewController
-    
-        
         DemoView.movedSlider = demoModel.configureDemo
         demoModel.shareInformation = demoView.addInformation
     }
