@@ -124,26 +124,23 @@ class PhotographyCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let inset: CGFloat = 15
-        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
+        let contentArea = bounds.insetBy(dx: 15, dy: 15)
         let separatorYOffset = bounds.maxY - 50
         
         let titleSize = title.sizeThatFits(contentArea.size)
-        title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
+        title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: ceil(titleSize.width), height: ceil(titleSize.height))
         
         let phraseSize = phrase.sizeThatFits(contentArea.size)
-        phrase.frame = CGRect(x: contentArea.minX, y: (title.frame.maxY + separatorYOffset)/2 - phraseSize.height/2 - horizontalSeparator.frame.height, width: phraseSize.width, height: phraseSize.height)
+        let phraseTop = (title.frame.maxY + separatorYOffset)/2 - phraseSize.height/2
+        phrase.frame = CGRect(x: contentArea.minX, y: phraseTop, width: ceil(phraseSize.width), height: ceil(phraseSize.height))
         
         horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
         leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 50)
         rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 50)
         
-        
         startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
         middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-    }
-    
+    } 
 }

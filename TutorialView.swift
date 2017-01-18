@@ -162,7 +162,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         TutorialView.segmentedWidth = contentArea.width - insets.left - insets.right
         segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + padding, width: TutorialView.segmentedWidth, height: TutorialView.segmentedHeight)
         
-        demo.frame = CGRect(x: 0, y: 0, width: contentArea.width, height: contentArea.height)
+        demo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: contentArea.width, height: contentArea.height))
         
         //Use attributed strings to get rid of title
         let titleSize = title.sizeThatFits(contentArea.size)
@@ -173,19 +173,20 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         content.frame = CGRect(x: contentArea.midX - contentSize.width/2, y: segmentedControl.frame.maxY + padding, width: contentSize.width, height: contentSize.height)
         
         let pageControlSize = pageControl.sizeThatFits(contentArea.size)
-        pageControl.frame = CGRect(x: contentArea.midX - pageControlSize.width/2, y: (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2, width: pageControlSize.width, height: pageControlSize.height)
+        let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
+        pageControl.frame = CGRect(x: contentArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)
         
         let toolBarHeight: CGFloat = 44
         let toolBarTop = (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2
         customToolBar.frame = CGRect(x: contentArea.minX, y: toolBarTop, width: contentArea.width, height: toolBarHeight)
-        
-        let arrowSize: CGFloat = 24
-        backButtonArrow.frame = CGRect(x: customToolBar.frame.minX, y: customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2 , width: arrowSize, height: arrowSize)
 
+        let arrowSize: CGFloat = 24
+        let arrowTop = customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2
+        backButtonArrow.frame = CGRect(x: customToolBar.frame.minX, y: arrowTop, width: arrowSize, height: arrowSize)
+        nextButtonArrow.frame = CGRect(x: customToolBar.frame.maxX - arrowSize, y: arrowTop, width: arrowSize, height: arrowSize)
+        
         let backButtonWidth = backButton.sizeThatFits(contentArea.size).width
         backButton.frame = CGRect(x: customToolBar.frame.minX + arrowSize, y: customToolBar.frame.minY, width: backButtonWidth, height: toolBarHeight)
-        
-        nextButtonArrow.frame = CGRect(x: customToolBar.frame.maxX - arrowSize, y: customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2 , width: arrowSize, height: arrowSize)
         
         let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
         nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth - arrowSize, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)

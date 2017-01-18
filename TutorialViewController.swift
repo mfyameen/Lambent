@@ -42,6 +42,7 @@ class TutorialViewController: UIViewController {
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage.rawValue]
+        navigationController?.hidesBarsOnSwipe = false
         let homeButton = UIButton()
         let image = UIImage(named: "backicon")
         homeButton.setImage(image, for: .normal)
@@ -50,7 +51,6 @@ class TutorialViewController: UIViewController {
         homeButton.setTitleColor(UIColor.buttonColor(), for: .normal)
         homeButton.sizeToFit()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: homeButton)
-       // navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(returnHome))
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     

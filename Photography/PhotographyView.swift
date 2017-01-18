@@ -40,7 +40,7 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     public func numberOfSections(in tableView: UITableView) -> Int {
         return tableViewContent?.sections.count ?? 0
     }
-    
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
