@@ -89,6 +89,56 @@
 			path = PhotographyTests;
 			sourceTree = "<group>";
 		};
+		17C059EA1E3059F4007ACFB1 /* TableViewUI */ = {
+			isa = PBXGroup;
+			children = (
+				17C283551DF066F400E7BC29 /* ViewController.swift */,
+				17C283691DF07F2000E7BC29 /* PhotographyCell.swift */,
+				17C283651DF0788600E7BC29 /* PhotographyView.swift */,
+			);
+			name = TableViewUI;
+			sourceTree = "<group>";
+		};
+		17C059EB1E305A5A007ACFB1 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				172F513D1E01CFD60048E8E3 /* HelperMethods.swift */,
+				177DD3511E09C02000605146 /* Colors.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		17C059EC1E305A86007ACFB1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				17C283531DF066F400E7BC29 /* AppDelegate.swift */,
+				17C2835A1DF066F400E7BC29 /* Assets.xcassets */,
+				17C2835C1DF066F400E7BC29 /* LaunchScreen.storyboard */,
+				17C2835F1DF066F400E7BC29 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		17C059ED1E305AEA007ACFB1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				177DD3551E0ADA2D00605146 /* DemoModel.swift */,
+				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
+				17C283671DF07CA400E7BC29 /* PhotographyModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		17C059EE1E305B20007ACFB1 /* TutorialView */ = {
+			isa = PBXGroup;
+			children = (
+				176958C31DF47FE50060941A /* TutorialView.swift */,
+				176958C71DF48A760060941A /* TutorialViewController.swift */,
+				177DD33F1E060BC800605146 /* DemoView.swift */,
+			);
+			name = TutorialView;
+			sourceTree = "<group>";
+		};
 		17C283471DF066F300E7BC29 = {
 			isa = PBXGroup;
 			children = (
@@ -110,21 +160,11 @@
 		17C283521DF066F400E7BC29 /* Photography */ = {
 			isa = PBXGroup;
 			children = (
-				176958C31DF47FE50060941A /* TutorialView.swift */,
-				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
-				17C283531DF066F400E7BC29 /* AppDelegate.swift */,
-				177DD33F1E060BC800605146 /* DemoView.swift */,
-				177DD3551E0ADA2D00605146 /* DemoModel.swift */,
-				176958C71DF48A760060941A /* TutorialViewController.swift */,
-				17C283551DF066F400E7BC29 /* ViewController.swift */,
-				17C283651DF0788600E7BC29 /* PhotographyView.swift */,
-				17C283691DF07F2000E7BC29 /* PhotographyCell.swift */,
-				172F513D1E01CFD60048E8E3 /* HelperMethods.swift */,
-				17C283671DF07CA400E7BC29 /* PhotographyModel.swift */,
-				177DD3511E09C02000605146 /* Colors.swift */,
-				17C2835A1DF066F400E7BC29 /* Assets.xcassets */,
-				17C2835C1DF066F400E7BC29 /* LaunchScreen.storyboard */,
-				17C2835F1DF066F400E7BC29 /* Info.plist */,
+				17C059EE1E305B20007ACFB1 /* TutorialView */,
+				17C059EA1E3059F4007ACFB1 /* TableViewUI */,
+				17C059ED1E305AEA007ACFB1 /* Model */,
+				17C059EB1E305A5A007ACFB1 /* Common */,
+				17C059EC1E305A86007ACFB1 /* Supporting Files */,
 			);
 			path = Photography;
 			sourceTree = "<group>";

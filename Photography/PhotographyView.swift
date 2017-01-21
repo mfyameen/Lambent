@@ -14,10 +14,10 @@ struct CellBinding {
 
 public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     private let tableView: UITableView
+    var navigationController: UINavigationController?
     private let cachedCellForSizing = PhotographyCell()
     public var tableViewContent: PhotographyModel?
-    static var hideNavigationBar = false
-    
+
     var startTutorial: (TutorialSetUp)->() = { _ in }
     
     override init(frame: CGRect) {
@@ -58,6 +58,14 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
         cell.configureCell(title, phrase, page)
     }
     
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= 0 {
+             navigationController?.isNavigationBarHidden = true
+        } else {
+            navigationController?.isNavigationBarHidden = false
+        }
+    }
+
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.5
     }

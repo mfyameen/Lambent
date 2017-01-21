@@ -121,7 +121,7 @@ class PhotographyCell: UITableViewCell {
         let titleHeight: CGFloat = title.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         return CGSize(width: size.width, height: phraseHeight + titleHeight + buttonHeight + 8 * 6)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         let contentArea = bounds.insetBy(dx: 15, dy: 15)

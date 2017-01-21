@@ -25,7 +25,7 @@ public struct TutorialSetUp {
 }
 
 class TutorialViewController: UIViewController {
-    private let setUp: TutorialSetUp
+    let setUp: TutorialSetUp
     init(setUp: TutorialSetUp) {
         self.setUp = setUp
         super.init(nibName: nil, bundle: nil)
@@ -42,7 +42,6 @@ class TutorialViewController: UIViewController {
         let photographyModel = PhotographyModel()
         view = tutorialView
         title = photographyModel.sections[setUp.currentPage.rawValue]
-        navigationController?.hidesBarsOnSwipe = false
         let homeButton = UIButton()
         let image = UIImage(named: "backicon")
         homeButton.setImage(image, for: .normal)
@@ -50,10 +49,16 @@ class TutorialViewController: UIViewController {
         homeButton.addTarget(self, action: #selector(returnHome), for: .touchUpInside)
         homeButton.setTitleColor(UIColor.buttonColor(), for: .normal)
         homeButton.sizeToFit()
+        navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: homeButton)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
+
     func returnHome() {
         _ = navigationController?.popToRootViewController(animated: true)
     }

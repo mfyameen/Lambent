@@ -45,7 +45,7 @@ class DemoTests: XCTestCase {
         let demo = DemoModel(setUp: setUp)
         demo.shareInformation = { testObject = $0.image }
         demo.configureDemo(sliderValue: 6)
-        XCTAssertEqual(testObject, "flower")
+        XCTAssertEqual(testObject, "fountain5.6")
     }
     
     func testCorrectISOTextDisplayedWhenSliderValueChanged() {
