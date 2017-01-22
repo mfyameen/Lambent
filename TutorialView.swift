@@ -43,7 +43,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentSegment = setUp.currentSegment
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
@@ -64,6 +63,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         numberOfSections = information.numberOfSections
         backButton.setTitle(information.backButtonTitle, for: .normal)
         nextButton.setTitle(information.nextButtonTitle, for: .normal)
+        
         if information.backArrowHidden {
             backButtonArrow.isHidden = true
         } else if information.nextArrowHidden {
@@ -164,9 +164,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         
         demo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: contentArea.width, height: contentArea.height))
         
-        //Use attributed strings to get rid of title
         let titleSize = title.sizeThatFits(contentArea.size)
-        title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + padding, width: titleSize.width, height: titleSize.height)
+        title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + TutorialView.segmentedHeight, width: titleSize.width, height: titleSize.height)
         
         let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, insets)
         let contentSize = content.sizeThatFits(contentLabelArea.size)

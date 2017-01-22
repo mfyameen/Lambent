@@ -10,15 +10,16 @@ class PhotographyCell: UITableViewCell {
     private let horizontalSeparator = UIView()
     private let leftVerticalSeparator = UIView()
     private let rightVerticalSeparator = UIView()
-    
-    private let buttonHeight: CGFloat = 45
-    private let buttonWidth = (UIScreen.main.bounds.width - 30) * 0.33
+    private let buttonHeight: CGFloat = 44
+    private let insets: CGFloat = 15
+    private let padding: CGFloat = 50
+    private let buttonWidth: CGFloat
+    static let reuseIdentifier = "Cell"
     
     var pressButton: (Segment?)->() = { _ in }
     
-    static let reuseIdentifier = "Cell"
-    
     override init (style: UITableViewCellStyle, reuseIdentifier: String?) {
+        buttonWidth = (UIScreen.main.bounds.width - (insets * 2)) * 0.33
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
         contentView.addSubviews([title, phrase, horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator, startButton, leftButton, middleButton, rightButton])
@@ -32,6 +33,10 @@ class PhotographyCell: UITableViewCell {
         title.font = UIFont.boldSystemFont(ofSize: 16)
         phrase.font = UIFont.systemFont(ofSize: 14)
         phrase.numberOfLines = 0
+        
+        layer.cornerRadius = 8
+        selectionStyle = .none
+        HelperMethods.configureShadow(element: self)
         
         layoutSeparators([horizontalSeparator, leftVerticalSeparator, rightVerticalSeparator])
         layoutButtons([startButton, leftButton, middleButton, rightButton])
@@ -56,13 +61,11 @@ class PhotographyCell: UITableViewCell {
         })
     }
     
-    func configureCell(_ title: String, _ phrase: String, _ page: Page) {
-        self.title.text = title
-        self.phrase.text = phrase
-        layer.cornerRadius = 8
-        selectionStyle = .none
-        HelperMethods.configureShadow(element: self)
-        switch page {
+    func configure(_ content: CellContent, for cell: Page) {
+        self.title.text = content.title
+        self.phrase.text = content.phrase
+        
+        switch cell {
         case .overview: configureIntroductionCell()
         case .modes: configureModeCell(); fallthrough
         default:
@@ -119,13 +122,13 @@ class PhotographyCell: UITableViewCell {
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         let phraseHeight: CGFloat = phrase.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
         let titleHeight: CGFloat = title.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)).height
-        return CGSize(width: size.width, height: phraseHeight + titleHeight + buttonHeight + 8 * 6)
+        return CGSize(width: size.width, height: phraseHeight + titleHeight + buttonHeight + padding)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let contentArea = bounds.insetBy(dx: 15, dy: 15)
-        let separatorYOffset = bounds.maxY - 50
+        let contentArea = bounds.insetBy(dx: insets, dy: insets)
+        let separatorYOffset = bounds.maxY - padding
         
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: ceil(titleSize.width), height: ceil(titleSize.height))
@@ -135,8 +138,8 @@ class PhotographyCell: UITableViewCell {
         phrase.frame = CGRect(x: contentArea.minX, y: phraseTop, width: ceil(phraseSize.width), height: ceil(phraseSize.height))
         
         horizontalSeparator.frame = CGRect(x: bounds.minX, y: separatorYOffset, width: bounds.width, height: 1)
-        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: 50)
-        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: 50)
+        leftVerticalSeparator.frame = CGRect(x: buttonWidth, y: separatorYOffset, width: 1, height: padding)
+        rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: padding)
         
         startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)

@@ -1,5 +1,29 @@
 import UIKit
 
+public enum Page: Int {
+    case overview = 0
+    case aperture = 1
+    case shutter = 2
+    case iso = 3
+    case focal = 4
+    case modes = 5
+}
+
+public enum Segment: Int {
+    case intro = 0
+    case demo = 1
+    case practice = 2
+}
+
+public struct TutorialSetUp {
+    var currentPage: Page
+    var currentSegment: Segment?
+    public init(currentPage: Page, currentSegment: Segment?) {
+        self.currentPage = currentPage
+        self.currentSegment = currentSegment
+    }
+}
+
 class ViewController: UIViewController {
     override func loadView() {
         let photographyView = PhotographyView()

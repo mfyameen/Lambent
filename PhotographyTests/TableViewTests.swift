@@ -8,16 +8,16 @@ class TableViewTests: XCTestCase {
     func testCorrectTitleDisplayedWhenOverviewCell() {
         view.tableViewContent = model
         let overviewIndex = Page.overview.rawValue
-        let (titleTestObject, _) = view.setTitleAndPhrase(index: overviewIndex)
-        let correctTitle = model.sections[overviewIndex]
-        XCTAssertEqual(titleTestObject, correctTitle)
+        let testObject = view.setTitleAndPhrase(index: overviewIndex)
+        let expectedValue = model.sections[overviewIndex]
+        XCTAssertEqual(testObject.title, expectedValue)
     }
     
     func testCorrectPhraseDisplayedWhenApertureCell() {
         view.tableViewContent = model
         let apertureIndex = Page.aperture.rawValue
-        let (_, phraseTestObject) = view.setTitleAndPhrase(index: apertureIndex)
-        let correctPhrase = model.descriptions[apertureIndex]
-        XCTAssertEqual(phraseTestObject, correctPhrase)
+        let testObject = view.setTitleAndPhrase(index: apertureIndex)
+        let expectedValue = model.descriptions[apertureIndex]
+        XCTAssertEqual(testObject.phrase, expectedValue)
     }
 }

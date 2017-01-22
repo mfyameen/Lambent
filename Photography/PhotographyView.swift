@@ -12,8 +12,14 @@ struct CellBinding {
     }
 }
 
+public struct CellContent {
+    public var title: String = ""
+    public var phrase: String = ""
+}
+
 public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     private let tableView: UITableView
+    private var content = CellContent()
     var navigationController: UINavigationController?
     private let cachedCellForSizing = PhotographyCell()
     public var tableViewContent: PhotographyModel?
@@ -30,7 +36,7 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
         tableView.separatorStyle = .none
         tableView.clipsToBounds = false
         tableView.showsVerticalScrollIndicator = false
-        addSubview(self.tableView)
+        addSubview(tableView)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -40,10 +46,18 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     public func numberOfSections(in tableView: UITableView) -> Int {
         return tableViewContent?.sections.count ?? 0
     }
+    
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.5
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
-        CellBinding.bind(view: cell, handler: { [weak self ] segmentedControl in
+        CellBinding.bind(view: cell, handler: { [weak self] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
             self?.startTutorial(setUp)
@@ -54,37 +68,29 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? PhotographyCell else { fatalError() }
         guard let page = Page(rawValue: indexPath.section) else { return }
-        let (title, phrase) = setTitleAndPhrase(index: indexPath.section)
-        cell.configureCell(title, phrase, page)
+        content = setTitleAndPhrase(index: indexPath.section)
+        cell.configure(content, for: page)
+    }
+
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let page = Page(rawValue: indexPath.section) else { return 0 }
+        let content = setTitleAndPhrase(index: indexPath.section)
+        cachedCellForSizing.configure(content, for: page)
+        return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
+    }
+    
+   public func setTitleAndPhrase(index: Int) -> CellContent {
+        content.title = tableViewContent?.sections[index] ?? ""
+        content.phrase = tableViewContent?.descriptions[index] ?? ""
+        return content
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= 0 {
-             navigationController?.isNavigationBarHidden = true
+            navigationController?.isNavigationBarHidden = true
         } else {
             navigationController?.isNavigationBarHidden = false
         }
-    }
-
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.5
-    }
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let page = Page(rawValue: indexPath.section) else { return 0 }
-        let (title, phrase) = setTitleAndPhrase(index: indexPath.section)
-        cachedCellForSizing.configureCell(title, phrase, page)
-        return cachedCellForSizing.sizeThatFits(tableView.contentSize).height
-    }
-    
-    public func setTitleAndPhrase(index: Int) -> (String, String) {
-        let title = tableViewContent?.sections[index] ?? ""
-        let phrase = tableViewContent?.descriptions[index] ?? ""
-        return (title, phrase)
     }
 }
 

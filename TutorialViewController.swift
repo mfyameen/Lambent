@@ -1,29 +1,5 @@
 import UIKit
 
-public enum Page: Int {
-    case overview = 0
-    case aperture = 1
-    case shutter = 2
-    case iso = 3
-    case focal = 4
-    case modes = 5
-}
-
-public enum Segment: Int {
-    case intro = 0
-    case demo = 1
-    case practice = 2
-}
-
-public struct TutorialSetUp {
-   var currentPage: Page
-   var currentSegment: Segment?
-    public init(currentPage: Page, currentSegment: Segment?) {
-        self.currentPage = currentPage
-        self.currentSegment = currentSegment
-    }
-}
-
 class TutorialViewController: UIViewController {
     let setUp: TutorialSetUp
     init(setUp: TutorialSetUp) {
@@ -37,20 +13,14 @@ class TutorialViewController: UIViewController {
     
     override func loadView() {
         let tutorialView = TutorialView(setUp: setUp)
+        view = tutorialView
         let tutorialModel = TutorialModel(setUp: setUp)
         let demoModel = DemoModel(setUp: setUp)
         let photographyModel = PhotographyModel()
-        view = tutorialView
         title = photographyModel.sections[setUp.currentPage.rawValue]
-        let homeButton = UIButton()
-        let image = UIImage(named: "backicon")
-        homeButton.setImage(image, for: .normal)
-        homeButton.setTitle("Home", for: .normal)
-        homeButton.addTarget(self, action: #selector(returnHome), for: .touchUpInside)
-        homeButton.setTitleColor(UIColor.buttonColor(), for: .normal)
-        homeButton.sizeToFit()
+        let button = configureButton()
         navigationController?.isNavigationBarHidden = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: homeButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
     }
     
@@ -58,9 +28,16 @@ class TutorialViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.isNavigationBarHidden = false
     }
-
-    func returnHome() {
-        _ = navigationController?.popToRootViewController(animated: true)
+    
+    func configureButton() -> UIButton {
+        let button = UIButton()
+        let image = UIImage(named: "backicon")
+        button.setImage(image, for: .normal)
+        button.setTitle("Home", for: .normal)
+        button.addTarget(self, action: #selector(returnHome), for: .touchUpInside)
+        button.setTitleColor(UIColor.buttonColor(), for: .normal)
+        button.sizeToFit()
+        return button
     }
 
     func pushNextTutorialViewController(_ page: Page, _ segment: Segment?) -> Void {
@@ -70,15 +47,22 @@ class TutorialViewController: UIViewController {
     
     func pushPreviousTutorialViewController(_ page: Page, _ segment: Segment?) {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
-        
+        let transition = configureTransition()
+        navigationController?.view.layer.add(transition, forKey: nil)
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: false)
+    }
+    
+    func configureTransition() -> CATransition {
         let transition = CATransition()
         transition.duration = 0.35
         transition.type = kCATransitionMoveIn
         transition.subtype = kCATransitionFromLeft
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        navigationController?.view.layer.add(transition, forKey: nil)
-
-        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: false)
+        return transition
+    }
+    
+    func returnHome() {
+        _ = navigationController?.popToRootViewController(animated: true)
     }
 }
 
