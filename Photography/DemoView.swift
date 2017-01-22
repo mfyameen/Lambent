@@ -12,7 +12,7 @@ public class DemoView: UIView {
     private let demoInstructions = UILabel()
     private var apertureImage: String?
     
-    static var movedSlider: (Int?) ->() = { _ in }
+    var movedSlider: (Int?) ->() = { _ in }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,8 +52,7 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        //TODO: Fix binding
-        DemoView.movedSlider(Int(slider.value))
+        movedSlider(Int(slider.value))
         setNeedsLayout()
     }
     
