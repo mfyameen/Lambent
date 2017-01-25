@@ -78,6 +78,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		173D112C1E37F56E00706B80 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		177DD3481E07761E00605146 /* PhotographyTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +167,7 @@
 		17C283521DF066F400E7BC29 /* Photography */ = {
 			isa = PBXGroup;
 			children = (
+				173D112C1E37F56E00706B80 /* Services */,
 				17C059EE1E305B20007ACFB1 /* TutorialView */,
 				17C059EA1E3059F4007ACFB1 /* TableViewUI */,
 				17C059ED1E305AEA007ACFB1 /* Model */,

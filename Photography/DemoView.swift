@@ -12,6 +12,7 @@ public class DemoView: UIView {
     private let demoInstructions = UILabel()
     private var apertureImage: String?
     
+    private let cache = NSCache<NSString, UIImage>()
     var movedSlider: (Int?) ->() = { _ in }
     
     override init(frame: CGRect) {
@@ -38,10 +39,24 @@ public class DemoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func layoutImage(imageView: UIImageView,image: String) {
+    private func layoutImage(imageView: UIImageView, image: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: image)
+//        if let cachedImage = self.cache.object(forKey: "CachedObject") {
+//            imageView.image = cachedImage
+//        } else {
+//            if let preCachedImage = UIImage(named: image) {
+//                self.cache.setObject(preCachedImage, forKey: "CachedObject")
+//                imageView.image = UIImage(named: image)
+//            }
+//        }
+        
+//        if let preCachedImage = UIImage(named: image) {
+//            self.cache.setObject(preCachedImage, forKey: "CachedObject")
+//        }
+//        let cachedImage = self.cache.object(forKey: "CachedObject")
+//        imageView.image = cachedImage
     }
     
     private func layoutSlider() {

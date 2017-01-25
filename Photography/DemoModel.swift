@@ -5,6 +5,7 @@ enum CameraSections: String {
     case shutter = "Shutter Speed"
     case iso = "ISO"
     case focal = "Focal Length"
+    case modes = "Modes"
 }
 
 struct DemoSettings {
@@ -65,6 +66,7 @@ public class DemoModel {
             return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: updatedInstructions ?? demoInstructions)
         case .focal:
             return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.focalIcon, instructions: updatedInstructions ?? demoInstructions)
+        default: return sectionSettings
         }
     }
     
