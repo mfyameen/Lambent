@@ -1,7 +1,17 @@
 import Foundation
 
 public struct PhotographyModel{
-    public init() {}
+    var images = [String]()
+   // let service = ServiceLayer()
+    
+    func fetchImages() {
+        ServiceLayer.fetchImages()
+      //  self.images =
+    }
+    
+    public init() {
+        fetchImages()
+    }
     public let sections = ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"]
     public let descriptions = ["Start this tutorial to learn the basics of photography, or click around and explore any section that catches your eye.", "Aperture controls the amount of light that passes through the lens.", "Shutter speed controls how long the shutter remains open and the lens receives light.", "ISO controls your camera’s level of sensitivity to available light.", "Focal length controls the zoom of your lens and how much of the scene will be captured.","Explore Aperture-Priority, Shutter-Priority, and Manual mode to learn how and when you should use each mode."]
     public let sectionTitles = ["Lighting", "", "", "", "", ""]

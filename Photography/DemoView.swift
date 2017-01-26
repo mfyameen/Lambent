@@ -43,6 +43,16 @@ public class DemoView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: image)
+//        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/photography-f68e7.appspot.com/o/waterfall4.jpg?alt=media&token=f040e86b-f75f-4e20-af1d-bbf14ce4f914")
+//        DispatchQueue.global().async {
+//            let data = try? Data(contentsOf: url!)
+//            DispatchQueue.main.async {
+//                imageView.image = UIImage(data: data!)
+//            }
+//        }
+        
+        
+        
 //        if let cachedImage = self.cache.object(forKey: "CachedObject") {
 //            imageView.image = cachedImage
 //        } else {

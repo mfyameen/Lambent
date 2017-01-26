@@ -1,4 +1,5 @@
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.backgroundColor()
         window?.makeKeyAndVisible()
         return true
+    }
+    
+    override init() {
+        FIRApp.configure()
+        FIRDatabase.database().persistenceEnabled = true
     }
 }
 
