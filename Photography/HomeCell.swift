@@ -1,6 +1,6 @@
 import UIKit
 
-class PhotographyCell: UITableViewCell {
+class HomeCell: UITableViewCell {
     private let title = UILabel()
     private let phrase = UILabel()
     private let startButton = UIButton()

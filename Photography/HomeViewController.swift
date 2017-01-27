@@ -24,9 +24,9 @@ public struct TutorialSetUp {
     }
 }
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     override func loadView() {
-        let photographyView = PhotographyView()
+        let photographyView = HomeView()
         let photographyModel = PhotographyModel()
         view = photographyView
         view.backgroundColor = UIColor.backgroundColor()
@@ -35,17 +35,18 @@ class ViewController: UIViewController {
         ViewControllerBinding.bind(view: photographyView, viewController: self, model: photographyModel)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.isNavigationBarHidden = true
+//    }
 
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void{
         navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
     }
 }
     struct ViewControllerBinding{
-        static func bind (view: PhotographyView, viewController: ViewController, model: PhotographyModel){
+        static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel){
+            model.fetchImages({ DemoView.images = $0 })
             view.navigationController = viewController.navigationController
             view.tableViewContent = model
             view.startTutorial = viewController.pushTutorialViewController

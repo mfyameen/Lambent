@@ -3,22 +3,24 @@ import Firebase
 
 struct Images {
     let title: String
-    let location: URL
+    let location: String
 }
 
 struct ServiceLayer {
-    static func fetchImages() {
+    //unsure of the functionality of the completion blocks
+    static func fetchImages(_ completion: @escaping ([Images]) -> ()) {
         let database = FIRDatabase.database().reference()
-        database.child("images").observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let result = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
-            print("--------------------------------------- \(result) -------------------------------------------")
-            let snapshotValue = snapshot.value as! [String: Any]
-            let imageURL = snapshotValue["waterfall4"] as! String
-            print(imageURL)
-            
-            
-        }) { (error) in
-            print(error.localizedDescription)
-        }
+        database.observe(.value, with: { (snapshot) in
+            var images: [Images] = []
+            snapshot.children.forEach { item in
+                let child = item as! FIRDataSnapshot
+                let dict = child.value as! NSDictionary
+                guard let location = dict.object(forKey: "location") as? String, let title = dict.object(forKey: "title") as? String else { return }
+                images += [Images(title: title, location: location)]
+            }
+            completion(images)
+        })
     }
 }
+
+

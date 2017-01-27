@@ -14,6 +14,7 @@ public class DemoView: UIView {
     
     private let cache = NSCache<NSString, UIImage>()
     var movedSlider: (Int?) ->() = { _ in }
+    static var images = [Images]() 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,8 +25,8 @@ public class DemoView: UIView {
     }
     
     public func addInformation(demoInformation: CameraSectionDemoSettings) {
-        layoutImage(imageView: image, image: demoInformation.image ?? "")
-        layoutImage(imageView: icon, image: demoInformation.icon ?? "")
+        layoutImage(imageView: image, imageName: demoInformation.image ?? "")
+        layoutImage(imageView: icon, imageName: demoInformation.icon ?? "")
         cameraOpeningSize = CGFloat(demoInformation.cameraOpeningSize ?? 0)
         cameraSensorSize = CGFloat(demoInformation.cameraSensorSize ?? 0)
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
@@ -39,34 +40,21 @@ public class DemoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func layoutImage(imageView: UIImageView, image: String) {
+    private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: image)
-//        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/photography-f68e7.appspot.com/o/waterfall4.jpg?alt=media&token=f040e86b-f75f-4e20-af1d-bbf14ce4f914")
-//        DispatchQueue.global().async {
-//            let data = try? Data(contentsOf: url!)
-//            DispatchQueue.main.async {
-//                imageView.image = UIImage(data: data!)
-//            }
-//        }
-        
-        
-        
-//        if let cachedImage = self.cache.object(forKey: "CachedObject") {
-//            imageView.image = cachedImage
-//        } else {
-//            if let preCachedImage = UIImage(named: image) {
-//                self.cache.setObject(preCachedImage, forKey: "CachedObject")
-//                imageView.image = UIImage(named: image)
-//            }
-//        }
-        
-//        if let preCachedImage = UIImage(named: image) {
-//            self.cache.setObject(preCachedImage, forKey: "CachedObject")
-//        }
-//        let cachedImage = self.cache.object(forKey: "CachedObject")
-//        imageView.image = cachedImage
+        // imageView.image = UIImage(named: imageName)
+        DemoView.images.forEach({ image in
+            if image.title == imageName {
+                guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
+                DispatchQueue.main.async {
+                    self.cache.setObject(preCachedImage, forKey: "CachedObject")
+                    let cachedImage = self.cache.object(forKey: "CachedObject")
+                    imageView.image = cachedImage
+                    print(url)
+                }
+            }
+        })
     }
     
     private func layoutSlider() {

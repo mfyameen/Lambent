@@ -7,7 +7,7 @@ extension UIView {
 }
 
 struct CellBinding {
-    static func bind(view: PhotographyCell, handler: @escaping (Segment?)->()) {
+    static func bind(view: HomeCell, handler: @escaping (Segment?)->()) {
         view.pressButton = handler
     }
 }
@@ -17,11 +17,11 @@ public struct CellContent {
     public var phrase: String = ""
 }
 
-public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     private let tableView: UITableView
     private var content = CellContent()
     var navigationController: UINavigationController?
-    private let cachedCellForSizing = PhotographyCell()
+    private let cachedCellForSizing = HomeCell()
     public var tableViewContent: PhotographyModel?
 
     var startTutorial: (TutorialSetUp)->() = { _ in }
@@ -30,7 +30,7 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
         tableView = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 5), style: .grouped)
         super.init(frame: frame)
         backgroundColor = UIColor.backgroundColor()
-        tableView.register(PhotographyCell.self, forCellReuseIdentifier: PhotographyCell.reuseIdentifier)
+        tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -56,7 +56,7 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PhotographyCell.reuseIdentifier, for: indexPath) as? PhotographyCell else { fatalError() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.reuseIdentifier, for: indexPath) as? HomeCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
@@ -66,7 +66,7 @@ public class PhotographyView: UIView, UITableViewDelegate, UITableViewDataSource
     }
     
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? PhotographyCell else { fatalError() }
+        guard let cell = cell as? HomeCell else { fatalError() }
         guard let page = Page(rawValue: indexPath.section) else { return }
         content = setTitleAndPhrase(index: indexPath.section)
         cell.configure(content, for: page)
