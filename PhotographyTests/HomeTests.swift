@@ -1,8 +1,8 @@
 import XCTest
 import Photography
 
-class TableViewTests: XCTestCase {
-    let view = PhotographyView()
+class HomeTests: XCTestCase {
+    let view = HomeView()
     let model = PhotographyModel()
     
     func testCorrectTitleDisplayedWhenOverviewCell() {

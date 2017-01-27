@@ -11,6 +11,7 @@ public class DemoView: UIView {
     private var cameraOpeningSize: CGFloat = 38
     private let demoInstructions = UILabel()
     private var apertureImage: String?
+    private var imageString = ""
     
     private let cache = NSCache<NSString, UIImage>()
     var movedSlider: (Int?) ->() = { _ in }
@@ -45,13 +46,16 @@ public class DemoView: UIView {
         imageView.clipsToBounds = true
         // imageView.image = UIImage(named: imageName)
         DemoView.images.forEach({ image in
-            if image.title == imageName {
-                guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
-                DispatchQueue.main.async {
-                    self.cache.setObject(preCachedImage, forKey: "CachedObject")
-                    let cachedImage = self.cache.object(forKey: "CachedObject")
-                    imageView.image = cachedImage
-                    print(url)
+            if image.title == imageName && image.title != imageString {
+                DispatchQueue.global().async { [weak self] in
+                    self?.imageString = image.title
+                    guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.cache.setObject(preCachedImage, forKey: "CachedObject")
+                        let cachedImage = self?.cache.object(forKey: "CachedObject")
+                        imageView.image = cachedImage
+                        print(url)
+                    }
                 }
             }
         })
