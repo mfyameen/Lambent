@@ -15,7 +15,7 @@ public class DemoView: UIView {
     
     private let cache = NSCache<NSString, UIImage>()
     var movedSlider: (Int?) ->() = { _ in }
-    var images = [Images]()
+    static var images = [Images]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +45,7 @@ public class DemoView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         // imageView.image = UIImage(named: imageName)
-        images.forEach({ image in
+        DemoView.images.forEach({ image in
             if image.title == imageName && image.title != imageString {
                 DispatchQueue.global().async { [weak self] in
                     self?.imageString = image.title

@@ -37,7 +37,7 @@ class HomeViewController: UIViewController {
         ViewControllerBinding.bind(view: photographyView, viewController: self, model: photographyModel)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
+//    override =  func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
 //        navigationController?.isNavigationBarHidden = true
 //    }
@@ -49,9 +49,9 @@ class HomeViewController: UIViewController {
 }
     struct ViewControllerBinding{
         static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel){
-            model.fetchImages{ viewController.content = $0 }
-            model.fetchImages{ view.list = $0 }
-            //model.fetchImages({ DemoView.images = $0 })
+            model.fetchContent{ viewController.content = $0.0 }
+            model.fetchContent{ view.homeContent = $0.0 }
+            model.fetchContent{ DemoView.images = $0.1 }
             view.navigationController = viewController.navigationController
             view.tableViewContent = model
             view.startTutorial = viewController.pushTutorialViewController

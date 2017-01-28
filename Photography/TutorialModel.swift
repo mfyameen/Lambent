@@ -32,7 +32,7 @@ public class TutorialModel {
     
     public func configureContent() {
         if currentPage == .overview {
-            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
+            tutorial.content = content.introductions[currentPage.rawValue]
             tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
         } else {
             configureAppropriateSegment(segment: currentSegment)
@@ -50,7 +50,7 @@ public class TutorialModel {
             tutorial.content = tutorialContent.modesContent[segment.rawValue]
         case (.intro, _):
             tutorial.isDemoScreen = false
-            tutorial.content = tutorialContent.introContent[currentPage.rawValue]
+            tutorial.content = content.introductions[currentPage.rawValue]
         case (.demo, _):
             tutorial.isDemoScreen = true
         case (.practice, _):

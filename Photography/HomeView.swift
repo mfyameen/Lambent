@@ -23,7 +23,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     var navigationController: UINavigationController?
     private let cachedCellForSizing = HomeCell()
     public var tableViewContent: PhotographyModel?
-    var list: Content? {
+    public var homeContent: Content? {
         didSet {
             tableView.reloadData()
         }
@@ -48,7 +48,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return list?.sections.count ?? 0
+        return homeContent?.sections.count ?? 0
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -84,8 +84,8 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     }
     
    public func setTitleAndPhrase(index: Int) -> CellContent {
-        content.title = list?.sections[index] ?? ""
-        content.phrase = tableViewContent?.descriptions[index] ?? ""
+        content.title = homeContent?.sections[index] ?? ""
+        content.phrase = homeContent?.descriptions[index] ?? ""
         return content
     }
     
