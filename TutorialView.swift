@@ -21,6 +21,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     
     private var currentPage: Page
     private var currentSegment: Segment?
+    private var tutorialContent: Content
     
     var prepareContent: () -> () = { _ in }
     var prepareToolBar: ()->() = { _ in }
@@ -29,18 +30,19 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var prepareSegment: (Segment?) -> () = { _ in }
     var prepareDemo: (Int?) -> () = { _ in }
     
-    var tutorialContent: TutorialModel? {
+    var photographyContent: TutorialModel? {
         didSet {
             prepareContent()
             prepareDemo(0)
             prepareToolBar()
-            layoutPageControl(numberOfSections)
+            layoutPageControl(tutorialContent.sections.count)
         }
     }
     
-    init (setUp: TutorialSetUp) {
+    init (setUp: TutorialSetUp, tutorialContent: Content) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
+        self.tutorialContent = tutorialContent
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         layoutContainer()
@@ -60,7 +62,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         content.text = information.content
         title.text = information.title
         isDemo = information.isDemoScreen
-        numberOfSections = information.numberOfSections
+        //numberOfSections = information.numberOfSections
         backButton.setTitle(information.backButtonTitle, for: .normal)
         nextButton.setTitle(information.nextButtonTitle, for: .normal)
         

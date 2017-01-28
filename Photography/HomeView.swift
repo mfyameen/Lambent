@@ -23,7 +23,11 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     var navigationController: UINavigationController?
     private let cachedCellForSizing = HomeCell()
     public var tableViewContent: PhotographyModel?
-
+    var list: Content? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var startTutorial: (TutorialSetUp)->() = { _ in }
     
     override init(frame: CGRect) {
@@ -44,7 +48,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return tableViewContent?.sections.count ?? 0
+        return list?.sections.count ?? 0
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -80,7 +84,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     }
     
    public func setTitleAndPhrase(index: Int) -> CellContent {
-        content.title = tableViewContent?.sections[index] ?? ""
+        content.title = list?.sections[index] ?? ""
         content.phrase = tableViewContent?.descriptions[index] ?? ""
         return content
     }

@@ -2,8 +2,10 @@ import UIKit
 
 class TutorialViewController: UIViewController {
     let setUp: TutorialSetUp
-    init(setUp: TutorialSetUp) {
+    let content: Content
+    init(setUp: TutorialSetUp, content: Content) {
         self.setUp = setUp
+        self.content = content
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -12,12 +14,12 @@ class TutorialViewController: UIViewController {
     }
     
     override func loadView() {
-        let tutorialView = TutorialView(setUp: setUp)
+        let tutorialView = TutorialView(setUp: setUp, tutorialContent: content)
         view = tutorialView
-        let tutorialModel = TutorialModel(setUp: setUp)
-        let demoModel = DemoModel(setUp: setUp)
+        let tutorialModel = TutorialModel(setUp: setUp, content: content)
+        let demoModel = DemoModel(setUp: setUp, content: content)
         let photographyModel = PhotographyModel()
-        title = photographyModel.sections[setUp.currentPage.rawValue]
+        title = content.sections[setUp.currentPage.rawValue]
         let button = configureButton()
         navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
@@ -42,14 +44,14 @@ class TutorialViewController: UIViewController {
 
     func pushNextTutorialViewController(_ page: Page, _ segment: Segment?) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
-        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
     }
     
     func pushPreviousTutorialViewController(_ page: Page, _ segment: Segment?) {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         let transition = configureTransition()
         navigationController?.view.layer.add(transition, forKey: nil)
-        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: false)
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: false)
     }
     
     func configureTransition() -> CATransition {
@@ -76,7 +78,7 @@ struct TutorialBinding {
         tutorialModel.shareTutorialSettings = tutorialView.addInformation
         tutorialView.prepareDemo = demoModel.configureDemo
         demoModel.shareInformation = demoView.addInformation
-        tutorialView.tutorialContent = tutorialModel
+        tutorialView.photographyContent = tutorialModel
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         tutorialModel.previousSection = viewController.pushPreviousTutorialViewController
         demoView.movedSlider = demoModel.configureDemo

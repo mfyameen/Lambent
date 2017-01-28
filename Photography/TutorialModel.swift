@@ -15,6 +15,7 @@ public struct TutorialSettings {
 public class TutorialModel {
     private var currentPage: Page
     private var currentSegment: Segment?
+    private var content: Content
     private var tutorial = TutorialSettings()
     private var tutorialContent = PhotographyModel()
     
@@ -22,9 +23,10 @@ public class TutorialModel {
     public var previousSection: (Page, Segment?)-> Void = { _ in}
     public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
-    public init (setUp: TutorialSetUp) {
+    public init (setUp: TutorialSetUp, content: Content) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
+        self.content = content
         tutorial.numberOfSections = tutorialContent.sections.count
     }
     
@@ -73,7 +75,7 @@ public class TutorialModel {
     }
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
-        let sectionTitle = tutorialContent.sections[currentPage.rawValue + nextSection]
+        let sectionTitle = content.sections[currentPage.rawValue + nextSection]
         guard let title = CameraSections(rawValue: sectionTitle) else { return "Intro" }
         switch title {
         case .focal: return "Focal"

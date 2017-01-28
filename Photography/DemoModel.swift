@@ -39,17 +39,19 @@ public class DemoModel {
     private let tutorial = PhotographyModel()
     private var updatedInstructions: String?
     private var currentPage: Int
+    private var content: Content
     
     public var shareInformation: (CameraSectionDemoSettings) -> () = { _ in }
     
-    public init (setUp: TutorialSetUp) {
+    public init (setUp: TutorialSetUp, content: Content) {
         currentPage = setUp.currentPage.rawValue
+        self.content = content
     }
     
     public func configureDemo(sliderValue: Int?) {
         guard let sliderValue = sliderValue else { return }
         demoSettings = configureSectionsWhenSliderValueChanged(sliderValue)
-        sectionSettings = configureCurrentSection(tutorial.sections[currentPage])
+        sectionSettings = configureCurrentSection(content.sections[currentPage])
         shareInformation(sectionSettings)
     }
     

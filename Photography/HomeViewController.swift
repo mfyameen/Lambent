@@ -25,9 +25,11 @@ public struct TutorialSetUp {
 }
 
 class HomeViewController: UIViewController {
+    let photographyModel = PhotographyModel()
+    var content: Content?
+    
     override func loadView() {
         let photographyView = HomeView()
-        let photographyModel = PhotographyModel()
         view = photographyView
         view.backgroundColor = UIColor.backgroundColor()
         title = "Capturing Light"
@@ -41,12 +43,15 @@ class HomeViewController: UIViewController {
 //    }
 
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void{
-        navigationController?.pushViewController(TutorialViewController(setUp: setUp), animated: true)
+        guard let content = content else { return }
+        navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
     }
 }
     struct ViewControllerBinding{
         static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel){
-            model.fetchImages({ DemoView.images = $0 })
+            model.fetchImages{ viewController.content = $0 }
+            model.fetchImages{ view.list = $0 }
+            //model.fetchImages({ DemoView.images = $0 })
             view.navigationController = viewController.navigationController
             view.tableViewContent = model
             view.startTutorial = viewController.pushTutorialViewController
