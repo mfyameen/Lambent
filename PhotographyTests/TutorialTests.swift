@@ -54,7 +54,7 @@ class TutorialTests: XCTestCase {
         tutorial.shareTutorialSettings = { testObject = $0.content }
         tutorial.configureContent()
 
-        XCTAssertEqual(testObject, model.practiceContent[Page.aperture.rawValue])
+        XCTAssertEqual(testObject, model.exercises[Page.aperture.rawValue])
     }
     
     func testAppropriateNextButtonTitleDisplayedWhenShutterPage() {

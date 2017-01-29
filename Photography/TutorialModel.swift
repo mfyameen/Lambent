@@ -9,7 +9,6 @@ public struct TutorialSettings {
     public var title = ""
     public var content = ""
     public var isDemoScreen = false
-    public var numberOfSections = 0
 }
 
 public class TutorialModel {
@@ -17,7 +16,6 @@ public class TutorialModel {
     private var currentSegment: Segment?
     private var content: Content
     private var tutorial = TutorialSettings()
-    private var tutorialContent = PhotographyModel()
     
     public var nextSection: (Page, Segment?)-> Void = { _ in }
     public var previousSection: (Page, Segment?)-> Void = { _ in}
@@ -27,13 +25,14 @@ public class TutorialModel {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         self.content = content
-        tutorial.numberOfSections = tutorialContent.sections.count
     }
     
     public func configureContent() {
         if currentPage == .overview {
             tutorial.content = content.introductions[currentPage.rawValue]
-            tutorial.title = tutorialContent.sectionTitles[currentPage.rawValue]
+            if currentPage == .overview {
+                tutorial.title = "Lighting"
+            }
         } else {
             configureAppropriateSegment(segment: currentSegment)
         }
@@ -47,7 +46,7 @@ public class TutorialModel {
         case (.demo, .modes): fallthrough
         case (.practice, .modes):
             tutorial.isDemoScreen = false
-            tutorial.content = tutorialContent.modesContent[segment.rawValue]
+            tutorial.content = content.modeIntroductions[segment.rawValue]
         case (.intro, _):
             tutorial.isDemoScreen = false
             tutorial.content = content.introductions[currentPage.rawValue]
@@ -55,7 +54,7 @@ public class TutorialModel {
             tutorial.isDemoScreen = true
         case (.practice, _):
             tutorial.isDemoScreen = false
-            tutorial.content = tutorialContent.practiceContent[currentPage.rawValue]
+            tutorial.content = content.exercises[currentPage.rawValue]
         }
         shareTutorialSettings(tutorial)
     }
@@ -86,7 +85,7 @@ public class TutorialModel {
     
     public func configureScrollViewMovement(contentOffsetX: Float) {
         let scrollMinLimit = 0
-        let scrollMaxLimit = tutorialContent.sections.count - 1
+        let scrollMaxLimit = content.sections.count - 1
         if contentOffsetX < 0 && currentPage.rawValue > scrollMinLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
             previousSection(currentPage, currentSegment ?? Segment.intro)

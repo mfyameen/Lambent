@@ -62,7 +62,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         content.text = information.content
         title.text = information.title
         isDemo = information.isDemoScreen
-        //numberOfSections = information.numberOfSections
         backButton.setTitle(information.backButtonTitle, for: .normal)
         nextButton.setTitle(information.nextButtonTitle, for: .normal)
         

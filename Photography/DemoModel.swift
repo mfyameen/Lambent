@@ -36,7 +36,6 @@ public struct CameraSectionDemoSettings {
 public class DemoModel {
     private var demoSettings = DemoSettings()
     private var sectionSettings = CameraSectionDemoSettings()
-    private let tutorial = PhotographyModel()
     private var updatedInstructions: String?
     private var currentPage: Int
     private var content: Content
@@ -57,8 +56,8 @@ public class DemoModel {
     
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {
         guard let currentSection = CameraSections(rawValue: section ?? "") else { return sectionSettings }
-        let demoInstructions = tutorial.demoInstructions[currentPage]
-        defer { updatedInstructions = tutorial.updatedInstructions[currentPage] }
+        let demoInstructions = content.instructions[currentPage]
+        defer { updatedInstructions = content.updatedInstructions[currentPage] }
         switch currentSection {
         case .aperture:
             return CameraSectionDemoSettings(image: demoSettings.apertureImage, text: demoSettings.apertureText, cameraOpeningSize: demoSettings.cameraOpeningSize, cameraSensorSize: demoSettings.cameraSensorSize, icon: nil, instructions: updatedInstructions ?? demoInstructions)

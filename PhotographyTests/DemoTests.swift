@@ -4,11 +4,7 @@ import Photography
 class DemoTests: XCTestCase {
     var content: Content?
     let model = PhotographyModel()
-    
-//    override init() {
-//         model.fetchContent { self.content = $0 }
-//    }
-    
+
     func testNoImageDisplayedWhenNotDemo() {
         var testObject: String?
         model.fetchContent { self.content = $0.0 }
