@@ -3,11 +3,20 @@ import Foundation
 public class PhotographyModel{
     public init() {}
     
-    public func fetchContent(completion: @escaping (_ content: Content, _ images: [Images]) -> ()) {
+    public func fetchContent(completion: @escaping (Content) -> ()) {
         let serviceLayer = ServiceLayer()
-        serviceLayer.fetchContent { (content, images) in
+        serviceLayer.fetchContent { content in
             DispatchQueue.main.async {
-                completion(content, images)
+                completion(content)
+            }
+        }
+    }
+    
+    public func fetchImage(completion: @escaping([Images]) -> ()) {
+        let serviceLayer = ServiceLayer()
+        serviceLayer.fetchImage { images in
+            DispatchQueue.main.async {
+                completion(images)
             }
         }
     }

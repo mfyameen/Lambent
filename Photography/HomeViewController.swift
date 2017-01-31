@@ -36,22 +36,17 @@ class HomeViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: photographyView, viewController: self, model: photographyModel)
     }
-    
-//    override =  func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.isNavigationBarHidden = true
-//    }
 
-    func pushTutorialViewController(setUp: TutorialSetUp) -> Void{
+    func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
         guard let content = content else { return }
         navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
     }
 }
-    struct ViewControllerBinding{
-        static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel){
-            model.fetchContent{ viewController.content = $0.0 }
-            model.fetchContent{ view.homeContent = $0.0 }
-            model.fetchContent{ DemoView.images = $0.1 }
+    struct ViewControllerBinding {
+        static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
+            model.fetchContent{ viewController.content = $0 }
+            model.fetchContent{ view.homeContent = $0 }
+            model.fetchImage{ DemoView.images = $0 }
             view.navigationController = viewController.navigationController
             view.startTutorial = viewController.pushTutorialViewController
         }

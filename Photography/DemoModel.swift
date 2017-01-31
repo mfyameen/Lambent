@@ -39,6 +39,7 @@ public class DemoModel {
     private var updatedInstructions: String?
     private var currentPage: Int
     private var content: Content
+    private var previousSliderValue = -1
     
     public var shareInformation: (CameraSectionDemoSettings) -> () = { _ in }
     
@@ -48,7 +49,8 @@ public class DemoModel {
     }
     
     public func configureDemo(sliderValue: Int?) {
-        guard let sliderValue = sliderValue else { return }
+        guard let sliderValue = sliderValue, sliderValue != previousSliderValue else { return }
+        previousSliderValue = sliderValue
         demoSettings = configureSectionsWhenSliderValueChanged(sliderValue)
         sectionSettings = configureCurrentSection(content.sections[currentPage])
         shareInformation(sectionSettings)

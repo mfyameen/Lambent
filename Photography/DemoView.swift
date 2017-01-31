@@ -20,6 +20,7 @@ public class DemoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
+        cacheImages()
         layoutSlider()
         layoutDemoInstructions()
         addSubviews([image, cameraValue, icon, cameraSensor, cameraSensorOpening, slider, demoInstructions])
@@ -27,7 +28,7 @@ public class DemoView: UIView {
     
     public func addInformation(demoInformation: CameraSectionDemoSettings) {
         layoutImage(imageView: image, imageName: demoInformation.image ?? "")
-        layoutImage(imageView: icon, imageName: demoInformation.icon ?? "")
+        //layoutImage(imageView: icon, imageName: demoInformation.icon ?? "")
         cameraOpeningSize = CGFloat(demoInformation.cameraOpeningSize ?? 0)
         cameraSensorSize = CGFloat(demoInformation.cameraSensorSize ?? 0)
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)
@@ -44,20 +45,28 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: imageName)
-//        DemoView.images.forEach({ image in
-//            if image.title == imageName && image.title != imageString {
-//                DispatchQueue.global().async { [weak self] in
-//                    self?.imageString = image.title
-//                    guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
-//                    DispatchQueue.main.async { [weak self] in
-//                        self?.cache.setObject(preCachedImage, forKey: "CachedObject")
-//                        let cachedImage = self?.cache.object(forKey: "CachedObject")
-//                        imageView.image = cachedImage
-//                    }
-//                }
-//            }
-//        })
+        //imageView.image = UIImage(named: imageName)
+        
+        DemoView.images.forEach({ image in
+            if image.title == imageName && image.title != imageString {
+                let cachedImage = self.cache.object(forKey: image.title as NSString)
+                imageView.image = cachedImage
+                imageString = image.title
+            }
+        })
+    }
+    
+    private func cacheImages() {
+        DemoView.images.forEach({ image in
+            DispatchQueue.global().async { [weak self] in
+                guard let url = URL(string: image.location),
+                    let data = NSData(contentsOf: url),
+                    let preCachedImage = UIImage(data: data as Data) else { return }
+                DispatchQueue.main.async { [weak self] in
+                    self?.cache.setObject(preCachedImage, forKey: image.title as NSString)
+                }
+            }
+        })
     }
     
     private func layoutSlider() {
@@ -68,8 +77,8 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        movedSlider(Int(slider.value))
-        setNeedsLayout()
+            movedSlider(Int(slider.value))
+            setNeedsLayout()
     }
     
     private func layoutDemoInstructions() {
