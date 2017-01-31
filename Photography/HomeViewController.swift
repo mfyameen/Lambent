@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
         static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
             model.fetchContent{ viewController.content = $0 }
             model.fetchContent{ view.homeContent = $0 }
-            model.fetchImage{ DemoView.images = $0 }
+            model.fetchImage{ DemoView.images = $0.0; DemoView.cache = $0.1 }
             view.navigationController = viewController.navigationController
             view.startTutorial = viewController.pushTutorialViewController
         }

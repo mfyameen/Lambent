@@ -13,14 +13,13 @@ public class DemoView: UIView {
     private var apertureImage: String?
     private var imageString = ""
     
-    private let cache = NSCache<NSString, UIImage>()
     var movedSlider: (Int?) ->() = { _ in }
     static var images = [Images]()
+    static var cache = NSCache<NSString, UIImage>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
-        cacheImages()
         layoutSlider()
         layoutDemoInstructions()
         addSubviews([image, cameraValue, icon, cameraSensor, cameraSensorOpening, slider, demoInstructions])
@@ -49,26 +48,13 @@ public class DemoView: UIView {
         
         DemoView.images.forEach({ image in
             if image.title == imageName && image.title != imageString {
-                let cachedImage = self.cache.object(forKey: image.title as NSString)
+                let cachedImage = DemoView.cache.object(forKey: image.title as NSString)
                 imageView.image = cachedImage
                 imageString = image.title
             }
         })
     }
-    
-    private func cacheImages() {
-        DemoView.images.forEach({ image in
-            DispatchQueue.global().async { [weak self] in
-                guard let url = URL(string: image.location),
-                    let data = NSData(contentsOf: url),
-                    let preCachedImage = UIImage(data: data as Data) else { return }
-                DispatchQueue.main.async { [weak self] in
-                    self?.cache.setObject(preCachedImage, forKey: image.title as NSString)
-                }
-            }
-        })
-    }
-    
+
     private func layoutSlider() {
         slider.isContinuous = true
         slider.minimumValue = 2

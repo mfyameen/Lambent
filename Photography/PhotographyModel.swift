@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 public class PhotographyModel{
     public init() {}
@@ -12,11 +12,11 @@ public class PhotographyModel{
         }
     }
     
-    public func fetchImage(completion: @escaping([Images]) -> ()) {
+    public func fetchImage(_ completion: @escaping ([Images], NSCache<NSString, UIImage>) -> ()) {
         let serviceLayer = ServiceLayer()
-        serviceLayer.fetchImage { images in
+        serviceLayer.fetchImage { (images, cache) in
             DispatchQueue.main.async {
-                completion(images)
+                completion(images, cache)
             }
         }
     }

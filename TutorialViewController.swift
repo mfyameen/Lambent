@@ -30,7 +30,7 @@ class TutorialViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.isNavigationBarHidden = false
     }
-    
+ 
     func configureButton() -> UIButton {
         let button = UIButton()
         let image = UIImage(named: "backicon")
