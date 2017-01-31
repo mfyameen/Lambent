@@ -2,13 +2,11 @@ import XCTest
 import Photography
 
 class DemoTests: XCTestCase {
-    var content: Content?
     let model = PhotographyModel()
+    let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: [], exercises: [], instructions: ["","","","","",""], updatedInstructions: ["","","","","",""], modeIntroductions: [])
 
     func testNoImageDisplayedWhenNotDemo() {
         var testObject: String?
-        model.fetchContent { self.content = $0.0 }
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.image }
@@ -18,7 +16,6 @@ class DemoTests: XCTestCase {
     
     func testNoTextDisplayedWhenNotDemo() {
         var testObject: String?
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.text }
@@ -28,7 +25,6 @@ class DemoTests: XCTestCase {
     
     func testImageDisplayedWhenDemo() {
         var testObject: String?
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .demo)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.image }
@@ -38,7 +34,6 @@ class DemoTests: XCTestCase {
     
     func testCorrectShutterImageDisplayedWhenSliderValueChanged() {
         var testObject: String?
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .demo)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.image }
@@ -48,7 +43,6 @@ class DemoTests: XCTestCase {
     
     func testCorrectApertureImageDisplayedWhenSliderValueChanged() {
         var testObject: String?
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.image }
@@ -58,7 +52,6 @@ class DemoTests: XCTestCase {
     
     func testCorrectISOTextDisplayedWhenSliderValueChanged() {
         var testObject: String?
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .iso, currentSegment: .demo)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.text }
@@ -68,7 +61,6 @@ class DemoTests: XCTestCase {
     
     func testCorrectCameraSizeWhenApertureSliderValueChanged() {
         var testObject: Int?
-        guard let content = content else { return }
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
         let demo = DemoModel(setUp: setUp, content: content)
         demo.shareInformation = { testObject = $0.cameraOpeningSize }

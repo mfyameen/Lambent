@@ -44,20 +44,20 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        // imageView.image = UIImage(named: imageName)
-        DemoView.images.forEach({ image in
-            if image.title == imageName && image.title != imageString {
-                DispatchQueue.global().async { [weak self] in
-                    self?.imageString = image.title
-                    guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
-                    DispatchQueue.main.async { [weak self] in
-                        self?.cache.setObject(preCachedImage, forKey: "CachedObject")
-                        let cachedImage = self?.cache.object(forKey: "CachedObject")
-                        imageView.image = cachedImage
-                    }
-                }
-            }
-        })
+        imageView.image = UIImage(named: imageName)
+//        DemoView.images.forEach({ image in
+//            if image.title == imageName && image.title != imageString {
+//                DispatchQueue.global().async { [weak self] in
+//                    self?.imageString = image.title
+//                    guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
+//                    DispatchQueue.main.async { [weak self] in
+//                        self?.cache.setObject(preCachedImage, forKey: "CachedObject")
+//                        let cachedImage = self?.cache.object(forKey: "CachedObject")
+//                        imageView.image = cachedImage
+//                    }
+//                }
+//            }
+//        })
     }
     
     private func layoutSlider() {

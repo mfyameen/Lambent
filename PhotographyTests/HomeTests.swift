@@ -2,25 +2,23 @@ import XCTest
 import Photography
 
 class HomeTests: XCTestCase {
-    var content: Content?
+    let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: ["","Aperture controls the amount of light that passes through the lens.","","","",""], introductions: [], exercises: [], instructions: [], updatedInstructions: [], modeIntroductions: [])
     let model = PhotographyModel()
     let view = HomeView()
- //   var content: Content?
     
     func testCorrectTitleDisplayedWhenOverviewCell() {
-        model.fetchContent{ self.view.homeContent = $0.0 }
-        view.tableViewContent = model
+        view.homeContent = content
         let overviewIndex = Page.overview.rawValue
-
         let testObject = view.setTitleAndPhrase(index: overviewIndex)
-        XCTAssertEqual(testObject.title, "Get Started")
+        let expectedValue = content.sections[Page.overview.rawValue]
+        XCTAssertEqual(testObject.title, expectedValue)
     }
     
-//    func testCorrectPhraseDisplayedWhenApertureCell() {
-//        view.tableViewContent = model
-//        let apertureIndex = Page.aperture.rawValue
-//        let testObject = view.setTitleAndPhrase(index: apertureIndex)
-//       // let expectedValue = model.descriptions[apertureIndex]
-//        XCTAssertEqual(testObject.phrase, expectedValue)
-//    }
+    func testCorrectPhraseDisplayedWhenApertureCell() {
+        view.homeContent = content
+        let apertureIndex = Page.aperture.rawValue
+        let testObject = view.setTitleAndPhrase(index: apertureIndex)
+        let expectedValue = content.descriptions[Page.aperture.rawValue]
+        XCTAssertEqual(testObject.phrase, expectedValue)
+    }
 }

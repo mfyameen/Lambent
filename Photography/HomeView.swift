@@ -22,7 +22,6 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     private var content = CellContent()
     var navigationController: UINavigationController?
     private let cachedCellForSizing = HomeCell()
-    public var tableViewContent: PhotographyModel?
     public var homeContent: Content? {
         didSet {
             tableView.reloadData()

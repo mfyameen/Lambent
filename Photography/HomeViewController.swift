@@ -53,7 +53,6 @@ class HomeViewController: UIViewController {
             model.fetchContent{ view.homeContent = $0.0 }
             model.fetchContent{ DemoView.images = $0.1 }
             view.navigationController = viewController.navigationController
-            view.tableViewContent = model
             view.startTutorial = viewController.pushTutorialViewController
         }
 }
