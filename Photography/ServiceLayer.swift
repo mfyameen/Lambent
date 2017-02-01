@@ -32,7 +32,6 @@ public struct Content {
 }
 
 struct ServiceLayer {
-    private let cache = NSCache<NSString, UIImage>()
     private let database = FIRDatabase.database().reference()
     
     func fetchContent(_ completion: @escaping (Content) -> ()) {
@@ -67,7 +66,7 @@ struct ServiceLayer {
         })
     }
     
-    func fetchImage(_ completion: @escaping ([Images], NSCache<NSString, UIImage>) -> ()) {
+    func fetchImage(_ completion: @escaping ([Images]) -> ()) {
         var images: [Images] = []
         database.observe(.value, with: { snapshot in
             snapshot.children.forEach { item in
@@ -76,24 +75,10 @@ struct ServiceLayer {
                 guard let location = dict?.object(forKey: "location") as? String, let title = dict?.object(forKey: "title") as? String else { return }
                 images += [Images(title: title, location: location)]
             }
-            self.cacheImages(images)
-            completion(images, self.cache)
+            completion(images)
         })
     }
 
-    private func cacheImages(_ images: [Images]) {
-        images.forEach({ image in
-            DispatchQueue.global().async { _ in
-                guard let url = URL(string: image.location),
-                    let data = NSData(contentsOf: url),
-                    let preCachedImage = UIImage(data: data as Data) else { return }
-                DispatchQueue.main.async { _ in
-                    self.cache.setObject(preCachedImage, forKey: image.title as NSString)
-                }
-            }
-        })
-    }
-    
     private func obtainValue(snapshot: FIRDataSnapshot, key: String, count: Int) -> String? {
         let snapshot = snapshot.childSnapshot(forPath: ("\(key)s"))
         guard let snapshotDict = snapshot.value as? [String: AnyObject] else { return nil }

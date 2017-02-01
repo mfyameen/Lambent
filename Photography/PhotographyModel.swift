@@ -12,9 +12,9 @@ public class PhotographyModel{
         }
     }
     
-    public func fetchImage(_ completion: @escaping ([Images], NSCache<NSString, UIImage>) -> ()) {
-        let serviceLayer = ServiceLayer()
-        serviceLayer.fetchImage { (images, cache) in
+    public func fetchCachedImage(_ completion: @escaping ([Images], NSCache<NSString, UIImage>) -> ()) {
+        let cache = Cache()
+        cache.fetchCachedImage { (images, cache) in
             DispatchQueue.main.async {
                 completion(images, cache)
             }
