@@ -1,9 +1,8 @@
 import UIKit
 
-public class PhotographyModel{
-    public init() {}
+public class PhotographyModel {
     
-    public func fetchContent(completion: @escaping (Content) -> ()) {
+    func fetchContent(_ completion: @escaping (Content) -> ()) {
         let serviceLayer = ServiceLayer()
         serviceLayer.fetchContent { content in
             DispatchQueue.main.async {
@@ -12,7 +11,7 @@ public class PhotographyModel{
         }
     }
     
-    public func fetchCachedImage(_ completion: @escaping ([Images], NSCache<NSString, UIImage>) -> ()) {
+    func fetchCachedImages(_ completion: @escaping ([Images],NSCache<NSString, UIImage>) -> ()) {
         let cache = Cache()
         cache.fetchCachedImage { (images, cache) in
             DispatchQueue.main.async {

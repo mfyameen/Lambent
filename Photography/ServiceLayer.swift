@@ -1,14 +1,9 @@
 import Foundation
 import Firebase
 
-public struct Images {
-    public let title: String
-    public let location: String
-    
-    public init(title: String, location: String) {
-        self.title = title
-        self.location = location
-    }
+struct Images {
+    let title: String
+    let location: String
 }
 
 public struct Content {
@@ -32,7 +27,7 @@ public struct Content {
 }
 
 struct ServiceLayer {
-    private let database = FIRDatabase.database().reference()
+   private let database = FIRDatabase.database().reference()
     
     func fetchContent(_ completion: @escaping (Content) -> ()) {
         var count = 0
@@ -43,9 +38,11 @@ struct ServiceLayer {
         var instructions: [String] = []
         var updatedInstructions: [String] = []
         var modeIntroductions: [String] = []
+        
         database.observe(.value, with: { snapshot in
             snapshot.children.forEach { item in
                 count += 1
+                
                 guard let section = self.obtainValue(snapshot: snapshot, key: "section", count: count) else { return }
                 sections += [section]
                 guard let description = self.obtainValue(snapshot: snapshot, key: "description", count: count) else { return }
@@ -68,12 +65,15 @@ struct ServiceLayer {
     
     func fetchImage(_ completion: @escaping ([Images]) -> ()) {
         var images: [Images] = []
+        
         database.observe(.value, with: { snapshot in
             snapshot.children.forEach { item in
-                let child = item as? FIRDataSnapshot
-                let dict = child?.value as? NSDictionary
-                guard let location = dict?.object(forKey: "location") as? String, let title = dict?.object(forKey: "title") as? String else { return }
-                images += [Images(title: title, location: location)]
+                (item as AnyObject).children.forEach { image in
+                    let child = image as? FIRDataSnapshot
+                    let image = child?.value as? NSDictionary
+                    guard let title = image?.value(forKey: "title") as? String, let location = image?.value(forKey: "location") as? String else { return }
+                    images += [Images(title: title, location: location)]
+                }
             }
             completion(images)
         })
@@ -81,8 +81,7 @@ struct ServiceLayer {
 
     private func obtainValue(snapshot: FIRDataSnapshot, key: String, count: Int) -> String? {
         let snapshot = snapshot.childSnapshot(forPath: ("\(key)s"))
-        guard let snapshotDict = snapshot.value as? [String: AnyObject] else { return nil }
-        guard let value = snapshotDict[("\(key)\(count)")] as? String else { return nil }
+        guard let snapshotDict = snapshot.value as? [String: AnyObject], let value = snapshotDict[("\(key)\(count)")] as? String else { return nil }
         return value
     }
 }

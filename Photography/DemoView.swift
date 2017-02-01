@@ -27,7 +27,7 @@ public class DemoView: UIView {
     
     public func addInformation(demoInformation: CameraSectionDemoSettings) {
         layoutImage(imageView: image, imageName: demoInformation.image ?? "")
-        //layoutImage(imageView: icon, imageName: demoInformation.icon ?? "")
+        layoutImage(imageView: icon, imageName: demoInformation.icon ?? "")
         cameraOpeningSize = CGFloat(demoInformation.cameraOpeningSize ?? 0)
         cameraSensorSize = CGFloat(demoInformation.cameraSensorSize ?? 0)
         layoutSensor(cameraSensorSize: cameraSensorSize, cameraOpeningSize: cameraOpeningSize)

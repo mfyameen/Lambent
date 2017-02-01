@@ -2,7 +2,6 @@ import XCTest
 import Photography
 
 class DemoTests: XCTestCase {
-    let model = PhotographyModel()
     let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: [], exercises: [], instructions: ["","","","","",""], updatedInstructions: ["","","","","",""], modeIntroductions: [])
 
     func testNoImageDisplayedWhenNotDemo() {

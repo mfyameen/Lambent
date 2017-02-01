@@ -2,7 +2,6 @@ import XCTest
 import Photography
 
 class TutorialTests: XCTestCase {
-    let model = PhotographyModel()
     let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: ["Overview intro","Aperture intro","Shutter intro","ISO intro","Focal length intro","Modes intro"], exercises: ["No exercise", "Aperture exercise", "Shutter exercise", "ISO exercise", "Focal length exercise", "Modes exercise"], instructions: [], updatedInstructions: [], modeIntroductions: [])
     
     func testDemoRegisteredWhenDemo() {
