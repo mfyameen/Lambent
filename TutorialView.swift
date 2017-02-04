@@ -18,8 +18,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     public var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
-    private var contentHeight = CGFloat()
-    private var contentAreaHeight = CGFloat()
     
     private var currentPage: Page
     private var currentSegment: Segment?
@@ -42,10 +40,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     init(setUp: TutorialSetUp, tutorialContent: Content) {
-        contentScrollView.layer.borderColor = UIColor.blue.cgColor
-        contentScrollView.layer.borderWidth = 2
-//        content.layer.borderWidth = 2
-//        content.layer.borderColor = UIColor.purple.cgColor
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         self.tutorialContent = tutorialContent
@@ -59,7 +53,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         layoutToolBarButtons([nextButton, backButton])
         layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
-        addSubviews([container, /*scrollView,*/ scrollView, contentScrollView, segmentedControl, title, /*content,*/ customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
+        addSubviews([container, scrollView, contentScrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         contentScrollView.addSubview(content)
         scrollView.addSubview(demo)
     }
@@ -167,7 +161,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let insets = UIEdgeInsets(top: 75, left: 18, bottom: 75, right: 18)
         let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
         let padding: CGFloat = 20
-        let buffer: CGFloat = 2
         
         container.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         
@@ -185,15 +178,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let contentSize = content.sizeThatFits(contentScrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
         
-        contentScrollView.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: contentLabelArea.width, height: contentLabelArea.height + buffer)
+        contentScrollView.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: contentLabelArea.width, height: contentLabelArea.height + 2)
         contentScrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
-//        print("content size \(contentSize.height)")
-//        print("content scrollview height \(contentScrollView.frame.height)")
-//        if contentSize.height > contentScrollView.frame.height {
-//            contentScrollView.isHidden = false
-//        } else {
-//            contentScrollView.isHidden = true
-//        }
         
         let pageControlSize = pageControl.sizeThatFits(bounds.size)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
