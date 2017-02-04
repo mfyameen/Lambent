@@ -5,7 +5,7 @@ struct Cache {
     
     func fetchCachedImage(_ completion: @escaping ([Images], NSCache<NSString, UIImage>) -> ()) {
         let serviceLayer = ServiceLayer()
-        serviceLayer.fetchImage { images in
+        serviceLayer.fetchImages { images in
             self.cache(images)
             completion(images, self.cache)
         }

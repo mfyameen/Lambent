@@ -17,7 +17,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     public var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
-    private var numberOfSections = 0
     
     private var currentPage: Page
     private var currentSegment: Segment?
@@ -39,7 +38,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         }
     }
     
-    init (setUp: TutorialSetUp, tutorialContent: Content) {
+    init(setUp: TutorialSetUp, tutorialContent: Content) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         self.tutorialContent = tutorialContent

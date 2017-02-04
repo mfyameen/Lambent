@@ -16,8 +16,8 @@ public enum Segment: Int {
 }
 
 public struct TutorialSetUp {
-    var currentPage: Page
-    var currentSegment: Segment?
+    let currentPage: Page
+    let currentSegment: Segment?
     public init(currentPage: Page, currentSegment: Segment?) {
         self.currentPage = currentPage
         self.currentSegment = currentSegment
@@ -25,16 +25,16 @@ public struct TutorialSetUp {
 }
 
 class HomeViewController: UIViewController {
-    let photographyModel = PhotographyModel()
     var content: Content?
     
     override func loadView() {
-        let photographyView = HomeView()
-        view = photographyView
+        let photographyModel = PhotographyModel()
+        let homeView = HomeView()
+        view = homeView
         view.backgroundColor = UIColor.backgroundColor()
         title = "Capturing Light"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
-        ViewControllerBinding.bind(view: photographyView, viewController: self, model: photographyModel)
+        ViewControllerBinding.bind(view: homeView, viewController: self, model: photographyModel)
     }
 
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
@@ -45,8 +45,7 @@ class HomeViewController: UIViewController {
     struct ViewControllerBinding {
         static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
             model.fetchCachedImages { DemoView.images = $0.0; DemoView.cache = $0.1 }
-            model.fetchContent{ viewController.content = $0 }
-            model.fetchContent{ view.homeContent = $0 }
+            model.fetchContent{ viewController.content = $0; view.homeContent = $0 }
             view.navigationController = viewController.navigationController
             view.startTutorial = viewController.pushTutorialViewController
         }

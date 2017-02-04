@@ -38,9 +38,9 @@ struct ServiceLayer {
         var instructions: [String] = []
         var updatedInstructions: [String] = []
         var modeIntroductions: [String] = []
-        
+
         database.observe(.value, with: { snapshot in
-            snapshot.children.forEach { item in
+            snapshot.children.forEach { _ in 
                 count += 1
                 
                 guard let section = self.obtainValue(snapshot: snapshot, key: "section", count: count) else { return }
@@ -63,7 +63,7 @@ struct ServiceLayer {
         })
     }
     
-    func fetchImage(_ completion: @escaping ([Images]) -> ()) {
+    func fetchImages(_ completion: @escaping ([Images]) -> ()) {
         var images: [Images] = []
         
         database.observe(.value, with: { snapshot in

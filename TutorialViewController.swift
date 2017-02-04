@@ -1,8 +1,9 @@
 import UIKit
 
 class TutorialViewController: UIViewController {
-    let setUp: TutorialSetUp
-    let content: Content
+    private let setUp: TutorialSetUp
+    private let content: Content
+    
     init(setUp: TutorialSetUp, content: Content) {
         self.setUp = setUp
         self.content = content
@@ -18,12 +19,11 @@ class TutorialViewController: UIViewController {
         view = tutorialView
         let tutorialModel = TutorialModel(setUp: setUp, content: content)
         let demoModel = DemoModel(setUp: setUp, content: content)
-        let photographyModel = PhotographyModel()
         title = content.sections[setUp.currentPage.rawValue]
         let button = configureButton()
         navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, photographyModel: photographyModel, demoModel: demoModel)
+        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, demoModel: demoModel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,7 +69,7 @@ class TutorialViewController: UIViewController {
 }
 
 struct TutorialBinding {
-    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, photographyModel: PhotographyModel, demoModel: DemoModel){
+    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, demoModel: DemoModel){
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement

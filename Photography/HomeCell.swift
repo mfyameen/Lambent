@@ -1,6 +1,7 @@
 import UIKit
 
 class HomeCell: UITableViewCell {
+    static let reuseIdentifier = "Cell"
     private let title = UILabel()
     private let phrase = UILabel()
     private let startButton = UIButton()
@@ -14,7 +15,6 @@ class HomeCell: UITableViewCell {
     private let insets: CGFloat = 15
     private let padding: CGFloat = 50
     private let buttonWidth: CGFloat
-    static let reuseIdentifier = "Cell"
     
     var pressButton: (Segment?)->() = { _ in }
     
@@ -62,8 +62,8 @@ class HomeCell: UITableViewCell {
     }
     
     func configure(_ content: CellContent, for cell: Page) {
-        self.title.text = content.title
-        self.phrase.text = content.phrase
+        title.text = content.title
+        phrase.text = content.phrase
         
         switch cell {
         case .overview: configureIntroductionCell()

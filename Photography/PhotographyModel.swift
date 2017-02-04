@@ -13,7 +13,7 @@ public class PhotographyModel {
     
     func fetchCachedImages(_ completion: @escaping ([Images],NSCache<NSString, UIImage>) -> ()) {
         let cache = Cache()
-        cache.fetchCachedImage { (images, cache) in
+        cache.fetchCachedImage { images, cache in
             DispatchQueue.main.async {
                 completion(images, cache)
             }

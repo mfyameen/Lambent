@@ -44,7 +44,7 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        //imageView.image = UIImage(named: imageName)
+       // imageView.image = UIImage(named: imageName)
         
         DemoView.images.forEach({ image in
             if image.title == imageName && image.title != imageString {
@@ -63,8 +63,8 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-            movedSlider(Int(slider.value))
-            setNeedsLayout()
+        movedSlider(Int(slider.value))
+        setNeedsLayout()
     }
     
     private func layoutDemoInstructions() {

@@ -30,9 +30,7 @@ public class TutorialModel {
     public func configureContent() {
         if currentPage == .overview {
             tutorial.content = content.introductions[currentPage.rawValue]
-            if currentPage == .overview {
-                tutorial.title = "Lighting"
-            }
+            tutorial.title = "Lighting"
         } else {
             configureAppropriateSegment(segment: currentSegment)
         }

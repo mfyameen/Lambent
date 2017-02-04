@@ -13,21 +13,21 @@ struct CellBinding {
 }
 
 public struct CellContent {
-    public var title: String = ""
-    public var phrase: String = ""
+    public var title = String()
+    public var phrase = String()
 }
 
-public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     private let tableView: UITableView
-    private var content = CellContent()
-    var navigationController: UINavigationController?
     private let cachedCellForSizing = HomeCell()
+    private var cellContent = CellContent()
     public var homeContent: Content? {
         didSet {
             tableView.reloadData()
         }
     }
     var startTutorial: (TutorialSetUp)->() = { _ in }
+    var navigationController: UINavigationController?
     
     override init(frame: CGRect) {
         tableView = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 5), style: .grouped)
@@ -71,8 +71,8 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? HomeCell else { fatalError() }
         guard let page = Page(rawValue: indexPath.section) else { return }
-        content = setTitleAndPhrase(index: indexPath.section)
-        cell.configure(content, for: page)
+        cellContent = setTitleAndPhrase(index: indexPath.section)
+        cell.configure(cellContent, for: page)
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -83,9 +83,9 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource, UIScr
     }
     
    public func setTitleAndPhrase(index: Int) -> CellContent {
-        content.title = homeContent?.sections[index] ?? ""
-        content.phrase = homeContent?.descriptions[index] ?? ""
-        return content
+        cellContent.title = homeContent?.sections[index] ?? ""
+        cellContent.phrase = homeContent?.descriptions[index] ?? ""
+        return cellContent
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
