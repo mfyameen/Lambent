@@ -4,6 +4,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let container = UIView()
     private let pageControl = UIPageControl()
     private let scrollView = UIScrollView()
+    private let contentScrollView = UIScrollView()
     private let customToolBar = UIView()
     private let nextButton = UIButton()
     private let nextButtonArrow = UIImageView()
@@ -17,6 +18,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     public var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
+    private var contentHeight = CGFloat()
+    private var contentAreaHeight = CGFloat()
     
     private var currentPage: Page
     private var currentSegment: Segment?
@@ -39,6 +42,10 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     init(setUp: TutorialSetUp, tutorialContent: Content) {
+        contentScrollView.layer.borderColor = UIColor.blue.cgColor
+        contentScrollView.layer.borderWidth = 2
+//        content.layer.borderWidth = 2
+//        content.layer.borderColor = UIColor.purple.cgColor
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         self.tutorialContent = tutorialContent
@@ -52,8 +59,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         layoutToolBarButtons([nextButton, backButton])
         layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
-        
-        addSubviews([container, scrollView, segmentedControl, title, content, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
+        addSubviews([container, /*scrollView,*/ scrollView, contentScrollView, segmentedControl, title, /*content,*/ customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
+        contentScrollView.addSubview(content)
         scrollView.addSubview(demo)
     }
     
@@ -78,13 +85,15 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutScrollView() {
+        contentScrollView.delegate = self
+        contentScrollView.bounces = false
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-      prepareScrollView(Float(scrollView.contentOffset.x))
+        prepareScrollView(Float(scrollView.contentOffset.x))
     }
     
     private func layoutSegmentedControl() {
@@ -126,10 +135,13 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         if isDemo || currentSegment == .demo && currentPage != .overview && currentPage != .modes {
             demo.isHidden = false
             content.isHidden = true
+            contentScrollView.isHidden = true
         } else {
             demo.isHidden = true
             content.isHidden = false
+            contentScrollView.isHidden = false
         }
+        setNeedsLayout()
     }
     
     private func layoutToolBarButtons(_ buttons: [UIButton]) {
@@ -155,6 +167,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let insets = UIEdgeInsets(top: 75, left: 18, bottom: 75, right: 18)
         let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
         let padding: CGFloat = 20
+        let buffer: CGFloat = 2
         
         container.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
         
@@ -167,13 +180,24 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + TutorialView.segmentedHeight, width: titleSize.width, height: titleSize.height)
         
-        let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, insets)
-        let contentSize = content.sizeThatFits(contentLabelArea.size)
-        content.frame = CGRect(x: contentArea.midX - contentSize.width/2, y: segmentedControl.frame.maxY + padding, width: contentSize.width, height: contentSize.height)
+        let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, UIEdgeInsets(top: title.frame.maxY + padding, left: 18, bottom: 25, right: 18))
         
-        let pageControlSize = pageControl.sizeThatFits(contentArea.size)
+        let contentSize = content.sizeThatFits(contentScrollView.contentSize)
+        content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
+        
+        contentScrollView.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: contentLabelArea.width, height: contentLabelArea.height + buffer)
+        contentScrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
+//        print("content size \(contentSize.height)")
+//        print("content scrollview height \(contentScrollView.frame.height)")
+//        if contentSize.height > contentScrollView.frame.height {
+//            contentScrollView.isHidden = false
+//        } else {
+//            contentScrollView.isHidden = true
+//        }
+        
+        let pageControlSize = pageControl.sizeThatFits(bounds.size)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
-        pageControl.frame = CGRect(x: contentArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)
+        pageControl.frame = CGRect(x: contentLabelArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)
         
         let toolBarHeight: CGFloat = 44
         let toolBarTop = (container.frame.maxY + bounds.maxY)/2 - toolBarHeight/2
