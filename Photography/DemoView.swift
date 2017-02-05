@@ -44,15 +44,15 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: imageName)
+      //  imageView.image = UIImage(named: imageName)
         
-//        DemoView.images.forEach({ image in
-//            if image.title == imageName && image.title != imageString {
-//                let cachedImage = DemoView.cache.object(forKey: image.title as NSString)
-//                imageView.image = cachedImage
-//                imageString = image.title
-//            }
-//        })
+        DemoView.images.forEach({ image in
+            if image.title == imageName && image.title != imageString {
+                let cachedImage = DemoView.cache.object(forKey: image.title as NSString)
+                imageView.image = cachedImage
+                imageString = image.title
+            }
+        })
     }
 
     private func layoutSlider() {
