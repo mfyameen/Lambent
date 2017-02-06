@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,11 +22,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="light" translatesAutoresizingMaskIntoConstraints="NO" id="EbU-1D-CoN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="light" translatesAutoresizingMaskIntoConstraints="NO" id="EbU-1D-CoN">
                                 <rect key="frame" x="16" y="20" width="343" height="627"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Guide to Capturing Light" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZS-c1-B3Z">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Guide to Capturing Light" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="23" translatesAutoresizingMaskIntoConstraints="NO" id="pZS-c1-B3Z">
                                 <rect key="frame" x="29" y="130" width="317" height="170"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="170" id="S6V-7d-ZGQ"/>
@@ -38,9 +37,13 @@
                             </label>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="EbU-1D-CoN" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="952-7K-54z"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="EbU-1D-CoN" secondAttribute="bottom" constant="20" id="9SM-g9-lf1"/>
+                            <constraint firstItem="EbU-1D-CoN" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="JUt-sr-K09"/>
                             <constraint firstItem="pZS-c1-B3Z" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="13" id="UHD-6i-OTd"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pZS-c1-B3Z" secondAttribute="bottom" constant="367" id="VSm-Ta-Dm7"/>
                             <constraint firstItem="pZS-c1-B3Z" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="110" id="jAv-jC-W6A"/>
+                            <constraint firstItem="EbU-1D-CoN" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="wg0-WT-B7m"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pZS-c1-B3Z" secondAttribute="trailing" constant="13" id="zAL-ON-DLP"/>
                         </constraints>
                     </view>
