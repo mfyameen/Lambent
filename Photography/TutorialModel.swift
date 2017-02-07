@@ -80,16 +80,16 @@ public class TutorialModel {
         default: return title.rawValue
         }
     }
-    
-    public func configureScrollViewMovement(contentOffsetX: Float) {
-        let scrollMinLimit = 0
-        let scrollMaxLimit = content.sections.count - 1
-        if contentOffsetX < 0 && currentPage.rawValue > scrollMinLimit {
-            guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            previousSection(currentPage, currentSegment ?? Segment.intro)
-        } else if contentOffsetX > 0 && currentPage.rawValue < scrollMaxLimit {
+
+    public func configureSwipe(direction: Direction) {
+        let pageMinLimit = 0
+        let pageMaxLimit = content.sections.count - 1
+        if direction == .left && currentPage.rawValue >= pageMinLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
             nextSection(currentPage, currentSegment ?? Segment.intro)
+        } else if direction == .right && currentPage.rawValue <= pageMaxLimit {
+            guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
+            previousSection(currentPage, currentSegment ?? Segment.intro)
         }
     }
     

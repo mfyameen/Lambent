@@ -1,10 +1,14 @@
 import UIKit
 
+public enum Direction {
+    case right
+    case left
+}
+
 class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let container = UIView()
     private let pageControl = UIPageControl()
     private let scrollView = UIScrollView()
-    private let contentScrollView = UIScrollView()
     private let customToolBar = UIView()
     private let nextButton = UIButton()
     private let nextButtonArrow = UIImageView()
@@ -18,6 +22,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     public var demo = DemoView()
     private let setUp: TutorialSetUp
     private var isDemo = false
+    private let swipeRight = UISwipeGestureRecognizer()
+    private let swipeLeft = UISwipeGestureRecognizer()
     
     private var currentPage: Page
     private var currentSegment: Segment?
@@ -26,7 +32,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var prepareContent: () -> () = { _ in }
     var prepareToolBar: ()->() = { _ in }
     var preparePageControl: (Int)->() = { _ in }
-    var prepareScrollView: (Float)->()  = { _ in }
+    var prepareSwipe: (Direction)->()  = { _ in }
     var prepareSegment: (Segment?) -> () = { _ in }
     var prepareDemo: (Int?) -> () = { _ in }
     
@@ -45,6 +51,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         self.tutorialContent = tutorialContent
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        layoutSwipeGestures([swipeRight, swipeLeft])
         layoutContainer()
         layoutScrollView()
         layoutSegmentedControl()
@@ -53,9 +60,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         layoutToolBarButtons([nextButton, backButton])
         layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
-        addSubviews([container, scrollView, contentScrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
-        contentScrollView.addSubview(content)
-        scrollView.addSubview(demo)
+        addSubviews([container, demo, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
+        scrollView.addSubview(content)
     }
     
     func addInformation(information: TutorialSettings) {
@@ -72,6 +78,22 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         }
     }
     
+    private func layoutSwipeGestures(_ gestures: [UISwipeGestureRecognizer]) {
+        gestures.forEach({ gesture in
+            gesture.addTarget(self, action: #selector(swipeBetweenPages(swipe:)))
+            gesture.direction = gesture == swipeRight ? .right : .left
+            addGestureRecognizer(gesture)
+        })
+    }
+    
+    @objc func swipeBetweenPages(swipe: UISwipeGestureRecognizer) {
+        switch swipe.direction {
+        case UISwipeGestureRecognizerDirection.right: prepareSwipe(.right)
+        case UISwipeGestureRecognizerDirection.left: prepareSwipe(.left)
+        default: break
+        }
+    }
+    
     private func layoutContainer() {
         backgroundColor = UIColor.backgroundColor()
         container.backgroundColor = UIColor.containerColor()
@@ -79,19 +101,13 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutScrollView() {
-        contentScrollView.delegate = self
-        contentScrollView.bounces = false
         scrollView.delegate = self
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.bounces = false
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        prepareScrollView(Float(scrollView.contentOffset.x))
-    }
-    
-    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        scrollView.isScrollEnabled = demo.sliderFrame.contains(point) ? false : true
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        swipeLeft.isEnabled = demo.sliderFrame.contains(point) ? false : true
+        swipeRight.isEnabled = demo.sliderFrame.contains(point) ? false : true
         return super.hitTest(point, with: event)
     }
     
@@ -134,11 +150,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         if isDemo || currentSegment == .demo && currentPage != .overview && currentPage != .modes {
             demo.isHidden = false
             content.isHidden = true
-            contentScrollView.isHidden = true
+            scrollView.isHidden = true
         } else {
             demo.isHidden = true
             content.isHidden = false
-            contentScrollView.isHidden = false
+            scrollView.isHidden = false
         }
         setNeedsLayout()
     }
@@ -173,18 +189,19 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         TutorialView.segmentedWidth = contentArea.width - insets.left - insets.right
         segmentedControl.frame = CGRect(x: contentArea.midX - TutorialView.segmentedWidth/2, y: contentArea.minY + padding, width: TutorialView.segmentedWidth, height: TutorialView.segmentedHeight)
         
-        demo.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: contentArea.width, height: contentArea.height))
+        let demoHeight = contentArea.height - segmentedControl.frame.height - padding
+        demo.frame = CGRect(x: contentArea.minX, y: segmentedControl.frame.maxY, width: contentArea.width, height: demoHeight)
         
         let titleSize = title.sizeThatFits(contentArea.size)
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + TutorialView.segmentedHeight, width: titleSize.width, height: titleSize.height)
         
         let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, UIEdgeInsets(top: title.frame.maxY + padding, left: 18, bottom: 25, right: 18))
         
-        let contentSize = content.sizeThatFits(contentScrollView.contentSize)
+        let contentSize = content.sizeThatFits(scrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
         
-        contentScrollView.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: contentLabelArea.width, height: contentLabelArea.height + 2)
-        contentScrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
+        scrollView.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: contentLabelArea.width, height: contentLabelArea.height + 2)
+        scrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
         
         let pageControlSize = pageControl.sizeThatFits(bounds.size)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
@@ -204,8 +221,5 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         
         let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
         nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth - arrowSize, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
-        
-        scrollView.frame = CGRect(x: contentArea.minX, y: contentArea.minY, width: contentArea.width, height: contentArea.height)
-        scrollView.contentSize = CGSize(width: bounds.width, height: scrollView.frame.height)
     }
 }

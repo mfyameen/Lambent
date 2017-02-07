@@ -82,39 +82,39 @@ class TutorialTests: XCTestCase {
         XCTAssertEqual(testObject.backButtonTitle, "Focal")
     }
 
-    func testPageIncrementsWhenScrollingToTheRight() {
+    func testPageIncrementsWhenSwipingToTheLeft() {
         var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.nextSection = { testObject = $0.0 }
-        tutorial.configureScrollViewMovement(contentOffsetX: 10)
+        tutorial.configureSwipe(direction: .left)
         XCTAssertEqual(testObject, Page.shutter)
     }
 
-    func testPageDecrementsWhenScrollingToTheLeft() {
+    func testPageDecrementsWhenSwipingToTheRight() {
         var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.previousSection = { testObject = $0.0 }
-        tutorial.configureScrollViewMovement(contentOffsetX: -10)
+        tutorial.configureSwipe(direction: .right)
         XCTAssertEqual(testObject, Page.aperture)
     }
     
-    func testPageDoesNotScrollToTheRightIfNextPageDoesNotExist() {
+    func testPageDoesNotSwipeToTheLeftIfNextPageDoesNotExist() {
         var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .practice)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.nextSection = { testObject = $0.0 }
-        tutorial.configureScrollViewMovement(contentOffsetX: 10)
+        tutorial.configureSwipe(direction: .left)
         XCTAssertEqual(testObject, nil)
     }
    
-    func testPageDoesNotScrollToTheLeftIfPreviousPageDoesNotExist() {
+    func testPageDoesNotSwipeToTheRightIfPreviousPageDoesNotExist() {
         var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.nextSection = { testObject = $0.0 }
-        tutorial.configureScrollViewMovement(contentOffsetX: -10)
+        tutorial.configureSwipe(direction: .right)
         XCTAssertEqual(testObject, nil)
     }
     

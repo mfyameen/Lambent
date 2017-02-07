@@ -72,7 +72,7 @@ struct TutorialBinding {
     static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, demoModel: DemoModel){
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
-        tutorialView.prepareScrollView = tutorialModel.configureScrollViewMovement
+        tutorialView.prepareSwipe = tutorialModel.configureSwipe
         tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
         tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
         tutorialModel.shareTutorialSettings = tutorialView.addInformation
