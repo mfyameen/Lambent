@@ -90,6 +90,11 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         prepareScrollView(Float(scrollView.contentOffset.x))
     }
     
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        scrollView.isScrollEnabled = demo.sliderFrame.contains(point) ? false : true
+        return super.hitTest(point, with: event)
+    }
+    
     private func layoutSegmentedControl() {
         switch currentPage {
         case .overview: segmentedControl.isHidden = true

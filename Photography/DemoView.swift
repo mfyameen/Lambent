@@ -12,6 +12,7 @@ public class DemoView: UIView {
     private let demoInstructions = UILabel()
     private var apertureImage: String?
     private var imageString = ""
+    var sliderFrame = CGRect()
     
     var movedSlider: (Int?) ->() = { _ in }
     static var images = [Images]()
@@ -104,7 +105,7 @@ public class DemoView: UIView {
         let sliderHeight = slider.sizeThatFits(bounds.size).height
         let sliderTop = (image.frame.maxY + bounds.maxY)/2 - sliderHeight/2
         slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: sliderTop, width: sliderWidth, height: sliderHeight)
-        
+        sliderFrame = slider.frame
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
         let demoInstructionsTop = (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2
         demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: demoInstructionsTop, width: ceil(sliderWidth), height: ceil(demoInstructionHeight))
