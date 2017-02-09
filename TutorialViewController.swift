@@ -15,6 +15,7 @@ class TutorialViewController: UIViewController {
     }
     
     override func loadView() {
+        super.loadView()
         let tutorialView = TutorialView(setUp: setUp, tutorialContent: content)
         view = tutorialView
         let tutorialModel = TutorialModel(setUp: setUp, content: content)

@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.navigationBar.titleTextAttributes = titleAttributes
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController.navigationBar.shadowImage = UIImage()
-        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
         window?.backgroundColor = UIColor.backgroundColor()

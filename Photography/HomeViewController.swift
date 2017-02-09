@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
     var content: Content?
     
     override func loadView() {
+        super.loadView()
         let photographyModel = PhotographyModel()
         let homeView = HomeView()
         view = homeView

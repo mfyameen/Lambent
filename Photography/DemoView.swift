@@ -106,7 +106,8 @@ public class DemoView: UIView {
         let sliderTop = (image.frame.maxY + bounds.maxY)/2 - sliderHeight/2
         slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: sliderTop, width: sliderWidth, height: sliderHeight)
         let sliderFrameTop = sliderTop + imagePadding + TutorialView.segmentedHeight
-        sliderFrame = CGRect(x: slider.frame.minX, y: sliderFrameTop, width: slider.frame.width, height: slider.frame.height)
+        let sliderPadding: CGFloat = 10
+        sliderFrame = CGRect(x: slider.frame.minX, y: sliderFrameTop - sliderPadding, width: slider.frame.width, height: 2 * slider.frame.height)
         
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
         let demoInstructionsTop = (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2
