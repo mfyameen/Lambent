@@ -79,6 +79,8 @@ public class DemoView: UIView {
         cameraSensor.backgroundColor = UIColor.sensorColor()
         cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
         cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
+        let values = "akdj;aslkdfja"
+        values.addingPercentEncoding(withAllowedCharacters: "e")
     }
     
     override public func layoutSubviews() {
