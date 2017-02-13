@@ -26,7 +26,7 @@ public class DemoView: UIView {
         addSubviews([image, cameraValue, icon, cameraSensor, cameraSensorOpening, slider, demoInstructions])
     }
     
-    public func addInformation(demoInformation: CameraSectionDemoSettings) {
+    func addInformation(demoInformation: CameraSectionDemoSettings) {
         layoutImage(imageView: image, imageName: demoInformation.image ?? "")
         layoutImage(imageView: icon, imageName: demoInformation.icon ?? "")
         cameraOpeningSize = CGFloat(demoInformation.cameraOpeningSize ?? 0)
@@ -79,8 +79,6 @@ public class DemoView: UIView {
         cameraSensor.backgroundColor = UIColor.sensorColor()
         cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
         cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
-        let values = "akdj;aslkdfja"
-        values.addingPercentEncoding(withAllowedCharacters: "e")
     }
     
     override public func layoutSubviews() {

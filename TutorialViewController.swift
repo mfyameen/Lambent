@@ -24,7 +24,7 @@ class TutorialViewController: UIViewController {
         let button = configureButton()
         navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, viewController: self, demoModel: demoModel)
+        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, demoModel: demoModel, viewController: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +70,7 @@ class TutorialViewController: UIViewController {
 }
 
 struct TutorialBinding {
-    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, viewController: TutorialViewController, demoModel: DemoModel){
+    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, demoModel: DemoModel, viewController: TutorialViewController){
         tutorialView.prepareContent = tutorialModel.configureContent
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareSwipe = tutorialModel.configureSwipe

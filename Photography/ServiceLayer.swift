@@ -42,7 +42,6 @@ struct ServiceLayer {
         database.observe(.value, with: { snapshot in
             snapshot.children.forEach { _ in 
                 count += 1
-                
                 guard let section = self.obtainValue(snapshot: snapshot, key: "section", count: count) else { return }
                 sections += [section]
                 guard let description = self.obtainValue(snapshot: snapshot, key: "description", count: count) else { return }

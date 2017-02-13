@@ -37,18 +37,19 @@ class HomeViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: homeView, viewController: self, model: photographyModel)
     }
-
+    
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
         guard let content = content else { return }
         navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
     }
 }
-    struct ViewControllerBinding {
-        static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
-            model.fetchCachedImages { DemoView.images = $0.0; DemoView.cache = $0.1 }
-            model.fetchContent{ viewController.content = $0; view.homeContent = $0 }
-            view.navigationController = viewController.navigationController
-            view.startTutorial = viewController.pushTutorialViewController
-        }
+
+struct ViewControllerBinding {
+    static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
+        model.fetchCachedImages { DemoView.images = $0.0; DemoView.cache = $0.1 }
+        model.fetchContent{ viewController.content = $0; view.homeContent = $0 }
+        view.navigationController = viewController.navigationController
+        view.startTutorial = viewController.pushTutorialViewController
+    }
 }
 
