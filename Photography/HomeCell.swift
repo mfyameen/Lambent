@@ -56,7 +56,7 @@ class HomeCell: UITableViewCell {
     
     private func layoutButtons(_ buttons: [UIButton]) {
         buttons.forEach({
-            $0.setTitleColor(UIColor.buttonColor(), for: .normal)
+            $0.setTitleColor(UIColor.navigationTextColor(), for: .normal)
             $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         })
     }
@@ -85,7 +85,7 @@ class HomeCell: UITableViewCell {
         layoutSeparators([horizontalSeparator])
         leftVerticalSeparator.layer.borderWidth = 0
         rightVerticalSeparator.layer.borderWidth = 0
-        
+   
         startButton.setTitle("Start", for: .normal)
         leftButton.setTitle("", for: .normal)
         middleButton.setTitle("", for: .normal)

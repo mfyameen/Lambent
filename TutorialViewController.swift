@@ -15,7 +15,6 @@ class TutorialViewController: UIViewController {
     }
     
     override func loadView() {
-        super.loadView()
         let tutorialView = TutorialView(setUp: setUp, tutorialContent: content)
         view = tutorialView
         let tutorialModel = TutorialModel(setUp: setUp, content: content)
@@ -23,8 +22,13 @@ class TutorialViewController: UIViewController {
         title = content.sections[setUp.currentPage.rawValue]
         let button = configureButton()
         navigationController?.isNavigationBarHidden = false
+        navigationController?.hidesBarsOnSwipe = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, demoModel: demoModel, viewController: self)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,7 +42,7 @@ class TutorialViewController: UIViewController {
         button.setImage(image, for: .normal)
         button.setTitle("Home", for: .normal)
         button.addTarget(self, action: #selector(returnHome), for: .touchUpInside)
-        button.setTitleColor(UIColor.buttonColor(), for: .normal)
+        button.setTitleColor(UIColor.navigationTextColor(), for: .normal)
         button.sizeToFit()
         return button
     }

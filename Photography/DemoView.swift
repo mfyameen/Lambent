@@ -76,9 +76,9 @@ public class DemoView: UIView {
     
     private func layoutSensor(cameraSensorSize: CGFloat, cameraOpeningSize: CGFloat) {
         cameraSensor.layer.cornerRadius = cameraSensorSize/2
-        cameraSensor.backgroundColor = UIColor.sensorColor()
+        cameraSensor.backgroundColor = UIColor.sensorInnerColor()
         cameraSensorOpening.layer.cornerRadius = cameraOpeningSize/2
-        cameraSensorOpening.backgroundColor = UIColor.backgroundColor()
+        cameraSensorOpening.backgroundColor = UIColor.sensorOuterColor()
     }
     
     override public func layoutSubviews() {

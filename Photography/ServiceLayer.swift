@@ -27,7 +27,7 @@ public struct Content {
 }
 
 struct ServiceLayer {
-   private let database = FIRDatabase.database().reference()
+    private let database = FIRDatabase.database().reference()
     
     func fetchContent(_ completion: @escaping (Content) -> ()) {
         var count = 0
@@ -38,9 +38,9 @@ struct ServiceLayer {
         var instructions: [String] = []
         var updatedInstructions: [String] = []
         var modeIntroductions: [String] = []
-
+        
         database.observe(.value, with: { snapshot in
-            snapshot.children.forEach { _ in 
+            snapshot.children.forEach { _ in
                 count += 1
                 guard let section = self.obtainValue(snapshot: snapshot, key: "section", count: count) else { return }
                 sections += [section]

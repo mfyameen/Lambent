@@ -24,19 +24,35 @@ public struct TutorialSetUp {
     }
 }
 
-class HomeViewController: UIViewController {
+extension UINavigationController {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return topViewController?.preferredStatusBarStyle ?? .default
+    }
+}
+
+final class HomeViewController: UIViewController {
     var content: Content?
     
     override func loadView() {
-        super.loadView()
         let photographyModel = PhotographyModel()
         let homeView = HomeView()
         view = homeView
         view.backgroundColor = UIColor.backgroundColor()
         title = "Capturing Light"
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 24)]
+        navigationController?.hidesBarsOnSwipe = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: homeView, viewController: self, model: photographyModel)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return navigationController?.isNavigationBarHidden ?? false
+    }
+    
     
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
         guard let content = content else { return }

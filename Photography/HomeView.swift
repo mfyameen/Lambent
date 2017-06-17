@@ -33,6 +33,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 5), style: .grouped)
         super.init(frame: frame)
         backgroundColor = UIColor.backgroundColor()
+        tableView.backgroundColor = UIColor.backgroundColor()
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self

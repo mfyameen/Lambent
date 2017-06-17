@@ -29,8 +29,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private var currentSegment: Segment?
     private var tutorialContent: Content
     
-    var prepareContent: () -> () = { _ in }
-    var prepareToolBar: ()->() = { _ in }
+    var prepareContent: () -> () = {}
+    var prepareToolBar: ()->() = {}
     var preparePageControl: (Int)->() = { _ in }
     var prepareSwipe: (Direction)->()  = { _ in }
     var prepareSegment: (Segment?) -> () = { _ in }
@@ -160,7 +160,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutToolBarButtons(_ buttons: [UIButton]) {
-        buttons.forEach({ $0.setTitleColor(UIColor.buttonColor(), for: .normal) })
+        buttons.forEach({ $0.setTitleColor(UIColor.navigationTextColor(), for: .normal) })
     }
     
     private func layoutToolBarArrows(_ images: [UIImageView]){
