@@ -52,12 +52,12 @@
 		176958C31DF47FE50060941A /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = ../TutorialView.swift; sourceTree = "<group>"; };
 		176958C71DF48A760060941A /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialViewController.swift; path = ../TutorialViewController.swift; sourceTree = "<group>"; };
 		177DD33F1E060BC800605146 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
-		177DD3471E07761E00605146 /* PhotographyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotographyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		177DD3471E07761E00605146 /* LambentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		177DD3491E07761E00605146 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DemoTests.swift; path = PhotographyTests/DemoTests.swift; sourceTree = SOURCE_ROOT; };
 		177DD34B1E07761E00605146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		177DD3511E09C02000605146 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		177DD3551E0ADA2D00605146 /* DemoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModel.swift; sourceTree = "<group>"; };
-		17C283501DF066F400E7BC29 /* Photography.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photography.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17C283501DF066F400E7BC29 /* Lambent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lambent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C283531DF066F400E7BC29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17C283551DF066F400E7BC29 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		17C2835A1DF066F400E7BC29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 		17C283511DF066F400E7BC29 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17C283501DF066F400E7BC29 /* Photography.app */,
-				177DD3471E07761E00605146 /* PhotographyTests.xctest */,
+				17C283501DF066F400E7BC29 /* Lambent.app */,
+				177DD3471E07761E00605146 /* LambentTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -223,9 +223,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		177DD3461E07761E00605146 /* PhotographyTests */ = {
+		177DD3461E07761E00605146 /* LambentTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 177DD34E1E07761E00605146 /* Build configuration list for PBXNativeTarget "PhotographyTests" */;
+			buildConfigurationList = 177DD34E1E07761E00605146 /* Build configuration list for PBXNativeTarget "LambentTests" */;
 			buildPhases = (
 				D404400387B8F8698E3CED0D /* [CP] Check Pods Manifest.lock */,
 				177DD3431E07761E00605146 /* Sources */,
@@ -239,14 +239,14 @@
 			dependencies = (
 				177DD34D1E07761E00605146 /* PBXTargetDependency */,
 			);
-			name = PhotographyTests;
+			name = LambentTests;
 			productName = PhotographyTests;
-			productReference = 177DD3471E07761E00605146 /* PhotographyTests.xctest */;
+			productReference = 177DD3471E07761E00605146 /* LambentTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		17C2834F1DF066F400E7BC29 /* Photography */ = {
+		17C2834F1DF066F400E7BC29 /* Lambent */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 17C283621DF066F400E7BC29 /* Build configuration list for PBXNativeTarget "Photography" */;
+			buildConfigurationList = 17C283621DF066F400E7BC29 /* Build configuration list for PBXNativeTarget "Lambent" */;
 			buildPhases = (
 				B627395D1A2D61307923EA02 /* [CP] Check Pods Manifest.lock */,
 				17C2834C1DF066F400E7BC29 /* Sources */,
@@ -259,9 +259,9 @@
 			);
 			dependencies = (
 			);
-			name = Photography;
+			name = Lambent;
 			productName = Photography;
-			productReference = 17C283501DF066F400E7BC29 /* Photography.app */;
+			productReference = 17C283501DF066F400E7BC29 /* Lambent.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -281,7 +281,7 @@
 					};
 					17C2834F1DF066F400E7BC29 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = UN23PW9ETJ;
+						DevelopmentTeam = HV2ZKQRMWU;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -291,7 +291,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 17C2834B1DF066F400E7BC29 /* Build configuration list for PBXProject "Photography" */;
+			buildConfigurationList = 17C2834B1DF066F400E7BC29 /* Build configuration list for PBXProject "Lambent" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -304,8 +304,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				17C2834F1DF066F400E7BC29 /* Photography */,
-				177DD3461E07761E00605146 /* PhotographyTests */,
+				17C2834F1DF066F400E7BC29 /* Lambent */,
+				177DD3461E07761E00605146 /* LambentTests */,
 			);
 		};
 /* End PBXProject section */
@@ -460,7 +460,7 @@
 /* Begin PBXTargetDependency section */
 		177DD34D1E07761E00605146 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 17C2834F1DF066F400E7BC29 /* Photography */;
+			target = 17C2834F1DF066F400E7BC29 /* Lambent */;
 			targetProxy = 177DD34C1E07761E00605146 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,7 +487,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Asynchrony.PhotographyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Photography.app/Photography";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
 			};
 			name = Debug;
 		};
@@ -501,7 +501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Asynchrony.PhotographyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Photography.app/Photography";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
 			};
 			name = Release;
 		};
@@ -618,10 +618,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Photography/Photography.entitlements;
-				DEVELOPMENT_TEAM = UN23PW9ETJ;
+				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = Photography/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Asynchrony.Photography;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -633,10 +634,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Photography/Photography.entitlements;
-				DEVELOPMENT_TEAM = UN23PW9ETJ;
+				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = Photography/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Asynchrony.Photography;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -645,7 +647,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		177DD34E1E07761E00605146 /* Build configuration list for PBXNativeTarget "PhotographyTests" */ = {
+		177DD34E1E07761E00605146 /* Build configuration list for PBXNativeTarget "LambentTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				177DD34F1E07761E00605146 /* Debug */,
@@ -654,7 +656,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		17C2834B1DF066F400E7BC29 /* Build configuration list for PBXProject "Photography" */ = {
+		17C2834B1DF066F400E7BC29 /* Build configuration list for PBXProject "Lambent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				17C283601DF066F400E7BC29 /* Debug */,
@@ -663,7 +665,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		17C283621DF066F400E7BC29 /* Build configuration list for PBXNativeTarget "Photography" */ = {
+		17C283621DF066F400E7BC29 /* Build configuration list for PBXNativeTarget "Lambent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				17C283631DF066F400E7BC29 /* Debug */,

@@ -38,7 +38,7 @@ final class HomeViewController: UIViewController {
         let homeView = HomeView()
         view = homeView
         view.backgroundColor = UIColor.backgroundColor()
-        title = "Capturing Light"
+        title = "Lambent"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 24)]
         navigationController?.hidesBarsOnSwipe = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)

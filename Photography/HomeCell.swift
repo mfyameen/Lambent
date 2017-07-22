@@ -49,8 +49,8 @@ class HomeCell: UITableViewCell {
     
     private func layoutSeparators(_ separators: [UIView]) {
         separators.forEach ({
-            $0.layer.borderWidth = 2
-            $0.layer.borderColor = UIColor.backgroundColor().cgColor
+            $0.layer.borderWidth = 4
+            $0.layer.borderColor = UIColor.gray.cgColor
         })
     }
     
