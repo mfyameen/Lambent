@@ -1,5 +1,5 @@
 import XCTest
-import Photography
+import Lambent
 
 class DemoTests: XCTestCase {
     let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: [], exercises: [], instructions: ["","","","","",""], updatedInstructions: ["","","","","",""], modeIntroductions: [])

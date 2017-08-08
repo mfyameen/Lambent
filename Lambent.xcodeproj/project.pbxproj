@@ -19,6 +19,7 @@
 		177DD34A1E07761E00605146 /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3491E07761E00605146 /* DemoTests.swift */; };
 		177DD3521E09C02000605146 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3511E09C02000605146 /* Colors.swift */; };
 		177DD3561E0ADA2D00605146 /* DemoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3551E0ADA2D00605146 /* DemoModel.swift */; };
+		17937EB31F38CB8400DBB552 /* LambentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17937EB21F38CB8400DBB552 /* LambentUITests.swift */; };
 		17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283531DF066F400E7BC29 /* AppDelegate.swift */; };
 		17C283561DF066F400E7BC29 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283551DF066F400E7BC29 /* HomeViewController.swift */; };
 		17C2835B1DF066F400E7BC29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17C2835A1DF066F400E7BC29 /* Assets.xcassets */; };
@@ -39,6 +40,13 @@
 			remoteGlobalIDString = 17C2834F1DF066F400E7BC29;
 			remoteInfo = Photography;
 		};
+		17937EB51F38CB8400DBB552 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17C283481DF066F300E7BC29 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17C2834F1DF066F400E7BC29;
+			remoteInfo = Lambent;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +65,9 @@
 		177DD34B1E07761E00605146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		177DD3511E09C02000605146 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		177DD3551E0ADA2D00605146 /* DemoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModel.swift; sourceTree = "<group>"; };
+		17937EB01F38CB8400DBB552 /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		17937EB21F38CB8400DBB552 /* LambentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambentUITests.swift; sourceTree = "<group>"; };
+		17937EB41F38CB8400DBB552 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17C283501DF066F400E7BC29 /* Lambent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lambent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C283531DF066F400E7BC29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17C283551DF066F400E7BC29 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +95,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17937EAD1F38CB8400DBB552 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		17C2834D1DF066F400E7BC29 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -107,9 +125,21 @@
 		177DD3481E07761E00605146 /* PhotographyTests */ = {
 			isa = PBXGroup;
 			children = (
+				177DD3491E07761E00605146 /* DemoTests.swift */,
+				1766336D1E1B3B9800E2A05E /* TutorialTests.swift */,
+				17CF63BE1E253AA800D987A7 /* HomeTests.swift */,
 				177DD34B1E07761E00605146 /* Info.plist */,
 			);
 			path = PhotographyTests;
+			sourceTree = "<group>";
+		};
+		17937EB11F38CB8400DBB552 /* LambentUITests */ = {
+			isa = PBXGroup;
+			children = (
+				17937EB21F38CB8400DBB552 /* LambentUITests.swift */,
+				17937EB41F38CB8400DBB552 /* Info.plist */,
+			);
+			path = LambentUITests;
 			sourceTree = "<group>";
 		};
 		17C059EB1E305A5A007ACFB1 /* Common */ = {
@@ -138,8 +168,9 @@
 			isa = PBXGroup;
 			children = (
 				17C283521DF066F400E7BC29 /* Photography */,
-				177DD3481E07761E00605146 /* PhotographyTests */,
 				17C283511DF066F400E7BC29 /* Products */,
+				177DD3481E07761E00605146 /* PhotographyTests */,
+				17937EB11F38CB8400DBB552 /* LambentUITests */,
 				D4BD3913FEBCDD227176715B /* Pods */,
 				28B2D121BF1218B643D5DE82 /* Frameworks */,
 			);
@@ -150,6 +181,7 @@
 			children = (
 				17C283501DF066F400E7BC29 /* Lambent.app */,
 				177DD3471E07761E00605146 /* LambentTests.xctest */,
+				17937EB01F38CB8400DBB552 /* LambentUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,7 +206,6 @@
 				17C283651DF0788600E7BC29 /* HomeView.swift */,
 				17C283691DF07F2000E7BC29 /* HomeCell.swift */,
 				17C283671DF07CA400E7BC29 /* PhotographyModel.swift */,
-				17CF63BE1E253AA800D987A7 /* HomeTests.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -185,7 +216,6 @@
 				176958C71DF48A760060941A /* TutorialViewController.swift */,
 				176958C31DF47FE50060941A /* TutorialView.swift */,
 				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
-				1766336D1E1B3B9800E2A05E /* TutorialTests.swift */,
 			);
 			name = Tutorial;
 			sourceTree = "<group>";
@@ -195,7 +225,6 @@
 			children = (
 				177DD33F1E060BC800605146 /* DemoView.swift */,
 				177DD3551E0ADA2D00605146 /* DemoModel.swift */,
-				177DD3491E07761E00605146 /* DemoTests.swift */,
 			);
 			name = Demo;
 			sourceTree = "<group>";
@@ -244,6 +273,24 @@
 			productReference = 177DD3471E07761E00605146 /* LambentTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		17937EAF1F38CB8400DBB552 /* LambentUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17937EB71F38CB8400DBB552 /* Build configuration list for PBXNativeTarget "LambentUITests" */;
+			buildPhases = (
+				17937EAC1F38CB8400DBB552 /* Sources */,
+				17937EAD1F38CB8400DBB552 /* Frameworks */,
+				17937EAE1F38CB8400DBB552 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17937EB61F38CB8400DBB552 /* PBXTargetDependency */,
+			);
+			name = LambentUITests;
+			productName = LambentUITests;
+			productReference = 17937EB01F38CB8400DBB552 /* LambentUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		17C2834F1DF066F400E7BC29 /* Lambent */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17C283621DF066F400E7BC29 /* Build configuration list for PBXNativeTarget "Lambent" */;
@@ -270,12 +317,17 @@
 		17C283481DF066F300E7BC29 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0810;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Eisdorfer, Lauren";
 				TargetAttributes = {
 					177DD3461E07761E00605146 = {
 						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 17C2834F1DF066F400E7BC29;
+					};
+					17937EAF1F38CB8400DBB552 = {
+						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 17C2834F1DF066F400E7BC29;
 					};
@@ -306,12 +358,20 @@
 			targets = (
 				17C2834F1DF066F400E7BC29 /* Lambent */,
 				177DD3461E07761E00605146 /* LambentTests */,
+				17937EAF1F38CB8400DBB552 /* LambentUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		177DD3451E07761E00605146 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17937EAE1F38CB8400DBB552 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -434,6 +494,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17937EAC1F38CB8400DBB552 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17937EB31F38CB8400DBB552 /* LambentUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		17C2834C1DF066F400E7BC29 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -462,6 +530,11 @@
 			isa = PBXTargetDependency;
 			target = 17C2834F1DF066F400E7BC29 /* Lambent */;
 			targetProxy = 177DD34C1E07761E00605146 /* PBXContainerItemProxy */;
+		};
+		17937EB61F38CB8400DBB552 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17C2834F1DF066F400E7BC29 /* Lambent */;
+			targetProxy = 17937EB51F38CB8400DBB552 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -502,6 +575,34 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
+			};
+			name = Release;
+		};
+		17937EB81F38CB8400DBB552 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/**";
+				INFOPLIST_FILE = LambentUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "leisdorfer67-gmail.com.LambentUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Lambent;
+			};
+			name = Debug;
+		};
+		17937EB91F38CB8400DBB552 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/**";
+				INFOPLIST_FILE = LambentUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "leisdorfer67-gmail.com.LambentUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Lambent;
 			};
 			name = Release;
 		};
@@ -552,7 +653,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -603,7 +704,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -620,7 +721,7 @@
 				CODE_SIGN_ENTITLEMENTS = Photography/Photography.entitlements;
 				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = Photography/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -636,7 +737,7 @@
 				CODE_SIGN_ENTITLEMENTS = Photography/Photography.entitlements;
 				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = Photography/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -652,6 +753,15 @@
 			buildConfigurations = (
 				177DD34F1E07761E00605146 /* Debug */,
 				177DD3501E07761E00605146 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17937EB71F38CB8400DBB552 /* Build configuration list for PBXNativeTarget "LambentUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17937EB81F38CB8400DBB552 /* Debug */,
+				17937EB91F38CB8400DBB552 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

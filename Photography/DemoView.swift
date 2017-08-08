@@ -52,6 +52,7 @@ public class DemoView: UIView {
                 let cachedImage = DemoView.cache.object(forKey: image.title as NSString)
                 imageView.image = cachedImage
                 imageString = image.title
+                imageView.accessibilityLabel = imageName
             }
         })
     }
