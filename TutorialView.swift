@@ -1,4 +1,5 @@
 import UIKit
+import StoreKit
 
 public enum Direction {
     case right
@@ -51,6 +52,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         self.tutorialContent = tutorialContent
         self.setUp = setUp
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        maybeRequestReview()
         layoutSwipeGestures([swipeRight, swipeLeft])
         layoutContainer()
         layoutScrollView()
@@ -62,6 +64,15 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         HelperMethods.configureShadow(element: container)
         addSubviews([container, demo, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         scrollView.addSubview(content)
+    }
+    
+    private func maybeRequestReview() {
+        let launches = UserDefaults.standard.integer(forKey: "launch")
+        let numberOfLaunchesRequired = 5
+        guard setUp.currentPage == .shutter && currentSegment == .demo && launches % numberOfLaunchesRequired == 0 else { return }
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+        }
     }
     
     func addInformation(information: TutorialSettings) {
@@ -126,6 +137,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         prepareSegment(currentSegment)
         layoutAppropriateContent()
         setNeedsLayout()
+        maybeRequestReview()
     }
     
     private func layoutPageControl(_ numberOfSections: Int) {

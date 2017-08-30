@@ -45,7 +45,6 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-      //  imageView.image = UIImage(named: imageName)
         
         DemoView.images.forEach({ image in
             if image.title == imageName && image.title != imageString {

@@ -7,6 +7,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         prepareApplication()
+        let launches = UserDefaults.standard.integer(forKey: "launch") + 1
+        UserDefaults.standard.set(launches, forKey: "launch")
         return true
     }
     
