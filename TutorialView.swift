@@ -68,8 +68,8 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     
     private func maybeRequestReview() {
         let launches = UserDefaults.standard.integer(forKey: "launch")
-        let numberOfLaunchesRequired = 5
-        guard setUp.currentPage == .shutter && currentSegment == .demo && launches % numberOfLaunchesRequired == 0 else { return }
+        let numberOfLaunchesRequired = 3
+        guard setUp.currentPage == .shutter && currentSegment == .demo && launches > 0 && launches % numberOfLaunchesRequired == 0 else { return }
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         }

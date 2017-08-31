@@ -556,9 +556,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PhotographyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Asynchrony.PhotographyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.3;
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
 			};
@@ -570,9 +572,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = PhotographyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Asynchrony.PhotographyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.3;
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
 			};
@@ -721,7 +725,7 @@
 				CODE_SIGN_ENTITLEMENTS = Photography/Photography.entitlements;
 				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = Photography/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -737,7 +741,7 @@
 				CODE_SIGN_ENTITLEMENTS = Photography/Photography.entitlements;
 				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = Photography/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
