@@ -1,7 +1,7 @@
 import XCTest
 
 class LambentUITests: XCTestCase {
-        
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -24,7 +24,7 @@ class LambentUITests: XCTestCase {
         let apertureIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(apertureIntroSelected)
         homeButton.tap()
-       
+        
         tablesQuery.cells.containing(.staticText, identifier: "Aperture").buttons["Demo"].tap()
         XCTAssert(app.staticTexts["Aperture"].exists)
         let apertureDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
@@ -36,7 +36,7 @@ class LambentUITests: XCTestCase {
         let aperturePracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(aperturePracticeSelected)
         homeButton.tap()
-
+        
         tablesQuery.cells.containing(.staticText, identifier:"Shutter Speed").buttons["Intro"].tap()
         XCTAssert(app.staticTexts["Shutter Speed"].exists)
         let shutterSpeedIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
@@ -121,7 +121,7 @@ class LambentUITests: XCTestCase {
         slider.adjust(toNormalizedSliderPosition: 1.0)
         XCTAssert(app.staticTexts["f/22"].exists)
         XCTAssert(app.images["fountain22"].exists)
-
+        
         scrollViewsQuery.otherElements.containing(.staticText, identifier:"f/22").children(matching: .image).element(boundBy: 0).swipeLeft()
         XCTAssert(app.staticTexts["Press and move the slider to see how shutter speed affects the above photo"].exists)
         XCTAssert(app.staticTexts["1/2"].exists)

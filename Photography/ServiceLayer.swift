@@ -1,5 +1,6 @@
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 struct Images {
     let title: String
@@ -27,7 +28,7 @@ public struct Content {
 }
 
 struct ServiceLayer {
-    private let database = FIRDatabase.database().reference()
+    private let database = Database.database().reference()
     
     func fetchContent(_ completion: @escaping (Content) -> ()) {
         var count = 0
@@ -68,7 +69,7 @@ struct ServiceLayer {
         database.observe(.value, with: { snapshot in
             snapshot.children.forEach { item in
                 (item as AnyObject).children.forEach { image in
-                    let child = image as? FIRDataSnapshot
+                    let child = image as? DataSnapshot
                     let image = child?.value as? NSDictionary
                     guard let title = image?.value(forKey: "title") as? String, let location = image?.value(forKey: "location") as? String else { return }
                     images += [Images(title: title, location: location)]
@@ -78,7 +79,7 @@ struct ServiceLayer {
         })
     }
 
-    private func obtainValue(snapshot: FIRDataSnapshot, key: String, count: Int) -> String? {
+    private func obtainValue(snapshot: DataSnapshot, key: String, count: Int) -> String? {
         let snapshot = snapshot.childSnapshot(forPath: ("\(key)s"))
         guard let snapshotDict = snapshot.value as? [String: AnyObject], let value = snapshotDict[("\(key)\(count)")] as? String else { return nil }
         return value

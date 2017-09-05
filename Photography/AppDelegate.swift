@@ -1,5 +1,6 @@
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,8 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     override init() {
-        FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true
+        FirebaseApp.configure()
+        Database.database().isPersistenceEnabled = true
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
