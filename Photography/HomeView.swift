@@ -18,7 +18,8 @@ public struct CellContent {
 }
 
 public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
-    private let tableView: UITableView
+    private let title = UILabel()
+    private let tableView = UITableView()
     private let cachedCellForSizing = HomeCell()
     private var cellContent = CellContent()
     public var homeContent: Content? {
@@ -30,15 +31,18 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     var navigationController: UINavigationController?
     
     override init(frame: CGRect) {
-        tableView = UITableView(frame: UIScreen.main.bounds.insetBy(dx: 18, dy: 5), style: .grouped)
         super.init(frame: frame)
+        title.text = "Lambent"
+        title.textColor = .white
+        title.font = UIFont.systemFont(ofSize: 28)
+        addSubview(title)
         backgroundColor = UIColor.backgroundColor()
-        tableView.backgroundColor = UIColor.backgroundColor()
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .none
-        tableView.clipsToBounds = false
+        tableView.backgroundColor = UIColor.backgroundColor()
+        tableView.clipsToBounds = true
+        tableView.layer.cornerRadius = 8
         tableView.showsVerticalScrollIndicator = false
         addSubview(tableView)
     }
@@ -47,16 +51,38 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        let insets: UIEdgeInsets
+        let horizontalInsets: CGFloat = 18
+        let padding: CGFloat = 16
+        if #available(iOS 11.0, *) {
+            insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInsets, bottom: safeAreaInsets.bottom + padding, right: horizontalInsets)
+        } else {
+            insets = UIEdgeInsets(top: 0, left: horizontalInsets, bottom: 0, right: horizontalInsets)
+        }
+        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
+        let titleSize = title.sizeThatFits(contentArea.size)
+        title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
+        tableView.frame = CGRect(x: contentArea.minX, y: title.frame.maxY + 8, width: contentArea.width, height: contentArea.size.height - title.frame.height - 8)
+    }
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return homeContent?.sections.count ?? 0
     }
     
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.5
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,7 +94,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         })
         return cell
     }
-    
+
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? HomeCell else { fatalError() }
         guard let page = Page(rawValue: indexPath.section) else { return }

@@ -38,9 +38,7 @@ final class HomeViewController: UIViewController {
         let homeView = HomeView()
         view = homeView
         view.backgroundColor = UIColor.backgroundColor()
-        title = "Lambent"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.systemFont(ofSize: 24)]
-        navigationController?.hidesBarsOnSwipe = true
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: homeView, viewController: self, model: photographyModel)
     }
@@ -48,12 +46,7 @@ final class HomeViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    override var prefersStatusBarHidden: Bool {
-        return navigationController?.isNavigationBarHidden ?? false
-    }
-    
-    
+ 
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
         guard let content = content else { return }
         navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
