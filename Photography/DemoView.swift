@@ -110,7 +110,6 @@ public class DemoView: UIView {
         sliderFrame = CGRect(x: slider.frame.minX, y: sliderFrameTop - sliderPadding, width: slider.frame.width, height: 2 * slider.frame.height)
         
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
-        let demoInstructionsTop = (slider.frame.maxY + bounds.maxY)/2 - demoInstructionHeight/2
-        demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: demoInstructionsTop, width: ceil(sliderWidth), height: ceil(demoInstructionHeight))
+        demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: slider.frame.maxY + 8, width: ceil(sliderWidth), height: ceil(demoInstructionHeight))
     }
 }

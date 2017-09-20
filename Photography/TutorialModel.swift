@@ -17,8 +17,8 @@ public class TutorialModel {
     private var content: Content
     private var tutorial = TutorialSettings()
     
-    public var nextSection: (Page, Segment)-> Void = { _ in }
-    public var previousSection: (Page, Segment)-> Void = { _ in}
+    public var nextSection: (Page, Segment)-> Void = { _,_  in }
+    public var previousSection: (Page, Segment)-> Void = { _,_  in}
     public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
     public init (setUp: TutorialSetUp, content: Content) {

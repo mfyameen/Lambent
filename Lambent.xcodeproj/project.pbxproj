@@ -75,12 +75,12 @@
 		65B495D5F1189E61A417A526 /* Pods_Lambent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lambent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD3771611F5F4545004E8D28 /* LambentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambentUITests.swift; sourceTree = "<group>"; };
 		BD3771631F5F4545004E8D28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD4852491F72B0F400CA9475 /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LambentUnitTests.xctest; path = "/Users/lauren.eisdorfer/Library/Mobile Documents/com~apple~CloudDocs/Projects/Lambent/build/Debug-iphoneos/LambentUnitTests.xctest"; sourceTree = "<absolute>"; };
-		BD48524A1F72B0F400CA9475 /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LambentUITests.xctest; path = "/Users/lauren.eisdorfer/Library/Mobile Documents/com~apple~CloudDocs/Projects/Lambent/build/Debug-iphoneos/LambentUITests.xctest"; sourceTree = "<absolute>"; };
 		BD48524B1F72B13700CA9475 /* Lambent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lambent-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD812E83F0E8C4FFF14574BC /* Pods-Lambent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lambent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lambent/Pods-Lambent.debug.xcconfig"; sourceTree = "<group>"; };
 		BDA428DE1F5F3EFC003CE8CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BDA429051F5F3FFD003CE8CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDEF97951F72EDF4004F61BE /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDEF97961F72EDF4004F61BE /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +159,8 @@
 				17C283511DF066F400E7BC29 /* Products */,
 				09B34E1E00A35F37FC8F7379 /* Pods */,
 				A3B4AA1FD5FA0F48198D8489 /* Frameworks */,
+				BDEF97951F72EDF4004F61BE /* LambentUITests.xctest */,
+				BDEF97961F72EDF4004F61BE /* LambentUnitTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -279,7 +281,7 @@
 			);
 			name = LambentUITests;
 			productName = LambentUITests;
-			productReference = BD48524A1F72B0F400CA9475 /* LambentUITests.xctest */;
+			productReference = BDEF97951F72EDF4004F61BE /* LambentUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		BDA429001F5F3FFD003CE8CA /* LambentUnitTests */ = {
@@ -297,7 +299,7 @@
 			);
 			name = LambentUnitTests;
 			productName = LambentUnitTests;
-			productReference = BD4852491F72B0F400CA9475 /* LambentUnitTests.xctest */;
+			productReference = BDEF97961F72EDF4004F61BE /* LambentUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -313,6 +315,7 @@
 					17C2834F1DF066F400E7BC29 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = HV2ZKQRMWU;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -323,12 +326,14 @@
 					BD37715E1F5F4545004E8D28 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = HV2ZKQRMWU;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 17C2834F1DF066F400E7BC29;
 					};
 					BDA429001F5F3FFD003CE8CA = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = HV2ZKQRMWU;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 17C2834F1DF066F400E7BC29;
 					};
@@ -627,7 +632,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -643,7 +649,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lauren.eisdorfer.lambent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -657,7 +664,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = Lambent;
 			};
 			name = Debug;
@@ -672,7 +680,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = Lambent;
 			};
 			name = Release;
@@ -689,7 +698,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
 			};
 			name = Debug;
@@ -706,7 +716,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lambent.app/Lambent";
 			};
 			name = Release;

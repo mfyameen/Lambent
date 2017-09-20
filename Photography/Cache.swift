@@ -13,9 +13,9 @@ struct Cache {
     
     private func cache(_ images: [Images]) {
         images.forEach({ image in
-            DispatchQueue.global().async { _ in
+            DispatchQueue.global().async { 
                 guard let url = URL(string: image.location), let data = NSData(contentsOf: url), let preCachedImage = UIImage(data: data as Data) else { return }
-                DispatchQueue.main.async { _ in
+                DispatchQueue.main.async { 
                     self.cache.setObject(preCachedImage, forKey: image.title as NSString)
                 }
             }

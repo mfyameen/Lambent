@@ -155,7 +155,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     private func layoutContent() {
-        title.font = UIFont.boldSystemFont(ofSize: 14)
+        title.font = UIFont.boldSystemFont(ofSize: 16)
         content.font = UIFont.systemFont(ofSize: 14)
         content.numberOfLines = 0
     }
@@ -196,7 +196,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let verticalInset: CGFloat = 75
         let horizontalInset: CGFloat = 18
         if #available(iOS 11.0, *) {
-            insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInset, bottom: safeAreaInsets.bottom, right: horizontalInset)
+            insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInset, bottom: safeAreaInsets.bottom + 16, right: horizontalInset)
         } else {
             insets = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
         }
