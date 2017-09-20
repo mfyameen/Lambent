@@ -18,7 +18,6 @@ public struct CellContent {
 }
 
 public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
-    private let title = UILabel()
     private let tableView = UITableView()
     private let cachedCellForSizing = HomeCell()
     private var cellContent = CellContent()
@@ -32,10 +31,6 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        title.text = "Lambent"
-        title.textColor = .white
-        title.font = UIFont.systemFont(ofSize: 28)
-        addSubview(title)
         backgroundColor = UIColor.backgroundColor()
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseIdentifier)
         tableView.dataSource = self
@@ -43,6 +38,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.backgroundColor = UIColor.backgroundColor()
         tableView.clipsToBounds = true
         tableView.layer.cornerRadius = 8
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         addSubview(tableView)
     }
@@ -61,10 +57,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         } else {
             insets = UIEdgeInsets(top: 0, left: horizontalInsets, bottom: 0, right: horizontalInsets)
         }
-        let contentArea = UIEdgeInsetsInsetRect(bounds, insets)
-        let titleSize = title.sizeThatFits(contentArea.size)
-        title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: contentArea.minY, width: titleSize.width, height: titleSize.height)
-        tableView.frame = CGRect(x: contentArea.minX, y: title.frame.maxY + 8, width: contentArea.width, height: contentArea.size.height - title.frame.height - 8)
+        tableView.frame = UIEdgeInsetsInsetRect(bounds, insets)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -120,14 +113,6 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         cellContent.title = homeContent?.sections[index] ?? ""
         cellContent.phrase = homeContent?.descriptions[index] ?? ""
         return cellContent
-    }
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= 0 {
-            navigationController?.isNavigationBarHidden = true
-        } else {
-            navigationController?.isNavigationBarHidden = false
-        }
     }
 }
 

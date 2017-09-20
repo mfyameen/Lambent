@@ -1,5 +1,48 @@
 import Foundation
 
+public enum Page: Int {
+    case overview = 0
+    case aperture = 1
+    case shutter = 2
+    case iso = 3
+    case focal = 4
+    case modes = 5
+}
+
+public enum Segment {
+    case none
+    case intro
+    case demo
+    case practice
+    
+    var value: Int {
+        switch self {
+        case .none: return 0
+        case .intro: return 0
+        case .demo: return 1
+        case .practice: return 2
+        }
+    }
+    
+    static func type(forValue value: Int) -> Segment {
+        switch value {
+        case 0: return .intro
+        case 1: return .demo
+        case 2: return .practice
+        default: return .none
+        }
+    }
+}
+
+public struct TutorialSetUp {
+    let currentPage: Page
+    let currentSegment: Segment
+    public init(currentPage: Page, currentSegment: Segment) {
+        self.currentPage = currentPage
+        self.currentSegment = currentSegment
+    }
+}
+
 public struct TutorialSettings {
     public init() {}
     public var backButtonTitle = ""
