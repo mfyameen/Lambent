@@ -24,7 +24,7 @@ class TutorialTests: XCTestCase {
 
     func testIntroContentDisplayedWhenOverviewPage() {
         var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject = $0.content }
         tutorial.configureContent()
@@ -44,7 +44,7 @@ class TutorialTests: XCTestCase {
     
     func testAppropriateNextButtonTitleDisplayedWhenShutterPage() {
         var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject = $0.nextButtonTitle }
         tutorial.configureToolBarButtonTitles()
@@ -63,7 +63,7 @@ class TutorialTests: XCTestCase {
 
     func testOnlyNextButtonDisplayedWhenOverviewPage() {
         var testObject = TutorialSettings()
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
         tutorial.configureToolBarButtonTitles()
@@ -74,7 +74,7 @@ class TutorialTests: XCTestCase {
 
     func testOnlyBackButtonDisplayedWhenModesPage() {
         var testObject = TutorialSettings()
-        let setUp = TutorialSetUp(currentPage: .modes, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
         tutorial.configureToolBarButtonTitles()
@@ -84,7 +84,7 @@ class TutorialTests: XCTestCase {
 
     func testPageIncrementsWhenSwipingToTheLeft() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.nextSection = { testObject = $0.0 }
         tutorial.configureSwipe(direction: .left)
@@ -93,7 +93,7 @@ class TutorialTests: XCTestCase {
 
     func testPageDecrementsWhenSwipingToTheRight() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.previousSection = { testObject = $0.0 }
         tutorial.configureSwipe(direction: .right)
@@ -111,7 +111,7 @@ class TutorialTests: XCTestCase {
    
     func testPageDoesNotSwipeToTheRightIfPreviousPageDoesNotExist() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.nextSection = { testObject = $0.0 }
         tutorial.configureSwipe(direction: .right)
@@ -120,7 +120,7 @@ class TutorialTests: XCTestCase {
     
     func testPageIncrementsWhenRightSideOfPageControlPressed() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.nextSection = { testObject = $0.0 }
         tutorial.configurePageControlMovement(currentPageControlPage: 1)
@@ -129,7 +129,7 @@ class TutorialTests: XCTestCase {
     
     func testPageDecrementsWhenLeftSideOfPageControlPressed() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .focal, currentSegment: nil)
+        let setUp = TutorialSetUp(currentPage: .focal, currentSegment: .none)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.previousSection = { testObject = $0.0 }
         tutorial.configurePageControlMovement(currentPageControlPage: 2)

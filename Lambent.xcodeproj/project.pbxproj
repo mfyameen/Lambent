@@ -73,10 +73,11 @@
 		17F6DAD91E399A3700DDD5D2 /* Photography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Photography.entitlements; sourceTree = "<group>"; };
 		5BA1DF4361318A62FDEDDD3A /* Pods-Lambent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lambent.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lambent/Pods-Lambent.release.xcconfig"; sourceTree = "<group>"; };
 		65B495D5F1189E61A417A526 /* Pods_Lambent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lambent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD2C45121F5F479400572C20 /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LambentUITests.xctest; path = "/Users/lauren.eisdorfer/Library/Mobile Documents/com~apple~CloudDocs/Projects/Lambent/build/Debug-iphoneos/LambentUITests.xctest"; sourceTree = "<absolute>"; };
-		BD2C45131F5F487300572C20 /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LambentUnitTests.xctest; path = "/Users/lauren.eisdorfer/Library/Mobile Documents/com~apple~CloudDocs/Projects/Lambent/build/Debug-iphoneos/LambentUnitTests.xctest"; sourceTree = "<absolute>"; };
 		BD3771611F5F4545004E8D28 /* LambentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambentUITests.swift; sourceTree = "<group>"; };
 		BD3771631F5F4545004E8D28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD4852491F72B0F400CA9475 /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LambentUnitTests.xctest; path = "/Users/lauren.eisdorfer/Library/Mobile Documents/com~apple~CloudDocs/Projects/Lambent/build/Debug-iphoneos/LambentUnitTests.xctest"; sourceTree = "<absolute>"; };
+		BD48524A1F72B0F400CA9475 /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LambentUITests.xctest; path = "/Users/lauren.eisdorfer/Library/Mobile Documents/com~apple~CloudDocs/Projects/Lambent/build/Debug-iphoneos/LambentUITests.xctest"; sourceTree = "<absolute>"; };
+		BD48524B1F72B13700CA9475 /* Lambent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lambent-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD812E83F0E8C4FFF14574BC /* Pods-Lambent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lambent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lambent/Pods-Lambent.debug.xcconfig"; sourceTree = "<group>"; };
 		BDA428DE1F5F3EFC003CE8CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BDA429051F5F3FFD003CE8CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 		17C283471DF066F300E7BC29 = {
 			isa = PBXGroup;
 			children = (
+				BD48524B1F72B13700CA9475 /* Lambent-Bridging-Header.h */,
 				17C283521DF066F400E7BC29 /* Photography */,
 				BDA429021F5F3FFD003CE8CA /* LambentUnitTests */,
 				BD3771601F5F4545004E8D28 /* LambentUITests */,
@@ -277,7 +279,7 @@
 			);
 			name = LambentUITests;
 			productName = LambentUITests;
-			productReference = BD2C45121F5F479400572C20 /* LambentUITests.xctest */;
+			productReference = BD48524A1F72B0F400CA9475 /* LambentUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		BDA429001F5F3FFD003CE8CA /* LambentUnitTests */ = {
@@ -295,7 +297,7 @@
 			);
 			name = LambentUnitTests;
 			productName = LambentUnitTests;
-			productReference = BD2C45131F5F487300572C20 /* LambentUnitTests.xctest */;
+			productReference = BD4852491F72B0F400CA9475 /* LambentUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -556,6 +558,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Lambent-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -605,6 +608,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Lambent-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

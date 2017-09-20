@@ -16,7 +16,7 @@ class HomeCell: UITableViewCell {
     private let padding: CGFloat = 50
     private let buttonWidth: CGFloat
     
-    var pressButton: (Segment?)->() = { _ in }
+    var pressButton: (Segment)->() = { _ in }
     
     override init (style: UITableViewCellStyle, reuseIdentifier: String?) {
         buttonWidth = (UIScreen.main.bounds.width - (insets * 2)) * 0.33
@@ -99,7 +99,7 @@ class HomeCell: UITableViewCell {
     }
     
     @objc private func pressStartButton() {
-        pressButton(nil)
+        pressButton(Segment.none)
     }
     
     @objc private func pressIntroButton() {

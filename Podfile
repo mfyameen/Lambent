@@ -6,4 +6,5 @@ target 'Lambent' do
   # Pods for Lambent
 pod 'Firebase/Core'
 pod 'Firebase/Database'
+pod 'GoogleAnalytics'
 end

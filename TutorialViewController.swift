@@ -47,12 +47,12 @@ class TutorialViewController: UIViewController {
         return button
     }
 
-    func pushNextTutorialViewController(_ page: Page, _ segment: Segment?) -> Void {
+    func pushNextTutorialViewController(_ page: Page, _ segment: Segment) -> Void {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
     }
     
-    func pushPreviousTutorialViewController(_ page: Page, _ segment: Segment?) {
+    func pushPreviousTutorialViewController(_ page: Page, _ segment: Segment) {
         let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
         let transition = configureTransition()
         navigationController?.view.layer.add(transition, forKey: nil)
@@ -87,6 +87,6 @@ struct TutorialBinding {
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         tutorialModel.previousSection = viewController.pushPreviousTutorialViewController
         demoView.movedSlider = demoModel.configureDemo
-        demoModel.shareInformation = demoView.addInformation
+        //demoModel.shareInformation = demoView.addInformation
     }
 }

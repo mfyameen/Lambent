@@ -27,14 +27,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let swipeLeft = UISwipeGestureRecognizer()
     
     private var currentPage: Page
-    private var currentSegment: Segment?
+    private var currentSegment: Segment
     private var tutorialContent: Content
     
     var prepareContent: () -> () = {}
     var prepareToolBar: ()->() = {}
     var preparePageControl: (Int)->() = { _ in }
     var prepareSwipe: (Direction)->()  = { _ in }
-    var prepareSegment: (Segment?) -> () = { _ in }
+    var prepareSegment: (Segment) -> () = { _ in }
     var prepareDemo: (Int?) -> () = { _ in }
     
     var photographyContent: TutorialModel? {
@@ -68,8 +68,10 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     
     private func maybeRequestReview() {
         let launches = UserDefaults.standard.integer(forKey: "launch")
+        let requestedReview = UserDefaults.standard.bool(forKey: "requested review")
         let numberOfLaunchesRequired = 3
-        guard setUp.currentPage == .shutter && currentSegment == .demo && launches > 0 && launches % numberOfLaunchesRequired == 0 else { return }
+        guard currentSegment == .demo && launches % numberOfLaunchesRequired == 0 && requestedReview == false else { return }
+        UserDefaults.standard.set(true, forKey: "requested review")
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         }
@@ -128,12 +130,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         case .modes: segmentedControl = UISegmentedControl(items: ["Aperture", "Shutter", "Manual"])
         default: segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
         }
-        segmentedControl.selectedSegmentIndex = currentSegment?.rawValue ?? 0
+        segmentedControl.selectedSegmentIndex = currentSegment.value
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
     @objc private func segmentedControlValueChanged() {
-        currentSegment = Segment(rawValue: segmentedControl.selectedSegmentIndex)
+        currentSegment = Segment.type(forValue: segmentedControl.selectedSegmentIndex)
         prepareSegment(currentSegment)
         layoutAppropriateContent()
         setNeedsLayout()

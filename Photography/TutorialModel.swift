@@ -13,12 +13,12 @@ public struct TutorialSettings {
 
 public class TutorialModel {
     private var currentPage: Page
-    private var currentSegment: Segment?
+    private var currentSegment: Segment
     private var content: Content
     private var tutorial = TutorialSettings()
     
-    public var nextSection: (Page, Segment?)-> Void = { _ in }
-    public var previousSection: (Page, Segment?)-> Void = { _ in}
+    public var nextSection: (Page, Segment)-> Void = { _ in }
+    public var previousSection: (Page, Segment)-> Void = { _ in}
     public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
     
     public init (setUp: TutorialSetUp, content: Content) {
@@ -40,11 +40,15 @@ public class TutorialModel {
     func configureAppropriateSegment(segment: Segment?) {
         guard let segment = segment else { return }
         switch (segment, currentPage) {
+        case (.none, .modes): fallthrough
         case (.intro, .modes): fallthrough
         case (.demo, .modes): fallthrough
         case (.practice, .modes):
             tutorial.isDemoScreen = false
-            tutorial.content = content.modeIntroductions[segment.rawValue]
+            tutorial.content = content.modeIntroductions[segment.value]
+        case (.none, _):
+            tutorial.isDemoScreen = false
+            tutorial.content = content.introductions[currentPage.rawValue]
         case (.intro, _):
             tutorial.isDemoScreen = false
             tutorial.content = content.introductions[currentPage.rawValue]
@@ -86,20 +90,20 @@ public class TutorialModel {
         let pageMaxLimit = content.sections.count - 1
         if direction == .left && currentPage.rawValue >= pageMinLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
-            nextSection(currentPage, currentSegment ?? Segment.intro)
+            nextSection(currentPage, currentSegment)
         } else if direction == .right && currentPage.rawValue <= pageMaxLimit {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            previousSection(currentPage, currentSegment ?? Segment.intro)
+            previousSection(currentPage, currentSegment)
         }
     }
     
     public func configurePageControlMovement(currentPageControlPage: Int) {
         if currentPageControlPage > currentPage.rawValue {
             guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
-            nextSection(currentPage, currentSegment ?? Segment.intro)
+            nextSection(currentPage, currentSegment)
         } else {
             guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            previousSection(currentPage, currentSegment ?? Segment.intro)
+            previousSection(currentPage, currentSegment)
         }
     }
 }

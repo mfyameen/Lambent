@@ -7,7 +7,7 @@ extension UIView {
 }
 
 struct CellBinding {
-    static func bind(view: HomeCell, handler: @escaping (Segment?)->()) {
+    static func bind(view: HomeCell, handler: @escaping (Segment)->()) {
         view.pressButton = handler
     }
 }
@@ -71,25 +71,32 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         return homeContent?.sections.count ?? 0
     }
     
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView
     }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
-
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.reuseIdentifier, for: indexPath) as? HomeCell else { fatalError() }
         CellBinding.bind(view: cell, handler: { [weak self] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
+            guard let tracker = GAI.sharedInstance().defaultTracker else { return }
+            let eventTracker = GAIDictionaryBuilder.createEvent(
+                withCategory: "Home View Section and Segment Selection",
+                action: "Select \(page) section",
+                label: "Select \(segmentedControl) segment",
+                value: 1).build()
+            tracker.send(eventTracker as? [AnyHashable : Any])
             self?.startTutorial(setUp)
         })
         return cell

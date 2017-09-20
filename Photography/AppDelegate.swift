@@ -9,6 +9,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         prepareApplication()
         let launches = UserDefaults.standard.integer(forKey: "launch") + 1
+        UserDefaults.standard.set(false, forKey: "requested review")
         UserDefaults.standard.set(launches, forKey: "launch")
         return true
     }
@@ -32,6 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.backgroundColor = UIColor.backgroundColor()
         window?.makeKeyAndVisible()
+        configureGoogleAnalytics()
+    }
+    
+    private func configureGoogleAnalytics() {
+        guard let gai = GAI.sharedInstance() else { assert(false, "Google Analytics not configured correctly") }
+        gai.tracker(withTrackingId: "UA-106810868-1")
+        gai.trackUncaughtExceptions = true
+        gai.logger.logLevel = .verbose
     }
 }
 
