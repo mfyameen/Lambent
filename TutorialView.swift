@@ -20,7 +20,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     private var segmentedControl = UISegmentedControl()
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
-    public var demo = DemoView()
+    public var demo: DemoView
     private let setUp: TutorialSetUp
     private var isDemo = false
     private let swipeRight = UISwipeGestureRecognizer()
@@ -52,6 +52,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentSegment = setUp.currentSegment
         self.tutorialContent = tutorialContent
         self.setUp = setUp
+        demo = DemoView(page: setUp.currentPage)
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         maybeRequestReview()
         layoutSwipeGestures([swipeRight, swipeLeft])
