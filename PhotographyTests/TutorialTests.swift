@@ -24,7 +24,7 @@ class TutorialTests: XCTestCase {
 
     func testIntroContentDisplayedWhenOverviewPage() {
         var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject = $0.content }
         tutorial.configureContent()
@@ -44,7 +44,7 @@ class TutorialTests: XCTestCase {
     
     func testAppropriateNextButtonTitleDisplayedWhenShutterPage() {
         var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject = $0.nextButtonTitle }
         tutorial.configureToolBarButtonTitles()
@@ -63,7 +63,7 @@ class TutorialTests: XCTestCase {
 
     func testOnlyNextButtonDisplayedWhenOverviewPage() {
         var testObject = TutorialSettings()
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
         tutorial.configureToolBarButtonTitles()
@@ -74,7 +74,7 @@ class TutorialTests: XCTestCase {
 
     func testOnlyBackButtonDisplayedWhenModesPage() {
         var testObject = TutorialSettings()
-        let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
         tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
         tutorial.configureToolBarButtonTitles()
@@ -84,18 +84,18 @@ class TutorialTests: XCTestCase {
 
     func testPageIncrementsWhenSwipingToTheLeft() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { testObject = $0.0 }
+        tutorial.nextSection = { (page, _) in testObject = page }
         tutorial.configureSwipe(direction: .left)
         XCTAssertEqual(testObject, Page.shutter)
     }
 
     func testPageDecrementsWhenSwipingToTheRight() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.previousSection = { testObject = $0.0 }
+        tutorial.previousSection = { (page, _) in testObject = page }
         tutorial.configureSwipe(direction: .right)
         XCTAssertEqual(testObject, Page.aperture)
     }
@@ -104,34 +104,34 @@ class TutorialTests: XCTestCase {
         var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .practice)
         let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { testObject = $0.0 }
+        tutorial.nextSection = { (page, _) in testObject = page }
         tutorial.configureSwipe(direction: .left)
         XCTAssertEqual(testObject, nil)
     }
    
     func testPageDoesNotSwipeToTheRightIfPreviousPageDoesNotExist() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { testObject = $0.0 }
+        tutorial.nextSection = { (page, _) in testObject = page }
         tutorial.configureSwipe(direction: .right)
         XCTAssertEqual(testObject, nil)
     }
     
     func testPageIncrementsWhenRightSideOfPageControlPressed() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { testObject = $0.0 }
+        tutorial.nextSection = { (page, _) in testObject = page }
         tutorial.configurePageControlMovement(currentPageControlPage: 1)
         XCTAssertEqual(testObject, Page.aperture)
     }
     
     func testPageDecrementsWhenLeftSideOfPageControlPressed() {
         var testObject: Page?
-        let setUp = TutorialSetUp(currentPage: .focal, currentSegment: .none)
+        let setUp = TutorialSetUp(currentPage: .focal, currentSegment: .intro)
         let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.previousSection = { testObject = $0.0 }
+        tutorial.previousSection = { (page, _) in testObject = page }
         tutorial.configurePageControlMovement(currentPageControlPage: 2)
         XCTAssertEqual(testObject, Page.iso)
     }
