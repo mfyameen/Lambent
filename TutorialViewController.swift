@@ -1,6 +1,6 @@
 import UIKit
 
-class TutorialViewController: UIViewController {
+class TutorialViewController: GAITrackedViewController {
     private let setUp: TutorialSetUp
     private let content: Content
     
@@ -68,7 +68,19 @@ class TutorialViewController: UIViewController {
         return transition
     }
     
-    func returnHome() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        screenName = "\(setUp.currentPage) - \(setUp.currentSegment)"
+    }
+    
+    func trackSegment(_ segment: Segment) {
+        let tracker = GAI.sharedInstance().defaultTracker
+        tracker?.set(kGAIScreenName, value: "\(setUp.currentPage) - \(segment)")
+        let builder = GAIDictionaryBuilder.createScreenView().build() as [NSObject: AnyObject]
+        tracker?.send(builder)
+    }
+    
+    @objc private func returnHome() {
         _ = navigationController?.popToRootViewController(animated: true)
     }
 }
@@ -79,6 +91,7 @@ struct TutorialBinding {
         tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
         tutorialView.prepareSwipe = tutorialModel.configureSwipe
         tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
+        tutorialView.trackSegment = viewController.trackSegment
         tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
         tutorialModel.shareTutorialSettings = tutorialView.addInformation
         tutorialView.prepareDemo = demoModel.configureDemo

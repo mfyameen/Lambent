@@ -99,7 +99,7 @@ class HomeCell: UITableViewCell {
     }
     
     @objc private func pressStartButton() {
-        pressButton(Segment.none)
+        pressButton(Segment.intro)
     }
     
     @objc private func pressIntroButton() {

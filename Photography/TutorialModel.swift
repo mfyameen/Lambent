@@ -9,29 +9,10 @@ public enum Page: Int {
     case modes = 5
 }
 
-public enum Segment {
-    case none
-    case intro
-    case demo
-    case practice
-    
-    var value: Int {
-        switch self {
-        case .none: return 0
-        case .intro: return 0
-        case .demo: return 1
-        case .practice: return 2
-        }
-    }
-    
-    static func type(forValue value: Int) -> Segment {
-        switch value {
-        case 0: return .intro
-        case 1: return .demo
-        case 2: return .practice
-        default: return .none
-        }
-    }
+public enum Segment: Int {
+    case intro = 0
+    case demo = 1
+    case practice = 2
 }
 
 public struct TutorialSetUp {
@@ -83,15 +64,11 @@ public class TutorialModel {
     func configureAppropriateSegment(segment: Segment?) {
         guard let segment = segment else { return }
         switch (segment, currentPage) {
-        case (.none, .modes): fallthrough
         case (.intro, .modes): fallthrough
         case (.demo, .modes): fallthrough
         case (.practice, .modes):
             tutorial.isDemoScreen = false
-            tutorial.content = content.modeIntroductions[segment.value]
-        case (.none, _):
-            tutorial.isDemoScreen = false
-            tutorial.content = content.introductions[currentPage.rawValue]
+            tutorial.content = content.modeIntroductions[segment.rawValue]
         case (.intro, _):
             tutorial.isDemoScreen = false
             tutorial.content = content.introductions[currentPage.rawValue]

@@ -35,6 +35,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     var preparePageControl: (Int)->() = { _ in }
     var prepareSwipe: (Direction)->()  = { _ in }
     var prepareSegment: (Segment) -> () = { _ in }
+    var trackSegment: (Segment) -> () = { _ in }
     var prepareDemo: (Int?) -> () = { _ in }
     
     var photographyContent: TutorialModel? {
@@ -130,13 +131,15 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         case .modes: segmentedControl = UISegmentedControl(items: ["Aperture", "Shutter", "Manual"])
         default: segmentedControl = UISegmentedControl(items: ["Intro", "Demo", "Practice"])
         }
-        segmentedControl.selectedSegmentIndex = currentSegment.value
+        segmentedControl.selectedSegmentIndex = currentSegment.rawValue
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
     @objc private func segmentedControlValueChanged() {
-        currentSegment = Segment.type(forValue: segmentedControl.selectedSegmentIndex)
+        guard let segment = Segment(rawValue: segmentedControl.selectedSegmentIndex) else { return }
+        currentSegment = segment
         prepareSegment(currentSegment)
+        trackSegment(currentSegment)
         layoutAppropriateContent()
         setNeedsLayout()
         maybeRequestReview()

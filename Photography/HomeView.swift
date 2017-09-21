@@ -83,13 +83,6 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         CellBinding.bind(view: cell, handler: { [weak self] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
-            guard let tracker = GAI.sharedInstance().defaultTracker else { return }
-            let eventTracker = GAIDictionaryBuilder.createEvent(
-                withCategory: "Home View Section and Segment Selection",
-                action: "Select \(page) section",
-                label: "Select \(segmentedControl) segment",
-                value: 1).build()
-            tracker.send(eventTracker as? [AnyHashable : Any])
             self?.startTutorial(setUp)
         })
         return cell

@@ -6,7 +6,7 @@ extension UINavigationController {
     }
 }
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: GAITrackedViewController {
     var content: Content?
     
     override func loadView() {
@@ -22,6 +22,11 @@ final class HomeViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        screenName = "Home"
     }
 
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
