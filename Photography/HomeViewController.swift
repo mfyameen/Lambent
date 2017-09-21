@@ -15,7 +15,11 @@ final class HomeViewController: GAITrackedViewController {
         title = "Lambent"
         view = homeView
         view.backgroundColor = UIColor.backgroundColor()
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24)]
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize(width: 0, height: 0)
+        shadow.shadowBlurRadius = 3
+        shadow.shadowColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24), NSAttributedStringKey.shadow: shadow]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
         ViewControllerBinding.bind(view: homeView, viewController: self, model: photographyModel)
     }

@@ -25,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func prepareApplication() {
         let navigationController = UINavigationController(rootViewController: HomeViewController())
-        let titleAttributes =  [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)]
-        navigationController.navigationBar.titleTextAttributes = titleAttributes
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController.navigationBar.shadowImage = UIImage()
         window = UIWindow(frame: UIScreen.main.bounds)

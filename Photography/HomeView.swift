@@ -18,6 +18,7 @@ public struct CellContent {
 }
 
 public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
+    private let container = UIView()
     private let tableView = UITableView()
     private let cachedCellForSizing = HomeCell()
     private var cellContent = CellContent()
@@ -32,15 +33,18 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.backgroundColor()
+        container.clipsToBounds = true
+        container.layer.cornerRadius = 8
+        addSubview(container)
         tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.backgroundColor()
-        tableView.clipsToBounds = true
+        tableView.clipsToBounds = false
         tableView.layer.cornerRadius = 8
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        addSubview(tableView)
+        container.addSubview(tableView)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -57,7 +61,9 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         } else {
             insets = UIEdgeInsets(top: 0, left: horizontalInsets, bottom: 0, right: horizontalInsets)
         }
-        tableView.frame = UIEdgeInsetsInsetRect(bounds, insets)
+        container.frame = UIEdgeInsetsInsetRect(bounds, insets)
+        let shadowInset = HelperMethods.shadowRadius
+        tableView.frame = container.bounds.insetBy(dx: shadowInset, dy: shadowInset)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {

@@ -100,6 +100,5 @@ struct TutorialBinding {
         tutorialModel.nextSection = viewController.pushNextTutorialViewController
         tutorialModel.previousSection = viewController.pushPreviousTutorialViewController
         demoView.movedSlider = demoModel.configureDemo
-        //demoModel.shareInformation = demoView.addInformation
     }
 }
