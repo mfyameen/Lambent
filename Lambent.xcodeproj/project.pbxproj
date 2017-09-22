@@ -24,6 +24,7 @@
 		17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283671DF07CA400E7BC29 /* PhotographyModel.swift */; };
 		17C2836A1DF07F2000E7BC29 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283691DF07F2000E7BC29 /* HomeCell.swift */; };
 		AFA17C86AD1B331060216B61 /* Pods_Lambent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B495D5F1189E61A417A526 /* Pods_Lambent.framework */; };
+		BD0DCAC31F74600400631C69 /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DCAC21F74600400631C69 /* CameraHandler.swift */; };
 		BD3771621F5F4545004E8D28 /* LambentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3771611F5F4545004E8D28 /* LambentUITests.swift */; };
 		BDA428DF1F5F3EFC003CE8CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDA428DE1F5F3EFC003CE8CA /* GoogleService-Info.plist */; };
 		BDA4290B1F5F4009003CE8CA /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3491E07761E00605146 /* DemoTests.swift */; };
@@ -73,9 +74,10 @@
 		17F6DAD91E399A3700DDD5D2 /* Photography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Photography.entitlements; sourceTree = "<group>"; };
 		5BA1DF4361318A62FDEDDD3A /* Pods-Lambent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lambent.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lambent/Pods-Lambent.release.xcconfig"; sourceTree = "<group>"; };
 		65B495D5F1189E61A417A526 /* Pods_Lambent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lambent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD0DCAC21F74600400631C69 /* CameraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
 		BD3771611F5F4545004E8D28 /* LambentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambentUITests.swift; sourceTree = "<group>"; };
 		BD3771631F5F4545004E8D28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD48524B1F72B13700CA9475 /* Lambent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lambent-Bridging-Header.h"; sourceTree = "<group>"; };
+		BD4E73B61F754952002DA5EE /* Lambent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lambent-Bridging-Header.h"; sourceTree = "<group>"; };
 		BD812E83F0E8C4FFF14574BC /* Pods-Lambent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lambent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lambent/Pods-Lambent.debug.xcconfig"; sourceTree = "<group>"; };
 		BDA428DE1F5F3EFC003CE8CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BDA429051F5F3FFD003CE8CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -152,7 +154,7 @@
 		17C283471DF066F300E7BC29 = {
 			isa = PBXGroup;
 			children = (
-				BD48524B1F72B13700CA9475 /* Lambent-Bridging-Header.h */,
+				BD4E73B61F754952002DA5EE /* Lambent-Bridging-Header.h */,
 				17C283521DF066F400E7BC29 /* Photography */,
 				BDA429021F5F3FFD003CE8CA /* LambentUnitTests */,
 				BD3771601F5F4545004E8D28 /* LambentUITests */,
@@ -202,6 +204,7 @@
 				176958C71DF48A760060941A /* TutorialViewController.swift */,
 				176958C31DF47FE50060941A /* TutorialView.swift */,
 				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
+				BD0DCAC21F74600400631C69 /* CameraHandler.swift */,
 			);
 			name = Tutorial;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				172F513E1E01CFD60048E8E3 /* HelperMethods.swift in Sources */,
 				176958C81DF48A760060941A /* TutorialViewController.swift in Sources */,
 				173D112E1E3928AD00706B80 /* ServiceLayer.swift in Sources */,
+				BD0DCAC31F74600400631C69 /* CameraHandler.swift in Sources */,
 				17C283661DF0788600E7BC29 /* HomeView.swift in Sources */,
 				177DD3561E0ADA2D00605146 /* DemoModel.swift in Sources */,
 				177DD3401E060BC800605146 /* DemoView.swift in Sources */,
