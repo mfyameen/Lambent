@@ -69,10 +69,10 @@ class CameraOverlay: UIView {
 class CameraHandler: UIView {
     private let imagePicker = UIImagePickerController()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(section: Page) {
+        super.init(frame: CGRect.zero)
         imagePicker.sourceType = .camera
-        let cameraOverlay = CameraOverlay(section: .iso)
+        let cameraOverlay = CameraOverlay(section: section)
         cameraOverlay.frame = CGRect(x: 0, y: 475, width: UIScreen.main.bounds.width, height: 75)
         imagePicker.cameraOverlayView = cameraOverlay
 

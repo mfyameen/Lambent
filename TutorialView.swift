@@ -114,7 +114,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     @objc private func cameraSelection() {
-        CameraHandler()
+        CameraHandler(section: currentPage)
     }
     
     private func layoutContainer() {
