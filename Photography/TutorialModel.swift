@@ -7,6 +7,17 @@ public enum Page: Int {
     case iso = 3
     case focal = 4
     case modes = 5
+    
+    func description() -> String {
+        switch self {
+        case .overview: return "Intro"
+        case .aperture: return "Aperture"
+        case .shutter: return "Shutter Speed"
+        case .iso: return "ISO"
+        case .focal: return "Focal Length"
+        case .modes: return "Modes"
+        }
+    }
 }
 
 public enum Segment: Int {
@@ -96,12 +107,11 @@ public class TutorialModel {
     }
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
-        let sectionTitle = content.sections[currentPage.rawValue + nextSection]
-        guard let title = CameraSections(rawValue: sectionTitle) else { return "Intro" }
-        switch title {
+        guard let section = Page(rawValue: currentPage.rawValue + nextSection) else { return "" }
+        switch section {
         case .focal: return "Focal"
         case .shutter: return "Shutter"
-        default: return title.rawValue
+        default: return section.description()
         }
     }
 

@@ -1,13 +1,5 @@
 import Foundation
 
-enum CameraSections: String {
-    case aperture = "Aperture"
-    case shutter = "Shutter Speed"
-    case iso = "ISO"
-    case focal = "Focal Length"
-    case modes = "Modes"
-}
-
 struct DemoSettings {
     var apertureImage: String = "fountain2.8"
     var apertureText: String = "f/2.8"
@@ -37,14 +29,14 @@ public class DemoModel {
     private var demoSettings = DemoSettings()
     private var sectionSettings = CameraSectionDemoSettings()
     private var updatedInstructions: String?
-    private var currentPage: Int
+    private let currentPage: Page
     private var content: Content
     private var previousSliderValue = -1
     
     public var shareInformation: (CameraSectionDemoSettings) -> () = { _ in }
     
     public init (setUp: TutorialSetUp, content: Content) {
-        currentPage = setUp.currentPage.rawValue
+        currentPage = setUp.currentPage
         self.content = content
     }
     
@@ -52,15 +44,14 @@ public class DemoModel {
         guard let sliderValue = sliderValue, sliderValue != previousSliderValue else { return }
         previousSliderValue = sliderValue
         demoSettings = configureSectionsWhenSliderValueChanged(sliderValue)
-        sectionSettings = configureCurrentSection(content.sections[currentPage])
+        sectionSettings = configureCurrentSection(content.sections[currentPage.rawValue])
         shareInformation(sectionSettings)
     }
     
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {
-        guard let currentSection = CameraSections(rawValue: section ?? "") else { return sectionSettings }
-        let demoInstructions = content.instructions[currentPage]
-        defer { updatedInstructions = content.updatedInstructions[currentPage] }
-        switch currentSection {
+        let demoInstructions = content.instructions[currentPage.rawValue]
+        defer { updatedInstructions = content.updatedInstructions[currentPage.rawValue] }
+        switch  currentPage {
         case .aperture:
             return CameraSectionDemoSettings(image: demoSettings.apertureImage, text: demoSettings.apertureText, cameraOpeningSize: demoSettings.cameraOpeningSize, cameraSensorSize: demoSettings.cameraSensorSize, icon: nil, instructions: updatedInstructions ?? demoInstructions)
         case .shutter:
