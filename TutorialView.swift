@@ -22,6 +22,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
     public var demo: DemoView
+    private let cameraHandler: CameraHandler
     private let setUp: TutorialSetUp
     private var isDemo = false
     private let swipeRight = UISwipeGestureRecognizer()
@@ -49,11 +50,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     init(setUp: TutorialSetUp, tutorialContent: Content) {
-        currentPage = setUp.currentPage
-        currentSegment = setUp.currentSegment
         self.tutorialContent = tutorialContent
         self.setUp = setUp
+        currentPage = setUp.currentPage
+        currentSegment = setUp.currentSegment
         demo = DemoView(page: setUp.currentPage)
+        cameraHandler = CameraHandler(section: currentPage)
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         maybeRequestReview()
         layoutSwipeGestures([swipeRight, swipeLeft])
@@ -114,7 +116,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     @objc private func cameraSelection() {
-        CameraHandler(section: currentPage)
+        cameraHandler.launchImagePicker()
     }
     
     private func layoutContainer() {

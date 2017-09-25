@@ -40,6 +40,8 @@ class CameraOverlay: UIView {
     
     private func updateExposureMode() {
         switch section {
+        case .aperture:
+            valueLabel.text = String(device.lensAperture)
         case .iso:
             let newISO = slider.value
             valueLabel.text = String(Int(newISO))
@@ -103,24 +105,29 @@ class CameraOverlay: UIView {
     }
 }
 
-class CameraHandler: UIView {
+class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let imagePicker = UIImagePickerController()
     
     init(section: Page) {
-        super.init(frame: CGRect.zero)
+        super.init()
         imagePicker.sourceType = .camera
         let cameraOverlay = CameraOverlay(section: section)
         cameraOverlay?.frame = CGRect(x: 0, y: 475, width: UIScreen.main.bounds.width, height: 75)
         imagePicker.cameraOverlayView = cameraOverlay
-
-        UIApplication.shared.keyWindow?.rootViewController?.present(imagePicker, animated: true, completion: nil)
+        imagePicker.delegate = self
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func launchImagePicker() {
+        UIApplication.shared.keyWindow?.rootViewController?.present(imagePicker, animated: true, completion: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        imagePicker.dismiss(animated: true, completion: nil)
     }
 }
