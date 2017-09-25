@@ -112,9 +112,22 @@ class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationCont
         super.init()
         imagePicker.sourceType = .camera
         let cameraOverlay = CameraOverlay(section: section)
-        cameraOverlay?.frame = CGRect(x: 0, y: 475, width: UIScreen.main.bounds.width, height: 75)
+        cameraOverlay?.frame = frameForOverlay()
         imagePicker.cameraOverlayView = cameraOverlay
         imagePicker.delegate = self
+    }
+    
+    private func frameForOverlay() -> CGRect {
+        let screenSize = UIScreen.main.bounds
+        let aspectRatio: CGFloat = 4.0/3.0
+        let previewHeight = UIScreen.main.bounds.width * aspectRatio
+        let topBarHeight = (screenSize.height - previewHeight) * 1/4
+        let overlayWidth = UIScreen.main.bounds.width * 3/4
+        let overlayHeight: CGFloat = 75
+        let yPosition = topBarHeight + previewHeight - overlayHeight
+        return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ?
+            CGRect(x: screenSize.width/2 - overlayWidth/2, y: yPosition, width: overlayWidth, height: overlayHeight) :
+            CGRect(x: 0, y: yPosition, width: screenSize.width, height: overlayHeight)
     }
     
     func launchImagePicker() {
