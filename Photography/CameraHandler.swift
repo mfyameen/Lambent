@@ -1,6 +1,46 @@
 import UIKit
 import AVFoundation
 
+class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    private let imagePicker = UIImagePickerController()
+    
+    init(section: Page) {
+        super.init()
+        imagePicker.sourceType = .camera
+        let cameraOverlay = CameraOverlay(section: section)
+        cameraOverlay?.frame = frameForOverlay()
+        imagePicker.cameraOverlayView = cameraOverlay
+        imagePicker.delegate = self
+    }
+    
+    private func frameForOverlay() -> CGRect {
+        let screenSize = UIScreen.main.bounds
+        let aspectRatio: CGFloat = 4.0/3.0
+        let previewHeight = UIScreen.main.bounds.width * aspectRatio
+        let topBarHeight = (screenSize.height - previewHeight) * 1/4
+        let overlayHeight: CGFloat = 75
+        let yPosition = topBarHeight + previewHeight - overlayHeight
+        let iPadOverlayWidth = UIScreen.main.bounds.width * 3/4
+        return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ?
+            CGRect(x: screenSize.width/2 - iPadOverlayWidth/2, y: yPosition, width: iPadOverlayWidth, height: overlayHeight) :
+            CGRect(x: 0, y: yPosition, width: screenSize.width, height: overlayHeight)
+    }
+    
+    func launchImagePicker() {
+        UIApplication.shared.keyWindow?.rootViewController?.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+}
+
 class CameraOverlay: UIView {
     private let sectionLabel = UILabel()
     private let valueLabel = UILabel()
@@ -10,8 +50,13 @@ class CameraOverlay: UIView {
     private let section: Page
  
     init?(section: Page) {
-        guard let device = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera], mediaType: nil, position: .unspecified).devices.first else { return nil }
-        self.device = device
+        if #available(iOS 10.0, *) {
+            guard let device = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera], mediaType: nil, position: .unspecified).devices.first else { return nil }
+            self.device = device
+        } else {
+            guard let device = AVCaptureDevice.devices().first else { return nil }
+            self.device = device
+        }
         self.section = section
         super.init(frame: CGRect.zero)
         backgroundColor = UIColor.backgroundColor()
@@ -45,6 +90,7 @@ class CameraOverlay: UIView {
         case .iso:
             let newISO = slider.value
             valueLabel.text = String(Int(newISO))
+            slider.maximumValue = device.activeFormat.maxISO
             device.setExposureModeCustom(duration: device.exposureDuration, iso: newISO, completionHandler: nil)
         case .shutter:
             let newShutterSpeed = CMTime(seconds: Double(slider.value), preferredTimescale: 1000000)
@@ -64,7 +110,7 @@ class CameraOverlay: UIView {
         switch section {
         case .iso:
             slider.minimumValue = device.activeFormat.minISO
-            slider.maximumValue = 1856
+            slider.maximumValue = device.activeFormat.maxISO
         case .shutter:
             slider.minimumValue = Float(device.activeFormat.minExposureDuration.seconds)
             slider.maximumValue = Float(device.activeFormat.maxExposureDuration.seconds)
@@ -105,42 +151,3 @@ class CameraOverlay: UIView {
     }
 }
 
-class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    private let imagePicker = UIImagePickerController()
-    
-    init(section: Page) {
-        super.init()
-        imagePicker.sourceType = .camera
-        let cameraOverlay = CameraOverlay(section: section)
-        cameraOverlay?.frame = frameForOverlay()
-        imagePicker.cameraOverlayView = cameraOverlay
-        imagePicker.delegate = self
-    }
-    
-    private func frameForOverlay() -> CGRect {
-        let screenSize = UIScreen.main.bounds
-        let aspectRatio: CGFloat = 4.0/3.0
-        let previewHeight = UIScreen.main.bounds.width * aspectRatio
-        let topBarHeight = (screenSize.height - previewHeight) * 1/4
-        let overlayWidth = UIScreen.main.bounds.width * 3/4
-        let overlayHeight: CGFloat = 75
-        let yPosition = topBarHeight + previewHeight - overlayHeight
-        return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ?
-            CGRect(x: screenSize.width/2 - overlayWidth/2, y: yPosition, width: overlayWidth, height: overlayHeight) :
-            CGRect(x: 0, y: yPosition, width: screenSize.width, height: overlayHeight)
-    }
-    
-    func launchImagePicker() {
-        UIApplication.shared.keyWindow?.rootViewController?.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        imagePicker.dismiss(animated: true, completion: nil)
-    }
-}
