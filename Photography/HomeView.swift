@@ -59,7 +59,8 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         if #available(iOS 11.0, *) {
             insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInsets, bottom: safeAreaInsets.bottom + padding, right: horizontalInsets)
         } else {
-            insets = UIEdgeInsets(top: 0, left: horizontalInsets, bottom: 0, right: horizontalInsets)
+            insets = UIEdgeInsets(top: 64, left: horizontalInsets, bottom: padding, right: horizontalInsets)
+            tableView.contentInset = .zero
         }
         container.frame = UIEdgeInsetsInsetRect(bounds, insets)
         let shadowInset = HelperMethods.shadowRadius
