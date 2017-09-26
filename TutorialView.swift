@@ -8,7 +8,6 @@ public enum Direction {
 
 class TutorialView: UIScrollView, UIScrollViewDelegate {
     private let container = UIView()
-    private let camera = UIButton()
     private let pageControl = UIPageControl()
     private let scrollView = UIScrollView()
     private let customToolBar = UIView()
@@ -22,7 +21,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
     public var demo: DemoView
-    private let cameraHandler: CameraHandler
+    private let practice: PracticeView
     private let setUp: TutorialSetUp
     private var isDemo = false
     private let swipeRight = UISwipeGestureRecognizer()
@@ -55,7 +54,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         demo = DemoView(page: setUp.currentPage)
-        cameraHandler = CameraHandler(section: currentPage)
+        practice = PracticeView(page: setUp.currentPage)
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         maybeRequestReview()
         layoutSwipeGestures([swipeRight, swipeLeft])
@@ -67,10 +66,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         layoutToolBarButtons([nextButton, backButton])
         layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
-        camera.setTitle("Camera", for: .normal)
-        camera.setTitleColor(.blue, for: .normal)
-        camera.addTarget(self, action: #selector(cameraSelection), for: .touchUpInside)
-        addSubviews([container, camera, demo, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
+        addSubviews([container, demo, practice, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         scrollView.addSubview(content)
     }
     
@@ -114,11 +110,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         default: break
         }
     }
-    
-    @objc private func cameraSelection() {
-        cameraHandler.launchImagePicker()
-    }
-    
+
     private func layoutContainer() {
         backgroundColor = UIColor.backgroundColor()
         container.backgroundColor = UIColor.containerColor()
@@ -227,11 +219,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + TutorialView.segmentedHeight, width: titleSize.width, height: titleSize.height)
         let contentTop = (title.text?.isEmpty ?? false) ? segmentedControl.frame.maxY + padding : title.frame.maxY + padding
         let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, UIEdgeInsets(top: contentTop, left: horizontalInset, bottom: verticalInset, right: horizontalInset))
-        let cameraSize = camera.sizeThatFits(contentLabelArea.size)
-        camera.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: cameraSize.width, height: cameraSize.height)
+        practice.isHidden = currentSegment != .practice
+        let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(contentLabelArea.size)
+        practice.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: practiceSize.width, height: practiceSize.height)
         let contentSize = content.sizeThatFits(scrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        scrollView.frame = CGRect(x: contentLabelArea.minX, y: camera.frame.maxY, width: contentLabelArea.width, height: contentLabelArea.height - camera.frame.height)
+        scrollView.frame = CGRect(x: contentLabelArea.minX, y: practice.frame.maxY, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
         scrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
         pageControl.frame = CGRect(x: contentLabelArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)

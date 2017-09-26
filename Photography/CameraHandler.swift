@@ -4,10 +4,10 @@ import AVFoundation
 class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let imagePicker = UIImagePickerController()
     
-    init(section: Page) {
+    init(page: Page) {
         super.init()
         imagePicker.sourceType = .camera
-        let cameraOverlay = CameraOverlay(section: section)
+        let cameraOverlay = CameraOverlay(page: page)
         cameraOverlay?.frame = frameForOverlay()
         imagePicker.cameraOverlayView = cameraOverlay
         imagePicker.delegate = self
@@ -49,7 +49,7 @@ class CameraOverlay: UIView {
     private let device: AVCaptureDevice
     private let section: Page
  
-    init?(section: Page) {
+    init?(page: Page) {
         if #available(iOS 10.0, *) {
             guard let device = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera], mediaType: nil, position: .unspecified).devices.first else { return nil }
             self.device = device
@@ -57,7 +57,7 @@ class CameraOverlay: UIView {
             guard let device = AVCaptureDevice.devices().first else { return nil }
             self.device = device
         }
-        self.section = section
+        self.section = page
         super.init(frame: CGRect.zero)
         backgroundColor = UIColor.backgroundColor()
         alpha = 0.7
