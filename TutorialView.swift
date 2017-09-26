@@ -224,6 +224,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         let contentSize = content.sizeThatFits(scrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
         scrollView.frame = CGRect(x: contentLabelArea.minX, y: practice.frame.maxY + 8, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
+        scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -4)
         scrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
         pageControl.frame = CGRect(x: contentLabelArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)
