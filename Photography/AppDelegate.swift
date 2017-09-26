@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let gai = GAI.sharedInstance() else { assert(false, "Google Analytics not configured correctly") }
         gai.tracker(withTrackingId: "UA-106810868-1")
         gai.trackUncaughtExceptions = true
-        gai.logger.logLevel = .verbose
+        //gai.logger.logLevel = .verbose
     }
 }
 

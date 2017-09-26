@@ -21,6 +21,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
     public var demo: DemoView
+    private let practice: PracticeView
     private let setUp: TutorialSetUp
     private var isDemo = false
     private let swipeRight = UISwipeGestureRecognizer()
@@ -48,11 +49,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
     }
     
     init(setUp: TutorialSetUp, tutorialContent: Content) {
-        currentPage = setUp.currentPage
-        currentSegment = setUp.currentSegment
         self.tutorialContent = tutorialContent
         self.setUp = setUp
+        currentPage = setUp.currentPage
+        currentSegment = setUp.currentSegment
         demo = DemoView(page: setUp.currentPage)
+        practice = PracticeView(page: setUp.currentPage)
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         maybeRequestReview()
         layoutSwipeGestures([swipeRight, swipeLeft])
@@ -64,7 +66,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         layoutToolBarButtons([nextButton, backButton])
         layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
-        addSubviews([container, demo, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
+        addSubviews([container, demo, practice, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         scrollView.addSubview(content)
     }
     
@@ -101,14 +103,14 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         })
     }
     
-    @objc func swipeBetweenPages(swipe: UISwipeGestureRecognizer) {
+    @objc private func swipeBetweenPages(swipe: UISwipeGestureRecognizer) {
         switch swipe.direction {
         case UISwipeGestureRecognizerDirection.right: prepareSwipe(.right)
         case UISwipeGestureRecognizerDirection.left: prepareSwipe(.left)
         default: break
         }
     }
-    
+
     private func layoutContainer() {
         backgroundColor = UIColor.backgroundColor()
         container.backgroundColor = UIColor.containerColor()
@@ -217,9 +219,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + TutorialView.segmentedHeight, width: titleSize.width, height: titleSize.height)
         let contentTop = (title.text?.isEmpty ?? false) ? segmentedControl.frame.maxY + padding : title.frame.maxY + padding
         let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, UIEdgeInsets(top: contentTop, left: horizontalInset, bottom: verticalInset, right: horizontalInset))
+        practice.isHidden = currentSegment != .practice
+        let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(contentLabelArea.size)
+        practice.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: practiceSize.width, height: practiceSize.height)
         let contentSize = content.sizeThatFits(scrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        scrollView.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: contentLabelArea.width, height: contentLabelArea.height)
+        scrollView.frame = CGRect(x: contentLabelArea.minX, y: practice.frame.maxY, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
         scrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
         pageControl.frame = CGRect(x: contentLabelArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)
