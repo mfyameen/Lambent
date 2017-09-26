@@ -144,7 +144,6 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         prepareSegment(currentSegment)
         trackSegment(currentSegment)
         layoutAppropriateContent()
-        setNeedsLayout()
         maybeRequestReview()
     }
     
@@ -219,12 +218,12 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         title.frame = CGRect(x: contentArea.midX - titleSize.width/2, y: container.frame.minY + TutorialView.segmentedHeight, width: titleSize.width, height: titleSize.height)
         let contentTop = (title.text?.isEmpty ?? false) ? segmentedControl.frame.maxY + padding : title.frame.maxY + padding
         let contentLabelArea = UIEdgeInsetsInsetRect(contentArea, UIEdgeInsets(top: contentTop, left: horizontalInset, bottom: verticalInset, right: horizontalInset))
-        practice.isHidden = currentSegment != .practice
+        practice.isHidden = !(currentSegment == .practice && currentPage != .overview && currentPage != .modes)
         let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(contentLabelArea.size)
         practice.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: practiceSize.width, height: practiceSize.height)
         let contentSize = content.sizeThatFits(scrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        scrollView.frame = CGRect(x: contentLabelArea.minX, y: practice.frame.maxY, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
+        scrollView.frame = CGRect(x: contentLabelArea.minX, y: practice.frame.maxY + 8, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
         scrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
         let pageControlTop = (container.frame.maxY + bounds.maxY)/2 - pageControlSize.height/2
         pageControl.frame = CGRect(x: contentLabelArea.midX - pageControlSize.width/2, y: pageControlTop, width: pageControlSize.width, height: pageControlSize.height)
