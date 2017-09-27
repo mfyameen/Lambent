@@ -66,6 +66,7 @@ class TutorialView: UIScrollView, UIScrollViewDelegate {
         layoutToolBarButtons([nextButton, backButton])
         layoutToolBarArrows([nextButtonArrow, backButtonArrow])
         HelperMethods.configureShadow(element: container)
+        practice.clipsToBounds = true
         addSubviews([container, demo, practice, scrollView, segmentedControl, title, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         scrollView.addSubview(content)
     }

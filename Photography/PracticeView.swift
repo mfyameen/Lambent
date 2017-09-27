@@ -56,7 +56,8 @@ class PracticeView: UIView {
         iOSLabel.font = UIFont.boldSystemFont(ofSize: 16)
         addSubview(iOSLabel)
         addSubview(cameraPreview)
-        container.backgroundColor = .white
+        container.clipsToBounds = true
+        container.backgroundColor = UIColor.containerColor()
         addSubview(container)
         dslrLabel.text = "DSLR"
         dslrLabel.font = UIFont.boldSystemFont(ofSize: 16)

@@ -1,16 +1,14 @@
 import UIKit
 import AVFoundation
 
-class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    private let imagePicker = UIImagePickerController()
-    
+class CameraHandler: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     init(page: Page) {
-        super.init()
-        imagePicker.sourceType = .camera
+        super.init(nibName: nil, bundle: nil)
+        sourceType = .camera
         let cameraOverlay = CameraOverlay(page: page)
-        cameraOverlay?.frame = frameForOverlay()
-        imagePicker.cameraOverlayView = cameraOverlay
-        imagePicker.delegate = self
+        cameraOverlayView = cameraOverlay
+        cameraOverlayView?.frame = frameForOverlay()
+        delegate = self
     }
     
     private func frameForOverlay() -> CGRect {
@@ -27,7 +25,7 @@ class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationCont
     }
     
     func launchImagePicker() {
-        UIApplication.shared.keyWindow?.rootViewController?.present(imagePicker, animated: true, completion: nil)
+        UIApplication.shared.keyWindow?.rootViewController?.present(self, animated: true, completion: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +35,7 @@ class CameraHandler: NSObject, UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        imagePicker.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
