@@ -1,4 +1,6 @@
 import Foundation
+import RxSugar
+import RxSwift
 
 struct DemoSettings {
     var apertureImage: String = "fountain2.8"
@@ -27,25 +29,23 @@ public struct CameraSectionDemoSettings {
 
 public class DemoModel {
     private var demoSettings = DemoSettings()
-    private var sectionSettings = CameraSectionDemoSettings()
     private var updatedInstructions: String?
     private let currentPage: Page
-    private var content: Content
-    private var previousSliderValue = -1
+    private let content: Content
     
-    public var shareInformation: (CameraSectionDemoSettings) -> () = { _ in }
+    let currentDemoSettings: Observable<CameraSectionDemoSettings>
+    private let _currentDemoSettings = Variable<CameraSectionDemoSettings>(CameraSectionDemoSettings())
     
-    public init (setUp: TutorialSetUp, content: Content) {
-        currentPage = setUp.currentPage
+    public init (currentPage: Page, content: Content) {
+        self.currentPage = currentPage
+        currentDemoSettings = _currentDemoSettings.asObservable()
         self.content = content
+        _currentDemoSettings.value = configureCurrentSection(content.sections[currentPage.rawValue])
     }
     
-    public func configureDemo(sliderValue: Int?) {
-        guard let sliderValue = sliderValue, sliderValue != previousSliderValue else { return }
-        previousSliderValue = sliderValue
+    public func configureDemo(_ sliderValue: Int) {
         demoSettings = configureSectionsWhenSliderValueChanged(sliderValue)
-        sectionSettings = configureCurrentSection(content.sections[currentPage.rawValue])
-        shareInformation(sectionSettings)
+        _currentDemoSettings.value  = configureCurrentSection(content.sections[currentPage.rawValue])
     }
     
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {
@@ -60,7 +60,7 @@ public class DemoModel {
             return CameraSectionDemoSettings(image: demoSettings.isoImage, text: demoSettings.isoText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.isoIcon, instructions: updatedInstructions ?? demoInstructions)
         case .focal:
             return CameraSectionDemoSettings(image: demoSettings.focalImage, text: demoSettings.focalText, cameraOpeningSize: nil, cameraSensorSize: nil, icon: demoSettings.focalIcon, instructions: updatedInstructions ?? demoInstructions)
-        default: return sectionSettings
+        default: return CameraSectionDemoSettings()
         }
     }
     

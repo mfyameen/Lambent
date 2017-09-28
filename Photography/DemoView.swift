@@ -1,4 +1,6 @@
 import UIKit
+import RxSugar
+import RxSwift
 
 public class DemoView: UIView {
     private let currentPage: Page
@@ -16,12 +18,15 @@ public class DemoView: UIView {
     private var imageString = ""
     var sliderFrame = CGRect()
     
-    var movedSlider: (Int?) ->() = { _ in }
+    let currentSliderValue: Observable<Int>
+    private let _currentSliderValue = PublishSubject<Int>()
+    
     static var images = [Images]()
     static var cache = NSCache<NSString, UIImage>()
     
     init(page: Page) {
         currentPage = page
+        currentSliderValue = _currentSliderValue.asObservable()
         super.init(frame: CGRect.zero)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
         layoutSlider()
@@ -64,7 +69,7 @@ public class DemoView: UIView {
     }
     
     @objc private func configureAppropriateSectionWhenSliderValueChanged() {
-        movedSlider(Int(slider.value))
+        _currentSliderValue.onNext(Int(slider.value))
         setNeedsLayout()
         trackSlider()
     }
@@ -95,9 +100,16 @@ public class DemoView: UIView {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        let cameraPadding: CGFloat = 10
         let imagePadding: CGFloat = 20
+        let cameraPadding: CGFloat = 10
         image.frame = CGRect(x: bounds.minX, y: bounds.minY + imagePadding, width: bounds.width, height: bounds.height * 0.5)
+        let sliderWidth = ContentView.segmentedWidth
+        let sliderHeight = slider.sizeThatFits(bounds.size).height
+        let sliderTop = (image.frame.maxY + bounds.maxY)/2 - sliderHeight/2
+        slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: sliderTop, width: sliderWidth, height: sliderHeight)
+        let sliderFrameTop = sliderTop + imagePadding + ContentView.segmentedHeight
+        let sliderPadding: CGFloat = 10
+        sliderFrame = CGRect(x: slider.frame.minX, y: sliderFrameTop - sliderPadding, width: slider.frame.width, height: 2 * slider.frame.height)
         cameraSensor.frame = CGRect(x: bounds.midX - cameraSensorSize - cameraPadding, y: (image.frame.maxY + slider.frame.minY)/2 - cameraSensorSize/2, width: cameraSensorSize, height: cameraSensorSize)
         let cameraSensorTop = (image.frame.maxY + slider.frame.minY)/2 - cameraOpeningSize/2
         cameraSensorOpening.frame = CGRect(x: cameraSensor.frame.midX - cameraOpeningSize/2, y: cameraSensorTop, width: cameraOpeningSize, height: cameraOpeningSize)
@@ -107,13 +119,6 @@ public class DemoView: UIView {
         let cameraValueSize = cameraValue.sizeThatFits(bounds.size)
         let cameraValueTop = (image.frame.maxY + slider.frame.minY)/2 - cameraValueSize.height/2
         cameraValue.frame = CGRect(x: bounds.midX, y: cameraValueTop, width: ceil(cameraValueSize.width), height: ceil(cameraValueSize.height))
-        let sliderWidth = TutorialView.segmentedWidth
-        let sliderHeight = slider.sizeThatFits(bounds.size).height
-        let sliderTop = (image.frame.maxY + bounds.maxY)/2 - sliderHeight/2
-        slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: sliderTop, width: sliderWidth, height: sliderHeight)
-        let sliderFrameTop = sliderTop + imagePadding + TutorialView.segmentedHeight
-        let sliderPadding: CGFloat = 10
-        sliderFrame = CGRect(x: slider.frame.minX, y: sliderFrameTop - sliderPadding, width: slider.frame.width, height: 2 * slider.frame.height)
         let demoInstructionHeight = demoInstructions.sizeThatFits(bounds.size).height
         demoInstructions.frame = CGRect(x: bounds.midX - sliderWidth/2, y: slider.frame.maxY + 8, width: ceil(sliderWidth), height: ceil(demoInstructionHeight))
     }

@@ -1,47 +1,6 @@
 import UIKit
 import AVFoundation
 
-class CameraPreview: UIView {
-    private let cameraHandler: CameraHandler
-    private let imagePicker = UIImagePickerController()
-    private let icon = UIImageView()
-    private let camera = UIButton()
-    private let aspectRatio: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? 1 : 4/3
-    
-    init(page: Page) {
-        cameraHandler = CameraHandler(page: page)
-        super.init(frame: CGRect.zero)
-        imagePicker.sourceType = .camera
-        imagePicker.showsCameraControls = false
-        addSubview(imagePicker.view)
-        icon.image = UIImage(named: "AppIcon")
-        //addSubview(icon)
-        camera.addTarget(self, action: #selector(cameraSelection), for: .touchUpInside)
-        addSubview(camera)
-    }
-    
-    @objc private func cameraSelection() {
-        cameraHandler.launchImagePicker()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let imagePickerSize = CGSize(width: bounds.width, height: bounds.width * aspectRatio)
-        let frame = CGRect(x: bounds.midX - imagePickerSize.width/2, y: 0, width: imagePickerSize.width, height: imagePickerSize.height)
-        imagePicker.view.frame = frame
-        camera.frame = frame
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
-        let height = size.width * aspectRatio
-        return CGSize(width: size.width, height: height)
-    }
-}
-
 class PracticeView: UIView {
     private let iOSLabel = UILabel()
     private let cameraPreview: CameraPreview
@@ -84,7 +43,49 @@ class PracticeView: UIView {
         let dslrLabelHeight = dslrLabel.sizeThatFits(size).height
         let totalHeight = iOSLabelHeight + cameraPreviewHeight + dslrLabelHeight + 2 * padding
         return CGSize(width: size.width, height: totalHeight)
-    }  
+    }
 }
+
+class CameraPreview: UIView {
+    private let cameraHandler: CameraHandler
+    private let imagePicker = UIImagePickerController()
+    private let icon = UIImageView()
+    private let camera = UIButton()
+    private let aspectRatio: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? 1 : 4/3
+    
+    init(page: Page) {
+        cameraHandler = CameraHandler(page: page)
+        super.init(frame: CGRect.zero)
+        imagePicker.sourceType = .camera
+        imagePicker.showsCameraControls = false
+        addSubview(imagePicker.view)
+        icon.image = UIImage(named: "AppIcon")
+        //addSubview(icon)
+        camera.addTarget(self, action: #selector(cameraSelection), for: .touchUpInside)
+        addSubview(camera)
+    }
+    
+    @objc private func cameraSelection() {
+        cameraHandler.launchImagePicker()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let imagePickerSize = CGSize(width: bounds.width, height: bounds.width * aspectRatio)
+        let frame = CGRect(x: bounds.midX - imagePickerSize.width/2, y: 0, width: imagePickerSize.width, height: imagePickerSize.height)
+        imagePicker.view.frame = frame
+        camera.frame = frame
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        let height = size.width * aspectRatio
+        return CGSize(width: size.width, height: height)
+    }
+}
+
 
 

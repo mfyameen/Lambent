@@ -1,4 +1,6 @@
 import Foundation
+import RxSugar
+import RxSwift
 
 public enum Page: Int {
     case overview = 0
@@ -47,34 +49,39 @@ public struct TutorialSettings {
 }
 
 public class TutorialModel {
-    private var currentPage: Page
-    private var currentSegment: Segment
-    private var content: Content
+    private let setUp: TutorialSetUp
+    private let content: Content
     private var tutorial = TutorialSettings()
     
-    public var nextSection: (Page, Segment)-> Void = { _,_  in }
-    public var previousSection: (Page, Segment)-> Void = { _,_  in}
-    public var shareTutorialSettings: (TutorialSettings)-> Void = { _ in }
+    let selectNext: Observable<TutorialSetUp>
+    private let _selectNext = PublishSubject<TutorialSetUp>()
+    let selectPrevious: Observable<TutorialSetUp>
+    let _selectPrevious = PublishSubject<TutorialSetUp>()
+    let currentTutorialSettings: Observable<TutorialSettings>
+    private let _currentTutorialSettings = Variable<TutorialSettings>(TutorialSettings())
     
     public init (setUp: TutorialSetUp, content: Content) {
-        currentPage = setUp.currentPage
-        currentSegment = setUp.currentSegment
+        self.setUp = setUp
+        currentTutorialSettings = _currentTutorialSettings.asObservable()
+        selectNext = _selectNext.asObservable()
+        selectPrevious = _selectPrevious.asObservable()
         self.content = content
+        configureContent()
+        configureToolBarButtonTitles()
     }
     
     public func configureContent() {
-        if currentPage == .overview {
-            tutorial.content = content.introductions[currentPage.rawValue]
+        if setUp.currentPage == .overview {
+            tutorial.content = content.introductions[setUp.currentPage.rawValue]
             tutorial.title = "Lighting"
         } else {
-            configureAppropriateSegment(segment: currentSegment)
+            configureAppropriateSegment(setUp.currentSegment)
         }
-        shareTutorialSettings(tutorial)
+        _currentTutorialSettings.value = tutorial
     }
     
-    func configureAppropriateSegment(segment: Segment?) {
-        guard let segment = segment else { return }
-        switch (segment, currentPage) {
+    func configureAppropriateSegment(_ segment: Segment) {
+        switch (segment, setUp.currentPage) {
         case (.intro, .modes): fallthrough
         case (.demo, .modes): fallthrough
         case (.practice, .modes):
@@ -82,32 +89,32 @@ public class TutorialModel {
             tutorial.content = content.modeIntroductions[segment.rawValue]
         case (.intro, _):
             tutorial.isDemoScreen = false
-            tutorial.content = content.introductions[currentPage.rawValue]
+            tutorial.content = content.introductions[setUp.currentPage.rawValue]
         case (.demo, _):
             tutorial.isDemoScreen = true
         case (.practice, _):
             tutorial.isDemoScreen = false
-            tutorial.content = content.exercises[currentPage.rawValue]
+            tutorial.content = content.exercises[setUp.currentPage.rawValue]
         }
-        shareTutorialSettings(tutorial)
+        _currentTutorialSettings.value = tutorial
     }
     
     public func configureToolBarButtonTitles()  {
-        if currentPage == .overview {
+        if setUp.currentPage == .overview {
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
             tutorial.backArrowHidden = true
-        } else if currentPage == .modes {
+        } else if setUp.currentPage == .modes {
             tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
             tutorial.nextArrowHidden = true
         } else {
             tutorial.backButtonTitle = obtainSectionTitleFor(nextSection: -1)
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
         }
-        shareTutorialSettings(tutorial)
+        _currentTutorialSettings.value = tutorial
     }
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
-        guard let section = Page(rawValue: currentPage.rawValue + nextSection) else { return "" }
+        guard let section = Page(rawValue: setUp.currentPage.rawValue + nextSection) else { return "" }
         switch section {
         case .focal: return "Focal"
         case .shutter: return "Shutter"
@@ -115,25 +122,25 @@ public class TutorialModel {
         }
     }
 
-    public func configureSwipe(direction: Direction) {
+    public func registerSwipe(_ direction: Direction) {
         let pageMinLimit = 0
         let pageMaxLimit = content.sections.count - 1
-        if direction == .left && currentPage.rawValue >= pageMinLimit {
-            guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
-            nextSection(currentPage, currentSegment)
-        } else if direction == .right && currentPage.rawValue <= pageMaxLimit {
-            guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            previousSection(currentPage, currentSegment)
+        if direction == .left && setUp.currentPage.rawValue >= pageMinLimit {
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue + 1) else { return }
+            _selectNext.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
+        } else if direction == .right && setUp.currentPage.rawValue <= pageMaxLimit {
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue - 1) else { return }
+            _selectPrevious.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
         }
     }
     
-    public func configurePageControlMovement(currentPageControlPage: Int) {
-        if currentPageControlPage > currentPage.rawValue {
-            guard let currentPage = Page(rawValue: currentPage.rawValue + 1) else { return }
-            nextSection(currentPage, currentSegment)
+    public func configurePageControlMovement(_ currentPageControlPage: Int) {
+        if currentPageControlPage > setUp.currentPage.rawValue {
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue + 1) else { return }
+            _selectNext.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
         } else {
-            guard let currentPage = Page(rawValue: currentPage.rawValue - 1) else { return }
-            previousSection(currentPage, currentSegment)
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue - 1) else { return }
+            _selectPrevious.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
         }
     }
 }

@@ -1,4 +1,6 @@
 import UIKit
+import RxSugar
+import RxSwift
 
 class TutorialViewController: GAITrackedViewController {
     private let setUp: TutorialSetUp
@@ -15,16 +17,16 @@ class TutorialViewController: GAITrackedViewController {
     }
     
     override func loadView() {
-        let tutorialView = TutorialView(setUp: setUp, tutorialContent: content)
-        view = tutorialView
         let tutorialModel = TutorialModel(setUp: setUp, content: content)
-        let demoModel = DemoModel(setUp: setUp, content: content)
+        let demoModel = DemoModel(currentPage: setUp.currentPage, content: content)
+        let tutorialView = TutorialView(setUp: setUp, numberOfSections: content.sections.count)
+        view = tutorialView
         title = content.sections[setUp.currentPage.rawValue]
         let button = configureButton()
         navigationController?.isNavigationBarHidden = false
         navigationController?.hidesBarsOnSwipe = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoView: tutorialView.demo, demoModel: demoModel, viewController: self)
+        TutorialBinding.bind(tutorialView: tutorialView, tutorialModel: tutorialModel, demoModel: demoModel, viewController: self)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -47,13 +49,11 @@ class TutorialViewController: GAITrackedViewController {
         return button
     }
 
-    func pushNextTutorialViewController(_ page: Page, _ segment: Segment) -> Void {
-        let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
+    func pushNextTutorialViewController(_ setUp: TutorialSetUp) -> Void {
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
     }
     
-    func pushPreviousTutorialViewController(_ page: Page, _ segment: Segment) {
-        let setUp = TutorialSetUp(currentPage: page, currentSegment: segment)
+    func pushPreviousTutorialViewController(_ setUp: TutorialSetUp) {
         let transition = configureTransition()
         navigationController?.view.layer.add(transition, forKey: nil)
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: false)
@@ -86,19 +86,16 @@ class TutorialViewController: GAITrackedViewController {
 }
 
 struct TutorialBinding {
-    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoView: DemoView, demoModel: DemoModel, viewController: TutorialViewController){
-        tutorialView.prepareContent = tutorialModel.configureContent
-        tutorialView.prepareToolBar = tutorialModel.configureToolBarButtonTitles
-        tutorialView.prepareSwipe = tutorialModel.configureSwipe
-        tutorialView.preparePageControl = tutorialModel.configurePageControlMovement
-        tutorialView.trackSegment = viewController.trackSegment
-        tutorialView.prepareSegment = tutorialModel.configureAppropriateSegment
-        tutorialModel.shareTutorialSettings = tutorialView.addInformation
-        tutorialView.prepareDemo = demoModel.configureDemo
-        demoModel.shareInformation = demoView.addInformation
-        tutorialView.photographyContent = tutorialModel
-        tutorialModel.nextSection = viewController.pushNextTutorialViewController
-        tutorialModel.previousSection = viewController.pushPreviousTutorialViewController
-        demoView.movedSlider = demoModel.configureDemo
+    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoModel: DemoModel, viewController: TutorialViewController){
+        tutorialView.rxs.disposeBag
+            ++ tutorialView.currentTutorialSettings <~ tutorialModel.currentTutorialSettings
+            ++ { tutorialModel.registerSwipe($0) } <~ tutorialView.swipe
+            ++ { tutorialModel.configurePageControlMovement($0) } <~ tutorialView.pageControlSettings
+            ++ { tutorialModel.configureAppropriateSegment($0) } <~ tutorialView.currentSegmentValue
+            ++ { demoModel.configureDemo($0) } <~ tutorialView.currentSliderValue
+            ++ tutorialView.currentDemoSettings <~ demoModel.currentDemoSettings
+            ++ { viewController.trackSegment($0) } <~ tutorialView.trackSegment
+            ++ { viewController.pushNextTutorialViewController($0) } <~ tutorialModel.selectNext
+            ++ { viewController.pushPreviousTutorialViewController($0) } <~ tutorialModel.selectPrevious
     }
 }
