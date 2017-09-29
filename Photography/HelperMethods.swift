@@ -10,3 +10,10 @@ struct HelperMethods {
         element.layer.shadowRadius = shadowRadius
     }
 }
+
+struct Padding {
+    static let tiny: CGFloat = 4
+    static let small: CGFloat = 8
+    static let large: CGFloat = 16
+    static let extraLarge: CGFloat = 20
+}

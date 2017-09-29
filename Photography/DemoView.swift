@@ -21,8 +21,8 @@ public class DemoView: UIView {
     let currentSliderValue: Observable<Int>
     private let _currentSliderValue = PublishSubject<Int>()
     
-    static var images = [Images]()
-    static var cache = NSCache<NSString, UIImage>()
+    static var imageContent: AnyObserver<ImageContent> { return _imageContent.asObserver() }
+    static private var _imageContent = Variable<ImageContent>(ImageContent(images: [], cache: NSCache()))
     
     init(page: Page) {
         currentPage = page
@@ -53,8 +53,8 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        DemoView.images.filter { $0.title == imageName && $0.title != imageString}.forEach { image in
-            let cachedImage = DemoView.cache.object(forKey: image.title as NSString)
+        DemoView._imageContent.value.images.filter { $0.title == imageName && $0.title != imageString}.forEach { image in
+            let cachedImage = DemoView._imageContent.value.cache.object(forKey: image.title as NSString)
             imageView.image = cachedImage
             imageString = image.title
             imageView.accessibilityLabel = imageName

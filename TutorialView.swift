@@ -131,7 +131,7 @@ class TutorialView: UIScrollView {
         let verticalInset: CGFloat = 75
         let horizontalInset: CGFloat = 18
         if #available(iOS 11.0, *) {
-            insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInset, bottom: safeAreaInsets.bottom + 16, right: horizontalInset)
+            insets = UIEdgeInsets(top: safeAreaInsets.top + 10, left: horizontalInset, bottom: safeAreaInsets.bottom + Padding.large, right: horizontalInset)
         } else {
             insets = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
         }

@@ -1,4 +1,6 @@
 import UIKit
+import RxSugar
+import RxSwift
 
 extension UIView {
     func addSubviews(_ views: [UIView]) {
@@ -22,15 +24,14 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     private let tableView = UITableView()
     private let cachedCellForSizing = HomeCell()
     private var cellContent = CellContent()
-    public var homeContent: Content? {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    
+   let content: AnyObserver<Content>
+    private let _content = Variable<Content>(Content(sections: [], descriptions: [], introductions: [], exercises: [], instructions: [], updatedInstructions: [], modeIntroductions: []))
     var startTutorial: (TutorialSetUp)->() = { _ in }
     var navigationController: UINavigationController?
     
     override init(frame: CGRect) {
+        content = _content.asObserver()
         super.init(frame: frame)
         backgroundColor = UIColor.backgroundColor()
         container.clipsToBounds = true
@@ -45,6 +46,9 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         container.addSubview(tableView)
+        
+        rxs.disposeBag
+            ++  tableView.rxs.reloadData <~ _content.asObservable().toVoid().debug()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -55,11 +59,10 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         super.layoutSubviews()
         let insets: UIEdgeInsets
         let horizontalInsets: CGFloat = 18
-        let padding: CGFloat = 16
         if #available(iOS 11.0, *) {
-            insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInsets, bottom: safeAreaInsets.bottom + padding, right: horizontalInsets)
+            insets = UIEdgeInsets(top: safeAreaInsets.top, left: horizontalInsets, bottom: safeAreaInsets.bottom + Padding.large, right: horizontalInsets)
         } else {
-            insets = UIEdgeInsets(top: 64, left: horizontalInsets, bottom: padding, right: horizontalInsets)
+            insets = UIEdgeInsets(top: 64, left: horizontalInsets, bottom: Padding.large, right: horizontalInsets)
             tableView.contentInset = .zero
         }
         container.frame = UIEdgeInsetsInsetRect(bounds, insets)
@@ -68,7 +71,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return homeContent?.sections.count ?? 0
+        return _content.value.sections.count
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,8 +113,8 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
    public func setTitleAndPhrase(index: Int) -> CellContent {
-        cellContent.title = homeContent?.sections[index] ?? ""
-        cellContent.phrase = homeContent?.descriptions[index] ?? ""
+        cellContent.title = _content.value.sections[index]
+        cellContent.phrase = _content.value.descriptions[index] 
         return cellContent
     }
 }

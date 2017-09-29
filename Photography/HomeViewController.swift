@@ -1,4 +1,6 @@
 import UIKit
+import RxSugar
+import RxSwift
 
 extension UINavigationController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -7,11 +9,30 @@ extension UINavigationController {
 }
 
 final class HomeViewController: GAITrackedViewController {
-    var content: Content?
+    private let photographyModel = PhotographyModel()
+    private let homeView = HomeView()
+    
+    let content: AnyObserver<Content>
+    private let _content = Variable<Content>(Content(sections: [], descriptions: [], introductions: [], exercises: [], instructions: [], updatedInstructions: [], modeIntroductions: []))
+    let images: AnyObserver<ImageContent>
+    private let _images = Variable<ImageContent>(ImageContent(images: [], cache: NSCache()))
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        content = _content.asObserver()
+        images = _images.asObserver()
+        super.init(nibName: nil, bundle: nil)
+        rxs.disposeBag
+            ++ content <~ photographyModel.content
+            ++ homeView.content <~ _content.asObservable()
+            ++ images <~ photographyModel.images
+            ++ DemoView.imageContent <~ _images.asObservable()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
-        let photographyModel = PhotographyModel()
-        let homeView = HomeView()
         title = "Lambent"
         view = homeView
         view.backgroundColor = UIColor.backgroundColor()
@@ -34,15 +55,12 @@ final class HomeViewController: GAITrackedViewController {
     }
 
     func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
-        guard let content = content else { return }
-        navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
+        navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: _content.value), animated: true)
     }
 }
 
 struct ViewControllerBinding {
     static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
-        model.fetchCachedImages { DemoView.images = $0; DemoView.cache = $1 }
-        model.fetchContent{ viewController.content = $0; view.homeContent = $0 }
         view.navigationController = viewController.navigationController
         view.startTutorial = viewController.pushTutorialViewController
     }

@@ -10,12 +10,9 @@ class ContentView: UIView, UIScrollViewDelegate {
     private var segmentedControl = UISegmentedControl()
     static var segmentedWidth = CGFloat()
     static var segmentedHeight = CGFloat()
-    public var demo: DemoView
+    let demo: DemoView
     private var isDemo = false
     private let practice: PracticeView
-    private let verticalInset: CGFloat = 50
-    private let horizontalInset: CGFloat = 18
-    private let padding: CGFloat = 20
     
     private let currentPage: Page
     private var currentSegment: Segment
@@ -104,25 +101,26 @@ class ContentView: UIView, UIScrollViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         container.frame = bounds
-        let contentTop = (title.text?.isEmpty ?? false) ? segmentedControl.frame.maxY + 8 : title.frame.maxY + padding
-        let contentLabelArea = UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: contentTop, left: horizontalInset, bottom: verticalInset, right: horizontalInset))
+        let contentTop = (title.text?.isEmpty ?? false) ? segmentedControl.frame.maxY + Padding.small : title.frame.maxY + Padding.extraLarge
+        let inset: CGFloat = 18
+        let contentLabelArea = UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: contentTop, left: inset, bottom: inset, right: inset))
         let segmentedSize = segmentedControl.sizeThatFits(contentLabelArea.size)
         ContentView.segmentedHeight = segmentedSize.height
         ContentView.segmentedWidth = contentLabelArea.width
-        segmentedControl.frame = CGRect(x: bounds.midX - contentLabelArea.width/2, y: bounds.minY + padding, width: contentLabelArea.width, height: segmentedSize.height)
-        let demoHeight = bounds.height - segmentedControl.frame.height - padding
+        segmentedControl.frame = CGRect(x: bounds.midX - contentLabelArea.width/2, y: bounds.minY + Padding.extraLarge, width: contentLabelArea.width, height: segmentedSize.height)
+        let demoHeight = bounds.height - segmentedControl.frame.height - Padding.extraLarge
         demo.isHidden = !isDemo
         demo.frame = demo.isHidden ? .zero : CGRect(x: bounds.minX, y: segmentedControl.frame.maxY, width: bounds.width, height: demoHeight)
         let titleSize = title.sizeThatFits(bounds.size)
         title.frame = CGRect(x: bounds.midX - titleSize.width/2, y: container.frame.minY + segmentedSize.height, width: titleSize.width, height: titleSize.height)
         practice.isHidden = !(currentSegment == .practice && currentPage != .overview && currentPage != .modes)
-        let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(contentLabelArea.size)
-        practice.frame = CGRect(x: contentLabelArea.minX, y: contentLabelArea.minY, width: practiceSize.width, height: practiceSize.height)
+        let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(bounds.size)
+        practice.frame = CGRect(x: bounds.minX, y: segmentedControl.frame.maxY, width: practiceSize.width, height: practiceSize.height)
         let contentSize = content.sizeThatFits(scrollView.contentSize)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        scrollView.frame = CGRect(x: contentLabelArea.minX, y: practice.frame.maxY + 8, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
-        let tinyPadding: CGFloat = 4
-        scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -tinyPadding)
+        let scrollViewTopY = practice.isHidden ? segmentedControl.frame.maxY + Padding.extraLarge : practice.frame.maxY
+        scrollView.frame = CGRect(x: contentLabelArea.minX, y: scrollViewTopY, width: contentLabelArea.width, height: contentLabelArea.height - practice.frame.height)
+        scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -Padding.tiny)
         scrollView.contentSize = CGSize(width: contentLabelArea.width, height: contentSize.height)
     }    
 }

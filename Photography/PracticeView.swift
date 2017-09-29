@@ -2,22 +2,25 @@ import UIKit
 import AVFoundation
 
 class PracticeView: UIView {
-    private let iOSLabel = UILabel()
     private let cameraPreview: CameraPreview
+    private let iOSLabel = UILabel()
+    private let iOSInstructions = UILabel()
     private let container = UIView()
     private let dslrLabel = UILabel()
-    private let padding: CGFloat = 8
     
     init(page: Page) {
         cameraPreview = CameraPreview(page: page)
         super.init(frame: CGRect.zero)
-        iOSLabel.text = "iOS"
-        iOSLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        addSubview(iOSLabel)
         addSubview(cameraPreview)
         container.clipsToBounds = true
         container.backgroundColor = UIColor.containerColor()
         addSubview(container)
+        iOSLabel.text = "iOS"
+        iOSLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        addSubview(iOSLabel)
+        iOSInstructions.text = "dlkjfa;lsdjfa;sldfjd"
+        iOSInstructions.font = UIFont.boldSystemFont(ofSize: 16)
+        addSubview(iOSInstructions)
         dslrLabel.text = "DSLR"
         dslrLabel.font = UIFont.boldSystemFont(ofSize: 16)
         addSubview(dslrLabel)
@@ -28,20 +31,23 @@ class PracticeView: UIView {
     }
     
     override func layoutSubviews() {
-        let iOSLabelSize = iOSLabel.sizeThatFits(bounds.size)
-        iOSLabel.frame = CGRect(x: bounds.midX - iOSLabelSize.width/2, y: bounds.minY, width: iOSLabelSize.width, height: iOSLabelSize.height)
         let cameraPreviewSize = cameraPreview.sizeThatFits(bounds.size)
-        cameraPreview.frame = CGRect(x: bounds.midX - cameraPreviewSize.width/2, y: iOSLabel.frame.maxY + padding, width: cameraPreviewSize.width, height: cameraPreviewSize.height)
-        container.frame = CGRect(x: bounds.minX, y: cameraPreview.frame.midY, width: bounds.width, height: cameraPreview.frame.height/2)
+        cameraPreview.frame = CGRect(x: bounds.midX - cameraPreviewSize.width/2, y: bounds.minY + Padding.extraLarge, width: cameraPreviewSize.width, height: cameraPreviewSize.height)
+        container.frame = CGRect(x: bounds.minX, y: cameraPreview.frame.maxY * 1/3, width: bounds.width, height: cameraPreview.frame.height * 2/3)
+        let iOSLabelSize = iOSLabel.sizeThatFits(bounds.size)
+        iOSLabel.frame = CGRect(x: bounds.midX - iOSLabelSize.width/2, y: container.frame.minY + Padding.small, width: iOSLabelSize.width, height: iOSLabelSize.height)
+        let iOSInstructionsSize = iOSInstructions.sizeThatFits(bounds.size)
+        iOSInstructions.frame = CGRect(x: bounds.minX, y: iOSLabel.frame.maxY + Padding.small, width: iOSInstructionsSize.width, height: iOSInstructionsSize.height)
         let dslrLabelSize = dslrLabel.sizeThatFits(bounds.size)
-        dslrLabel.frame = CGRect(x: bounds.midX - dslrLabelSize.width/2, y: container.frame.minY + padding, width: dslrLabelSize.width, height: dslrLabelSize.height)
+        dslrLabel.frame = CGRect(x: bounds.midX - dslrLabelSize.width/2, y: iOSInstructions.frame.maxY + Padding.small, width: dslrLabelSize.width, height: dslrLabelSize.height)
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
+        let cameraPreviewHeight = cameraPreview.sizeThatFits(size).height/3
         let iOSLabelHeight = iOSLabel.sizeThatFits(size).height
-        let cameraPreviewHeight = cameraPreview.sizeThatFits(size).height/2
+        let iOSInstructionsHeight = iOSInstructions.sizeThatFits(size).height
         let dslrLabelHeight = dslrLabel.sizeThatFits(size).height
-        let totalHeight = iOSLabelHeight + cameraPreviewHeight + dslrLabelHeight + 2 * padding
+        let totalHeight = Padding.extraLarge + cameraPreviewHeight + iOSLabelHeight + iOSInstructionsHeight + dslrLabelHeight + 3 * Padding.small
         return CGSize(width: size.width, height: totalHeight)
     }
 }

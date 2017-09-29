@@ -142,10 +142,10 @@ class CameraOverlay: UIView {
         let sliderWidth = UIScreen.main.bounds.width * 0.5
         slider.frame = CGRect(x: bounds.midX - sliderWidth/2, y: bounds.midY - sliderSize.height/2, width: sliderWidth, height: sliderSize.height)
         let valueLabelSize = valueLabel.sizeThatFits(bounds.size)
-        valueLabel.frame = CGRect(x: slider.frame.maxX + 8, y: bounds.midY - valueLabelSize.height/2, width: valueLabelSize.width, height: valueLabelSize.height)
+        valueLabel.frame = CGRect(x: slider.frame.maxX + Padding.small, y: bounds.midY - valueLabelSize.height/2, width: valueLabelSize.width, height: valueLabelSize.height)
         let contentArea = bounds.divided(atDistance: slider.frame.minX, from: .minXEdge).slice
         let sectionLabelSize = sectionLabel.sizeThatFits(contentArea.size)
-        sectionLabel.frame = CGRect(x: slider.frame.minX - sectionLabelSize.width - 8, y: bounds.midY - sectionLabelSize.height/2, width: sectionLabelSize.width, height: sectionLabelSize.height)
+        sectionLabel.frame = CGRect(x: slider.frame.minX - sectionLabelSize.width - Padding.small, y: bounds.midY - sectionLabelSize.height/2, width: sectionLabelSize.width, height: sectionLabelSize.height)
     }
 }
 
