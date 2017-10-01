@@ -27,11 +27,12 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
     
    let content: AnyObserver<Content>
     private let _content = Variable<Content>(Content(sections: [], descriptions: [], introductions: [], exercises: [], instructions: [], updatedInstructions: [], modeIntroductions: []))
-    var startTutorial: (TutorialSetUp)->() = { _ in }
-    var navigationController: UINavigationController?
+    let tutorialSelection: Observable<TutorialSetUp>
+    private let _tutorialSelection = PublishSubject<TutorialSetUp>()
     
     override init(frame: CGRect) {
         content = _content.asObserver()
+        tutorialSelection = _tutorialSelection.asObservable()
         super.init(frame: frame)
         backgroundColor = UIColor.backgroundColor()
         container.clipsToBounds = true
@@ -48,7 +49,7 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         container.addSubview(tableView)
         
         rxs.disposeBag
-            ++  tableView.rxs.reloadData <~ _content.asObservable().toVoid().debug()
+            ++  tableView.rxs.reloadData <~ _content.asObservable().toVoid()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -93,7 +94,8 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         CellBinding.bind(view: cell, handler: { [weak self] segmentedControl in
             guard let page = Page(rawValue: indexPath.section) else { return }
             let setUp = TutorialSetUp(currentPage: page, currentSegment: segmentedControl)
-            self?.startTutorial(setUp)
+            self?._tutorialSelection.onNext(setUp)
+
         })
         return cell
     }

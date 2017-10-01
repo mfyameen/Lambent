@@ -5,10 +5,12 @@ import RxSwift
 class TutorialViewController: GAITrackedViewController {
     private let setUp: TutorialSetUp
     private let content: Content
+    private let imageContent: ImageContent
     
-    init(setUp: TutorialSetUp, content: Content) {
+    init(setUp: TutorialSetUp, content: Content, imageContent: ImageContent) {
         self.setUp = setUp
         self.content = content
+        self.imageContent = imageContent
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -19,7 +21,7 @@ class TutorialViewController: GAITrackedViewController {
     override func loadView() {
         let tutorialModel = TutorialModel(setUp: setUp, content: content)
         let demoModel = DemoModel(currentPage: setUp.currentPage, content: content)
-        let tutorialView = TutorialView(setUp: setUp, numberOfSections: content.sections.count)
+        let tutorialView = TutorialView(setUp: setUp, numberOfSections: content.sections.count, imageContent: imageContent)
         view = tutorialView
         title = content.sections[setUp.currentPage.rawValue]
         let button = configureButton()
@@ -50,13 +52,13 @@ class TutorialViewController: GAITrackedViewController {
     }
 
     func pushNextTutorialViewController(_ setUp: TutorialSetUp) -> Void {
-        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: true)
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content, imageContent: imageContent), animated: true)
     }
     
     func pushPreviousTutorialViewController(_ setUp: TutorialSetUp) {
         let transition = configureTransition()
         navigationController?.view.layer.add(transition, forKey: nil)
-        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content), animated: false)
+        _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content, imageContent: imageContent), animated: false)
     }
     
     func configureTransition() -> CATransition {

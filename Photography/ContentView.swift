@@ -25,10 +25,10 @@ class ContentView: UIView, UIScrollViewDelegate {
     let currentDemoSettings: AnyObserver<CameraSectionDemoSettings>
     private let _currentDemoSettings = PublishSubject<CameraSectionDemoSettings>()
     
-    init(setUp: TutorialSetUp) {
+    init(setUp: TutorialSetUp, imageContent: ImageContent) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
-        demo = DemoView(page: currentPage)
+        demo = DemoView(page: currentPage, imageContent: imageContent)
         practice = PracticeView(page: currentPage)
         currentSegmentValue = _currentSegmentValue.asObservable()
         currentSliderValue = demo.currentSliderValue

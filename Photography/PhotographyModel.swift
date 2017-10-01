@@ -4,18 +4,17 @@ import RxSwift
 
 public class PhotographyModel: RXSObject {
     let content: Observable<Content>
-    let _content = Variable<Content>(Content(sections: [], descriptions: [], introductions: [], exercises: [], instructions: [], updatedInstructions: [], modeIntroductions: []))
+    private let _content = PublishSubject<Content>()
     let images: Observable<ImageContent>
-    private let _images = Variable<ImageContent>(ImageContent(images: [], cache: NSCache()))
-    private let serviceLayer = ServiceLayer()
-    private let cache = Cache()
+    private let _images = PublishSubject<ImageContent>()
 
     init() {
         content = _content.asObservable()
         images = _images.asObservable()
+        let cache = Cache()
 
         rxs.disposeBag
-        ++ _content.asObserver() <~ serviceLayer.fetchContent()
+        ++ _content.asObserver() <~ ServiceLayer.fetchContent()
         ++ _images.asObserver() <~ cache.imageContent
     }
 }

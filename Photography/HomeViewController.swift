@@ -14,18 +14,19 @@ final class HomeViewController: GAITrackedViewController {
     
     let content: AnyObserver<Content>
     private let _content = Variable<Content>(Content(sections: [], descriptions: [], introductions: [], exercises: [], instructions: [], updatedInstructions: [], modeIntroductions: []))
-    let images: AnyObserver<ImageContent>
-    private let _images = Variable<ImageContent>(ImageContent(images: [], cache: NSCache()))
+    let imageContent: AnyObserver<ImageContent>
+    private let _imageContent = Variable<ImageContent>(ImageContent(images: [], cache: NSCache()))
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         content = _content.asObserver()
-        images = _images.asObserver()
+        imageContent = _imageContent.asObserver()
         super.init(nibName: nil, bundle: nil)
+
         rxs.disposeBag
-            ++ content <~ photographyModel.content
+            ++ _content <~ photographyModel.content
             ++ homeView.content <~ _content.asObservable()
-            ++ images <~ photographyModel.images
-            ++ DemoView.imageContent <~ _images.asObservable()
+            ++ _imageContent <~ photographyModel.images
+            ++ { [weak self] in self?.pushTutorialViewController($0) } <~ homeView.tutorialSelection
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,7 +43,6 @@ final class HomeViewController: GAITrackedViewController {
         shadow.shadowColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24), NSAttributedStringKey.shadow: shadow]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: self, action: nil)
-        ViewControllerBinding.bind(view: homeView, viewController: self, model: photographyModel)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -54,15 +54,9 @@ final class HomeViewController: GAITrackedViewController {
         screenName = "Home"
     }
 
-    func pushTutorialViewController(setUp: TutorialSetUp) -> Void {
-        navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: _content.value), animated: true)
+    func pushTutorialViewController(_ setUp: TutorialSetUp) -> Void {
+        navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: _content.value, imageContent: _imageContent.value), animated: true)
     }
 }
 
-struct ViewControllerBinding {
-    static func bind (view: HomeView, viewController: HomeViewController, model: PhotographyModel) {
-        view.navigationController = viewController.navigationController
-        view.startTutorial = viewController.pushTutorialViewController
-    }
-}
 

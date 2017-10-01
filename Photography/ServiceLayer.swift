@@ -30,9 +30,9 @@ public struct Content {
 }
 
 struct ServiceLayer {
-    private let database = Database.database().reference()
+    private static let database = Database.database().reference()
     
-    func fetchContent() -> Observable<Content> {
+    static func fetchContent() -> Observable<Content> {
         var count = 0
         var sections: [String] = []
         var descriptions: [String] = []
@@ -68,7 +68,7 @@ struct ServiceLayer {
         }
     }
     
-    func fetchImages() -> Observable<[Image]> {
+    static func fetchImages() -> Observable<[Image]> {
         var images: [Image] = []
         
         return Observable.create { observer in
@@ -88,7 +88,7 @@ struct ServiceLayer {
         }
     }
 
-    private func obtainValue(snapshot: DataSnapshot, key: String, count: Int) -> String? {
+    private static func obtainValue(snapshot: DataSnapshot, key: String, count: Int) -> String? {
         let snapshot = snapshot.childSnapshot(forPath: ("\(key)s"))
         guard let snapshotDict = snapshot.value as? [String: AnyObject], let value = snapshotDict[("\(key)\(count)")] as? String else { return nil }
         return value

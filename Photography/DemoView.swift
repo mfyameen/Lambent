@@ -17,15 +17,14 @@ public class DemoView: UIView {
     private var apertureImage: String?
     private var imageString = ""
     var sliderFrame = CGRect()
+    private let imageContent: ImageContent
     
     let currentSliderValue: Observable<Int>
     private let _currentSliderValue = PublishSubject<Int>()
     
-    static var imageContent: AnyObserver<ImageContent> { return _imageContent.asObserver() }
-    static private var _imageContent = Variable<ImageContent>(ImageContent(images: [], cache: NSCache()))
-    
-    init(page: Page) {
+    init(page: Page, imageContent: ImageContent) {
         currentPage = page
+        self.imageContent = imageContent
         currentSliderValue = _currentSliderValue.asObservable()
         super.init(frame: CGRect.zero)
         cameraValue.font = UIFont.systemFont(ofSize: 32)
@@ -53,8 +52,8 @@ public class DemoView: UIView {
     private func layoutImage(imageView: UIImageView, imageName: String) {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        DemoView._imageContent.value.images.filter { $0.title == imageName && $0.title != imageString}.forEach { image in
-            let cachedImage = DemoView._imageContent.value.cache.object(forKey: image.title as NSString)
+        imageContent.images.filter { $0.title == imageName && $0.title != imageString}.forEach { image in
+            let cachedImage = imageContent.cache.object(forKey: image.title as NSString)
             imageView.image = cachedImage
             imageString = image.title
             imageView.accessibilityLabel = imageName

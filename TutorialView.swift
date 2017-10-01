@@ -32,9 +32,9 @@ class TutorialView: UIScrollView {
     let swipe: Observable<Direction>
     private let _swipe = PublishSubject<Direction>()
     
-    init(setUp: TutorialSetUp, numberOfSections: Int) {
+    init(setUp: TutorialSetUp, numberOfSections: Int, imageContent: ImageContent) {
         currentPage = setUp.currentPage
-        contentView = ContentView(setUp: setUp)
+        contentView = ContentView(setUp: setUp, imageContent: imageContent)
         currentTutorialSettings = _currentTutorialSettings.asObserver()
         currentSegmentValue = contentView.currentSegmentValue
         currentSliderValue = contentView.currentSliderValue
