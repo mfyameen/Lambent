@@ -20,6 +20,14 @@ public enum Page: Int {
         case .modes: return "Modes"
         }
     }
+    
+    func briefDescription() -> String {
+        switch self {
+        case .shutter: return "Shutter"
+        case .focal: return "Focal"
+        default: return self.description()
+        }
+    }
 }
 
 public enum Segment: Int {
@@ -115,11 +123,7 @@ public class TutorialModel {
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
         guard let section = Page(rawValue: setUp.currentPage.rawValue + nextSection) else { return "" }
-        switch section {
-        case .focal: return "Focal"
-        case .shutter: return "Shutter"
-        default: return section.description()
-        }
+        return section.briefDescription()
     }
 
     public func registerSwipe(_ direction: Direction) {

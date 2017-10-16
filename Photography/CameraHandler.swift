@@ -5,18 +5,18 @@ class CameraHandler: UIImagePickerController, UIImagePickerControllerDelegate, U
     init(page: Page) {
         super.init(nibName: nil, bundle: nil)
         sourceType = .camera
-        let cameraOverlay = CameraOverlay(page: page)
+        let cameraOverlay = page == .modes ? CameraOverlayModes(page: page) : CameraOverlay(page: page)
         cameraOverlayView = cameraOverlay
-        cameraOverlayView?.frame = frameForOverlay()
+        cameraOverlayView?.frame = frameForOverlay(page: page)
         delegate = self
     }
     
-    private func frameForOverlay() -> CGRect {
+    private func frameForOverlay(page: Page) -> CGRect {
         let screenSize = UIScreen.main.bounds
         let aspectRatio: CGFloat = 4.0/3.0
         let previewHeight = UIScreen.main.bounds.width * aspectRatio
         let topBarHeight = (screenSize.height - previewHeight) * 1/4
-        let overlayHeight: CGFloat = 75
+        let overlayHeight: CGFloat = page == .modes ? 150 : 75
         let yPosition = topBarHeight + previewHeight - overlayHeight
         let iPadOverlayWidth = UIScreen.main.bounds.width * 3/4
         return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ?
@@ -39,36 +39,47 @@ class CameraHandler: UIImagePickerController, UIImagePickerControllerDelegate, U
     }
 }
 
-class CameraOverlay: UIView {
-    private let sectionLabel = UILabel()
-    private let valueLabel = UILabel()
-    private let slider = UISlider()
-   
-    private let device: AVCaptureDevice
+class SectionSlider: UIView {
+    let sectionLabel = UILabel()
+    let valueLabel = UILabel()
+    let slider = UISlider()
     private let section: Page
- 
-    init?(page: Page) {
-        if #available(iOS 10.0, *) {
-            guard let device = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera], mediaType: nil, position: .unspecified).devices.first else { return nil }
-            self.device = device
-        } else {
-            guard let device = AVCaptureDevice.devices().first else { return nil }
-            self.device = device
-        }
-        self.section = page
+    private let device: AVCaptureDevice
+    
+    init(page: Page, device: AVCaptureDevice) {
+        section = page
+        self.device = device
         super.init(frame: CGRect.zero)
-        backgroundColor = UIColor.backgroundColor()
-        alpha = 0.7
-        sectionLabel.text = section.description()
+        sectionLabel.text = page.briefDescription()
         sectionLabel.numberOfLines = 0
         sectionLabel.textAlignment = .center
         sectionLabel.textColor = .white
         addSubview(sectionLabel)
+        valueLabel.text = "0"
         valueLabel.textColor = .white
         addSubview(valueLabel)
-        configureSlider()
         slider.addTarget(self, action: #selector(sliderMoved), for: .valueChanged)
+        configureSlider()
         addSubview(slider)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureSlider() {
+        switch section {
+        case .iso:
+            slider.minimumValue = device.activeFormat.minISO
+            slider.maximumValue = device.activeFormat.maxISO
+        case .shutter:
+            slider.minimumValue = Float(device.activeFormat.minExposureDuration.seconds)
+            slider.maximumValue = Float(device.activeFormat.maxExposureDuration.seconds)
+        case .focal:
+            slider.minimumValue = 1
+            slider.maximumValue = Float(device.activeFormat.videoMaxZoomFactor)/4
+        default: return
+        }
     }
     
     @objc private func sliderMoved() {
@@ -104,21 +115,6 @@ class CameraOverlay: UIView {
         setNeedsLayout()
     }
     
-    private func configureSlider() {
-        switch section {
-        case .iso:
-            slider.minimumValue = device.activeFormat.minISO
-            slider.maximumValue = device.activeFormat.maxISO
-        case .shutter:
-            slider.minimumValue = Float(device.activeFormat.minExposureDuration.seconds)
-            slider.maximumValue = Float(device.activeFormat.maxExposureDuration.seconds)
-        case .focal:
-            slider.minimumValue = 1
-            slider.maximumValue = Float(device.activeFormat.videoMaxZoomFactor)/4
-        default: return
-        }
-    }
-    
     private func configureShutterText() {
         switch slider.value {
         case 0.008 ..< 0.01: valueLabel.text = "1/125"
@@ -132,10 +128,6 @@ class CameraOverlay: UIView {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         let sliderSize = slider.sizeThatFits(bounds.size)
@@ -147,5 +139,15 @@ class CameraOverlay: UIView {
         let sectionLabelSize = sectionLabel.sizeThatFits(contentArea.size)
         sectionLabel.frame = CGRect(x: slider.frame.minX - sectionLabelSize.width - Padding.small, y: bounds.midY - sectionLabelSize.height/2, width: sectionLabelSize.width, height: sectionLabelSize.height)
     }
+    
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        let sectionLabelSize = sectionLabel.sizeThatFits(size)
+        let sliderSize = slider.sizeThatFits(size)
+        let valueSize = valueLabel.sizeThatFits(size)
+        let totalWidth = sectionLabelSize.width + Padding.small + sliderSize.width + Padding.small + valueSize.width
+        let totalHeight = max(sectionLabelSize.height, sliderSize.height, valueSize.height)
+        return CGSize(width: totalWidth, height: totalHeight)
+    }
 }
+
 

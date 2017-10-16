@@ -37,6 +37,7 @@
 		BDBC7D6B1F7BF3420042845D /* RxSugar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDFE4D451F7BEAC100CF26CD /* RxSugar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDBC7D6F1F7C09A70042845D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC7D6E1F7C09A70042845D /* ContentView.swift */; };
 		BDD865111F9505560099212A /* SectionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD865101F9505560099212A /* SectionContent.swift */; };
+		BDD8FF901F9549FF00139907 /* CameraOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD8FF8F1F9549FF00139907 /* CameraOverlay.swift */; };
 		BDFE4D381F7BE92100CF26CD /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = BDFE4D371F7BE92100CF26CD /* Cartfile */; };
 /* End PBXBuildFile section */
 
@@ -310,6 +311,7 @@
 		BDA429051F5F3FFD003CE8CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDBC7D6E1F7C09A70042845D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BDD865101F9505560099212A /* SectionContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionContent.swift; sourceTree = "<group>"; };
+		BDD8FF8F1F9549FF00139907 /* CameraOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOverlay.swift; sourceTree = "<group>"; };
 		BDEF97951F72EDF4004F61BE /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDEF97961F72EDF4004F61BE /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDFE4D371F7BE92100CF26CD /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 			children = (
 				BD8474D11F799D8C00DF5CD2 /* PracticeView.swift */,
 				BD0DCAC21F74600400631C69 /* CameraHandler.swift */,
+				BDD8FF8F1F9549FF00139907 /* CameraOverlay.swift */,
 			);
 			name = Practice;
 			sourceTree = "<group>";
@@ -972,6 +975,7 @@
 				177DD3401E060BC800605146 /* DemoView.swift in Sources */,
 				176958C41DF47FE50060941A /* TutorialView.swift in Sources */,
 				17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */,
+				BDD8FF901F9549FF00139907 /* CameraOverlay.swift in Sources */,
 				17C283561DF066F400E7BC29 /* HomeViewController.swift in Sources */,
 				17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */,
 				1766336C1E0DD6BD00E2A05E /* TutorialModel.swift in Sources */,

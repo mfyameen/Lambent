@@ -104,7 +104,7 @@ class ContentView: UIView, UIScrollViewDelegate {
         let demoHeight = bounds.height - segmentedControl.frame.height - Padding.extraLarge
         demo.isHidden = !isDemo
         demo.frame = demo.isHidden ? .zero : CGRect(x: bounds.minX, y: segmentedControl.frame.maxY, width: bounds.width, height: demoHeight)
-        practice.isHidden = !(currentSegment == .practice && currentPage != .overview && currentPage != .modes)
+        practice.isHidden = !(currentSegment == .practice && currentPage != .overview)
         let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(bounds.size)
         practice.frame = CGRect(x: bounds.minX, y: segmentedControl.frame.maxY, width: practiceSize.width, height: practiceSize.height)
         let scrollViewPadding = currentPage == .overview ? 0 : Padding.extraLarge

@@ -6,9 +6,11 @@ class PracticeView: UIView {
     private let container = UIView()
     private let iosSectionContent = SectionContent()
     private let dslrSectionContent = SectionContent()
+    let section: Page
     
     init(page: Page) {
         cameraPreview = CameraPreview(page: page)
+        section = page
         super.init(frame: CGRect.zero)
         addSubview(cameraPreview)
         container.backgroundColor = UIColor.containerColor()
@@ -18,6 +20,7 @@ class PracticeView: UIView {
         iosSectionContent.content.text = "alsdkfjasl;dfjsl;dkfjdsfsjalkdfjalskfjas;kldfjasdl;kfjaslfjsadkfjasdlfjaslkfjalsdkjfalsdkjfa;slkdfjas;lkdfja;sldkfja;slkdfjakdjfklajflsdjasdl;kjfl;asjf;lasdjf;alsdfjasdl;kfjal;ksdfjsa"
         addSubview(iosSectionContent)
         dslrSectionContent.section.text = "DSLR"
+        [iosSectionContent, dslrSectionContent].filter { _ in page == .modes }.forEach { $0.isHidden = true }
         addSubview(dslrSectionContent)
     }
     
@@ -50,7 +53,7 @@ class PracticeView: UIView {
         let fittedSize = CGSize(width: size.width - inset, height: (size.height - inset - cameraPreviewHeight)/2)
         let iosSectionHeight = iosSectionContent.sizeThatFits(fittedSize).height
         let dslrSectionHeight = dslrSectionContent.sizeThatFits(fittedSize).height
-        let totalHeight = Padding.extraLarge + cameraPreviewHeight + iosSectionHeight + dslrSectionHeight
+        let totalHeight = section == .modes ? Padding.extraLarge + cameraPreviewHeight : Padding.extraLarge + cameraPreviewHeight + iosSectionHeight + dslrSectionHeight
         return CGSize(width: size.width, height: totalHeight)
     }
 }
