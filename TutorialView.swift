@@ -52,7 +52,7 @@ class TutorialView: UIScrollView {
         addSubviews([contentView, customToolBar, nextButton, nextButtonArrow, backButton, backButtonArrow, pageControl])
         
         rxs.disposeBag
-            ++ { [weak self] in self?.contentView.addInformation($0) } <~ _currentTutorialSettings.asObservable()
+            ++ contentView.tutorialSettings <~ _currentTutorialSettings.asObservable()
             ++ { [weak self] in self?.configureToolBar($0) } <~ _currentTutorialSettings.asObservable()
             ++ { [weak self] in self?.requestReview($0) } <~ currentSegmentValue
             ++ contentView.currentDemoSettings <~ _currentDemoSettings.asObservable()

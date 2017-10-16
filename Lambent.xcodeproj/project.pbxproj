@@ -36,6 +36,7 @@
 		BDBC7D6A1F7BF3420042845D /* RxSugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDFE4D451F7BEAC100CF26CD /* RxSugar.framework */; };
 		BDBC7D6B1F7BF3420042845D /* RxSugar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDFE4D451F7BEAC100CF26CD /* RxSugar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDBC7D6F1F7C09A70042845D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC7D6E1F7C09A70042845D /* ContentView.swift */; };
+		BDD865111F9505560099212A /* SectionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD865101F9505560099212A /* SectionContent.swift */; };
 		BDFE4D381F7BE92100CF26CD /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = BDFE4D371F7BE92100CF26CD /* Cartfile */; };
 /* End PBXBuildFile section */
 
@@ -308,6 +309,7 @@
 		BDA428DE1F5F3EFC003CE8CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BDA429051F5F3FFD003CE8CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDBC7D6E1F7C09A70042845D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BDD865101F9505560099212A /* SectionContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionContent.swift; sourceTree = "<group>"; };
 		BDEF97951F72EDF4004F61BE /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDEF97961F72EDF4004F61BE /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDFE4D371F7BE92100CF26CD /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				BDFE4D361F7BE90500CF26CD /* Frameworks */,
 				17E7BA271E4635B6004A8115 /* Home */,
 				17E7BA281E4635E0004A8115 /* Tutorial */,
+				BDD8652B1F95059A0099212A /* Practice */,
 				17E7BA291E463636004A8115 /* Demo */,
 				17C059EB1E305A5A007ACFB1 /* Common */,
 				173D112C1E37F56E00706B80 /* Services */,
@@ -437,10 +440,9 @@
 			children = (
 				176958C71DF48A760060941A /* TutorialViewController.swift */,
 				176958C31DF47FE50060941A /* TutorialView.swift */,
-				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
-				BD0DCAC21F74600400631C69 /* CameraHandler.swift */,
-				BD8474D11F799D8C00DF5CD2 /* PracticeView.swift */,
 				BDBC7D6E1F7C09A70042845D /* ContentView.swift */,
+				1766336B1E0DD6BD00E2A05E /* TutorialModel.swift */,
+				BDD865101F9505560099212A /* SectionContent.swift */,
 			);
 			name = Tutorial;
 			sourceTree = "<group>";
@@ -481,6 +483,15 @@
 				BDA429051F5F3FFD003CE8CA /* Info.plist */,
 			);
 			path = LambentUnitTests;
+			sourceTree = "<group>";
+		};
+		BDD8652B1F95059A0099212A /* Practice */ = {
+			isa = PBXGroup;
+			children = (
+				BD8474D11F799D8C00DF5CD2 /* PracticeView.swift */,
+				BD0DCAC21F74600400631C69 /* CameraHandler.swift */,
+			);
+			name = Practice;
 			sourceTree = "<group>";
 		};
 		BDFE4D361F7BE90500CF26CD /* Frameworks */ = {
@@ -964,6 +975,7 @@
 				17C283561DF066F400E7BC29 /* HomeViewController.swift in Sources */,
 				17C283541DF066F400E7BC29 /* AppDelegate.swift in Sources */,
 				1766336C1E0DD6BD00E2A05E /* TutorialModel.swift in Sources */,
+				BDD865111F9505560099212A /* SectionContent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
