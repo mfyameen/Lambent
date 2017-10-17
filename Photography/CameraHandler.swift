@@ -93,15 +93,22 @@ class SectionSlider: UIView {
     
     private func configureSlider() {
         switch section {
+        case .aperture:
+            valueLabel.text = String(device.lensAperture)
         case .iso:
             slider.minimumValue = device.activeFormat.minISO
             slider.maximumValue = device.activeFormat.maxISO
+            slider.value = device.iso
+            configureISOText()
         case .shutter:
             slider.minimumValue = Float(device.activeFormat.minExposureDuration.seconds)
             slider.maximumValue = Float(device.activeFormat.maxExposureDuration.seconds)
+            slider.value = Float(device.exposureDuration.seconds)
+            configureShutterText()
         case .focal:
             slider.minimumValue = 1
             slider.maximumValue = Float(device.activeFormat.videoMaxZoomFactor)/4
+            valueLabel.text = String(Int(slider.minimumValue))
         default: return
         }
     }
@@ -122,8 +129,8 @@ class SectionSlider: UIView {
             valueLabel.text = String(device.lensAperture)
         case .iso:
             let newISO = slider.value
-            valueLabel.text = String(Int(newISO))
             slider.maximumValue = device.activeFormat.maxISO
+            configureISOText()
             device.setExposureModeCustom(duration: device.exposureDuration, iso: newISO, completionHandler: nil)
         case .shutter:
             let newShutterSpeed = CMTime(seconds: Double(slider.value), preferredTimescale: 1000000)
@@ -148,6 +155,18 @@ class SectionSlider: UIView {
         case 0.125 ..< 0.25: valueLabel.text = "1/8"
         case 0.25 ..< 0.4: valueLabel.text = "1/4"
         case 0.4 ... 0.5: valueLabel.text = "1/2"
+        default: valueLabel.text = "0"
+        }
+    }
+    
+    private func configureISOText() {
+        switch slider.value {
+        case 29 ..< 100: valueLabel.text = "50"
+        case 100 ..< 200: valueLabel.text = "100"
+        case 200 ..< 400: valueLabel.text = "200"
+        case 400 ..< 800: valueLabel.text = "400"
+        case 800 ..< 1600: valueLabel.text = "800"
+        case 1600 ... 1865: valueLabel.text = "1600"
         default: valueLabel.text = "0"
         }
     }

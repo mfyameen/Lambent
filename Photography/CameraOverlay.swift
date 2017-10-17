@@ -43,7 +43,6 @@ class CameraOverlayModes: UIView {
     }
     
     private func resetSliders(forSegment segment: Segment) {
-        [apertureSlider, shutterSlider, isoSlider].forEach { $0.slider.value = 0 }
         maybeDisableSliderSections(setUp: TutorialSetUp(currentPage: setUp.currentPage, currentSegment: segment))
     }
     
