@@ -1,22 +1,40 @@
 import UIKit
 import AVFoundation
+import RxSugar
+import RxSwift
 
 class CameraHandler: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    init(page: Page) {
+    private let cameraOverlayNonModes: CameraOverlay?
+    private let cameraOverlayModes: CameraOverlayModes?
+    private let overlayHeight: CGFloat
+    
+    let resetModeSectionSliders: AnyObserver<Segment>
+    private let _resetModeSectionSliders = PublishSubject<Segment>()
+    
+    init(setUp: TutorialSetUp) {
+        resetModeSectionSliders = _resetModeSectionSliders.asObserver()
+        cameraOverlayNonModes = CameraOverlay(page: setUp.currentPage)
+        cameraOverlayModes = CameraOverlayModes(setUp: setUp)
+        overlayHeight = setUp.currentPage == .modes ? 150 : 75
         super.init(nibName: nil, bundle: nil)
         sourceType = .camera
-        let cameraOverlay = page == .modes ? CameraOverlayModes(page: page) : CameraOverlay(page: page)
-        cameraOverlayView = cameraOverlay
-        cameraOverlayView?.frame = frameForOverlay(page: page)
+        if setUp.currentPage == .modes {
+            cameraOverlayView = cameraOverlayModes
+        } else {
+            cameraOverlayView = cameraOverlayNonModes
+        }
+        cameraOverlayView?.frame = frameForOverlay()
         delegate = self
+        guard let cameraOverlayModes = cameraOverlayModes else { return }
+        rxs.disposeBag
+            ++ cameraOverlayModes.resetModeSectionSliders <~ _resetModeSectionSliders.asObservable()
     }
     
-    private func frameForOverlay(page: Page) -> CGRect {
+    private func frameForOverlay() -> CGRect {
         let screenSize = UIScreen.main.bounds
         let aspectRatio: CGFloat = 4.0/3.0
         let previewHeight = UIScreen.main.bounds.width * aspectRatio
         let topBarHeight = (screenSize.height - previewHeight) * 1/4
-        let overlayHeight: CGFloat = page == .modes ? 150 : 75
         let yPosition = topBarHeight + previewHeight - overlayHeight
         let iPadOverlayWidth = UIScreen.main.bounds.width * 3/4
         return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ?
@@ -55,7 +73,6 @@ class SectionSlider: UIView {
         sectionLabel.textAlignment = .center
         sectionLabel.textColor = .white
         addSubview(sectionLabel)
-        valueLabel.text = "0"
         valueLabel.textColor = .white
         addSubview(valueLabel)
         slider.addTarget(self, action: #selector(sliderMoved), for: .valueChanged)

@@ -24,12 +24,13 @@ class ContentView: UIView, UIScrollViewDelegate {
     let currentSliderValue: Observable<Int>
     let currentDemoSettings: AnyObserver<CameraSectionDemoSettings>
     private let _currentDemoSettings = PublishSubject<CameraSectionDemoSettings>()
+    private let _resetModeSectionSliders = PublishSubject<Segment>()
     
     init(setUp: TutorialSetUp, imageContent: ImageContent) {
         currentPage = setUp.currentPage
         currentSegment = setUp.currentSegment
         demo = DemoView(page: currentPage, imageContent: imageContent)
-        practice = PracticeView(page: currentPage)
+        practice = PracticeView(setUp: setUp)
         tutorialSettings = _tutorialSettings.asObserver()
         currentSegmentValue = _currentSegmentValue.asObservable()
         currentSliderValue = demo.currentSliderValue
@@ -52,6 +53,7 @@ class ContentView: UIView, UIScrollViewDelegate {
         rxs.disposeBag
             ++ { [weak self] in self?.addInformation($0) } <~ _tutorialSettings.asObservable()
             ++ { [weak self] in self?.demo.addInformation(demoInformation: $0) } <~ _currentDemoSettings.asObservable()
+            ++ practice.resetModeSectionSliders <~ _resetModeSectionSliders.asObservable()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,9 +86,21 @@ class ContentView: UIView, UIScrollViewDelegate {
         isDemo = information.isDemoScreen
     }
     
+    private func maybeHidePracticeView() -> Bool {
+        switch (currentPage, currentSegment) {
+        case (.overview, _): return true
+        case (.modes, _): return false
+        case (_ , .practice): return false
+        default: return true
+        }
+    }
+    
     @objc private func segmentedControlValueChanged() {
         guard let segment = Segment(rawValue: segmentedControl.selectedSegmentIndex) else { return }
         currentSegment = segment
+        if currentPage == .modes {
+            _resetModeSectionSliders.onNext(currentSegment)
+        }
         _currentSegmentValue.onNext(currentSegment)
         _trackSegment.onNext(currentSegment)
         layoutAppropriateContent()
@@ -104,7 +118,7 @@ class ContentView: UIView, UIScrollViewDelegate {
         let demoHeight = bounds.height - segmentedControl.frame.height - Padding.extraLarge
         demo.isHidden = !isDemo
         demo.frame = demo.isHidden ? .zero : CGRect(x: bounds.minX, y: segmentedControl.frame.maxY, width: bounds.width, height: demoHeight)
-        practice.isHidden = !(currentSegment == .practice && currentPage != .overview)
+        practice.isHidden = maybeHidePracticeView()
         let practiceSize = practice.isHidden ? .zero : practice.sizeThatFits(bounds.size)
         practice.frame = CGRect(x: bounds.minX, y: segmentedControl.frame.maxY, width: practiceSize.width, height: practiceSize.height)
         let scrollViewPadding = currentPage == .overview ? 0 : Padding.extraLarge

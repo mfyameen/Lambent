@@ -1,5 +1,7 @@
 import UIKit
 import AVFoundation
+import RxSwift
+import RxSugar
 
 class PracticeView: UIView {
     private let cameraPreview: CameraPreview
@@ -8,9 +10,13 @@ class PracticeView: UIView {
     private let dslrSectionContent = SectionContent()
     let section: Page
     
-    init(page: Page) {
-        cameraPreview = CameraPreview(page: page)
-        section = page
+    let resetModeSectionSliders: AnyObserver<Segment>
+    private let _resetModeSectionSliders = PublishSubject<Segment>()
+    
+    init(setUp: TutorialSetUp) {
+        cameraPreview = CameraPreview(setUp: setUp)
+        section = setUp.currentPage
+        resetModeSectionSliders = _resetModeSectionSliders.asObserver()
         super.init(frame: CGRect.zero)
         addSubview(cameraPreview)
         container.backgroundColor = UIColor.containerColor()
@@ -20,8 +26,11 @@ class PracticeView: UIView {
         iosSectionContent.content.text = "alsdkfjasl;dfjsl;dkfjdsfsjalkdfjalskfjas;kldfjasdl;kfjaslfjsadkfjasdlfjaslkfjalsdkjfalsdkjfa;slkdfjas;lkdfja;sldkfja;slkdfjakdjfklajflsdjasdl;kjfl;asjf;lasdjf;alsdfjasdl;kfjal;ksdfjsa"
         addSubview(iosSectionContent)
         dslrSectionContent.section.text = "DSLR"
-        [iosSectionContent, dslrSectionContent].filter { _ in page == .modes }.forEach { $0.isHidden = true }
+        [iosSectionContent, dslrSectionContent].filter { _ in section == .modes }.forEach { $0.isHidden = true }
         addSubview(dslrSectionContent)
+        
+        rxs.disposeBag
+        ++ cameraPreview.resetModeSectionSliders <~ _resetModeSectionSliders.asObservable()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,8 +74,12 @@ class CameraPreview: UIView {
     private let camera = UIButton()
     private let aspectRatio: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? 1 : 4/3
     
-    init(page: Page) {
-        cameraHandler = CameraHandler(page: page)
+    let resetModeSectionSliders: AnyObserver<Segment>
+    private let _resetModeSectionSliders = PublishSubject<Segment>()
+    
+    init(setUp: TutorialSetUp) {
+        cameraHandler = CameraHandler(setUp: setUp)
+        resetModeSectionSliders = _resetModeSectionSliders.asObserver()
         super.init(frame: CGRect.zero)
         imagePicker.sourceType = .camera
         imagePicker.showsCameraControls = false
@@ -75,6 +88,9 @@ class CameraPreview: UIView {
         addSubview(icon)
         camera.addTarget(self, action: #selector(cameraSelection), for: .touchUpInside)
         addSubview(camera)
+        
+        rxs.disposeBag
+        ++ cameraHandler.resetModeSectionSliders <~ _resetModeSectionSliders.asObservable()
     }
     
     @objc private func cameraSelection() {

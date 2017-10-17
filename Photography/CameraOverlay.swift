@@ -1,14 +1,19 @@
 import UIKit
 import AVFoundation
+import RxSwift
+import RxSugar
 
 class CameraOverlayModes: UIView {
     private let apertureSlider: SectionSlider
     private let shutterSlider: SectionSlider
     private let isoSlider: SectionSlider
     private let device: AVCaptureDevice
-    private var section: Page
+    private let setUp: TutorialSetUp
     
-    init?(page: Page) {
+    let resetModeSectionSliders: AnyObserver<Segment>
+    private let _resetModeSectionSliders = PublishSubject<Segment>()
+    
+    init?(setUp: TutorialSetUp) {
         if #available(iOS 10.0, *) {
             guard let device = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera], mediaType: nil, position: .unspecified).devices.first else { return nil }
             self.device = device
@@ -16,20 +21,47 @@ class CameraOverlayModes: UIView {
             guard let device = AVCaptureDevice.devices().first else { return nil }
             self.device = device
         }
-        self.section = page
         apertureSlider = SectionSlider(page: .aperture, device: device)
         shutterSlider = SectionSlider(page: .shutter, device: device)
         isoSlider = SectionSlider(page: .iso, device: device)
+        resetModeSectionSliders = _resetModeSectionSliders.asObserver()
+        self.setUp = setUp
         super.init(frame: CGRect.zero)
         backgroundColor = UIColor.backgroundColor()
         alpha = 0.7
         addSubview(apertureSlider)
         addSubview(shutterSlider)
         addSubview(isoSlider)
+        maybeDisableSliderSections(setUp: setUp)
+        
+        rxs.disposeBag
+            ++ { [weak self] in self?.resetSliders(forSegment: $0) } <~ _resetModeSectionSliders.asObservable()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func resetSliders(forSegment segment: Segment) {
+        [apertureSlider, shutterSlider, isoSlider].forEach { $0.slider.value = 0 }
+        maybeDisableSliderSections(setUp: TutorialSetUp(currentPage: setUp.currentPage, currentSegment: segment))
+    }
+    
+    private func maybeDisableSliderSections(setUp: TutorialSetUp) {
+        switch (setUp.currentPage, setUp.currentSegment) {
+        case (.modes, .intro):
+            apertureSlider.isUserInteractionEnabled = true
+            isoSlider.isUserInteractionEnabled = true
+            shutterSlider.isUserInteractionEnabled = false
+        case (.modes, .demo):
+            apertureSlider.isUserInteractionEnabled = false
+            isoSlider.isUserInteractionEnabled = true
+            shutterSlider.isUserInteractionEnabled = true
+        default:
+            apertureSlider.isUserInteractionEnabled = true
+            isoSlider.isUserInteractionEnabled = true
+            shutterSlider.isUserInteractionEnabled = true
+        }
     }
     
     override func layoutSubviews() {
