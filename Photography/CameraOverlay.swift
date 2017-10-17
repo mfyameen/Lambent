@@ -48,19 +48,19 @@ class CameraOverlayModes: UIView {
     }
     
     private func maybeDisableSliderSections(setUp: TutorialSetUp) {
+        let inactiveColor = UIColor.lightGray
+        let activeColor = UIColor.navigationTextColor()
         switch (setUp.currentPage, setUp.currentSegment) {
         case (.modes, .intro):
-            apertureSlider.isUserInteractionEnabled = true
-            isoSlider.isUserInteractionEnabled = true
             shutterSlider.isUserInteractionEnabled = false
+            shutterSlider.sliderColor(inactiveColor)
+            [apertureSlider, isoSlider].forEach { $0.isUserInteractionEnabled = true; $0.sliderColor(activeColor) }
         case (.modes, .demo):
             apertureSlider.isUserInteractionEnabled = false
-            isoSlider.isUserInteractionEnabled = true
-            shutterSlider.isUserInteractionEnabled = true
+            apertureSlider.sliderColor(inactiveColor)
+            [isoSlider, shutterSlider].forEach { $0.isUserInteractionEnabled = true; $0.sliderColor(activeColor) }
         default:
-            apertureSlider.isUserInteractionEnabled = true
-            isoSlider.isUserInteractionEnabled = true
-            shutterSlider.isUserInteractionEnabled = true
+            [apertureSlider, isoSlider, shutterSlider].forEach { $0.isUserInteractionEnabled = true; $0.sliderColor(activeColor) }
         }
     }
     

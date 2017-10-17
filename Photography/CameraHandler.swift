@@ -75,6 +75,7 @@ class SectionSlider: UIView {
         addSubview(sectionLabel)
         valueLabel.textColor = .white
         addSubview(valueLabel)
+        sliderColor(UIColor.navigationTextColor())
         slider.addTarget(self, action: #selector(sliderMoved), for: .valueChanged)
         configureSlider()
         addSubview(slider)
@@ -82,6 +83,12 @@ class SectionSlider: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func sliderColor(_ color: UIColor) {
+        slider.minimumTrackTintColor = color
+        slider.maximumTrackTintColor = color
+        slider.thumbTintColor = color
     }
     
     private func configureSlider() {
