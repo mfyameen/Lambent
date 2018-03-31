@@ -144,12 +144,12 @@ class TutorialView: UIScrollView {
         let toolBarTop = (contentView.frame.maxY + bounds.maxY)/2 - toolBarHeight/2
         customToolBar.frame = CGRect(x: contentArea.minX, y: toolBarTop, width: contentArea.width, height: toolBarHeight)
         let arrowSize: CGFloat = 24
-        let arrowTop = customToolBar.frame.minY + backButton.frame.height/2 - arrowSize/2
+        let arrowTop = customToolBar.frame.midY - arrowSize/2
         backButtonArrow.frame = CGRect(x: customToolBar.frame.minX, y: arrowTop, width: arrowSize, height: arrowSize)
         nextButtonArrow.frame = CGRect(x: customToolBar.frame.maxX - arrowSize, y: arrowTop, width: arrowSize, height: arrowSize)
-        let backButtonWidth = backButton.sizeThatFits(contentArea.size).width
-        backButton.frame = CGRect(x: customToolBar.frame.minX + arrowSize, y: customToolBar.frame.minY, width: backButtonWidth, height: toolBarHeight)
-        let nextButtonWidth = nextButton.sizeThatFits(contentArea.size).width
-        nextButton.frame = CGRect(x: customToolBar.frame.maxX - nextButtonWidth - arrowSize, y: customToolBar.frame.minY, width: nextButtonWidth, height: toolBarHeight)
+        let backButtonSize = backButton.sizeThatFits(contentArea.size)
+        backButton.frame = CGRect(x: backButtonArrow.frame.maxX, y: customToolBar.frame.midY - backButtonSize.height/2, width: backButtonSize.width, height: backButtonSize.height)
+        let nextButtonSize = nextButton.sizeThatFits(contentArea.size)
+        nextButton.frame = CGRect(x: nextButtonArrow.frame.minX - nextButtonSize.width, y: customToolBar.frame.midY - nextButtonSize.height/2, width: nextButtonSize.width, height: nextButtonSize.height)
     }
 }
