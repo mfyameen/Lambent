@@ -131,7 +131,7 @@ class TutorialView: UIScrollView {
         let verticalInset: CGFloat = 75
         let horizontalInset: CGFloat = 18
         if #available(iOS 11.0, *) {
-            insets = UIEdgeInsets(top: safeAreaInsets.top + 10, left: horizontalInset, bottom: safeAreaInsets.bottom + Padding.large, right: horizontalInset)
+            insets = UIEdgeInsets(top: safeAreaInsets.top + Padding.large, left: horizontalInset, bottom: safeAreaInsets.bottom + Padding.large, right: horizontalInset)
         } else {
             insets = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
         }
@@ -147,9 +147,12 @@ class TutorialView: UIScrollView {
         let arrowTop = customToolBar.frame.midY - arrowSize/2
         backButtonArrow.frame = CGRect(x: customToolBar.frame.minX, y: arrowTop, width: arrowSize, height: arrowSize)
         nextButtonArrow.frame = CGRect(x: customToolBar.frame.maxX - arrowSize, y: arrowTop, width: arrowSize, height: arrowSize)
+        let minimumButtonWidth: CGFloat = 44
         let backButtonSize = backButton.sizeThatFits(contentArea.size)
-        backButton.frame = CGRect(x: backButtonArrow.frame.maxX, y: customToolBar.frame.midY - backButtonSize.height/2, width: backButtonSize.width, height: backButtonSize.height)
+        let backButtonWidth = max(backButtonSize.width, minimumButtonWidth)
+        backButton.frame = CGRect(x: backButtonArrow.frame.maxX, y: customToolBar.frame.midY - backButtonSize.height/2, width: backButtonWidth, height: backButtonSize.height)
         let nextButtonSize = nextButton.sizeThatFits(contentArea.size)
-        nextButton.frame = CGRect(x: nextButtonArrow.frame.minX - nextButtonSize.width, y: customToolBar.frame.midY - nextButtonSize.height/2, width: nextButtonSize.width, height: nextButtonSize.height)
+        let nextButtonWidth = max(nextButtonSize.width, minimumButtonWidth)
+        nextButton.frame = CGRect(x: nextButtonArrow.frame.minX - nextButtonWidth, y: customToolBar.frame.midY - nextButtonSize.height/2, width: nextButtonWidth, height: nextButtonSize.height)
     }
 }
