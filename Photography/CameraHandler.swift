@@ -51,9 +51,9 @@ class CameraHandler: UIImagePickerController, UIImagePickerControllerDelegate, U
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        defer { self.dismiss(animated: true, completion: nil) }
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        self.dismiss(animated: true, completion: nil)
     }
 }
 
