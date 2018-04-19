@@ -1,2 +1,2 @@
-github "ReactiveX/RxSwift" "3.6.1"
-github "RxSugar/RxSugar" "38d05187c9e9bdcb568c4d57a7c880c02c0fb7ea"
+github "ReactiveX/RxSwift" "4.1.2"
+github "RxSugar/RxSugar" "4fbdf7754c3dcf5ba488807c27977e5c570d5d7f"

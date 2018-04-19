@@ -1,0 +1,11 @@
+framework module RxSugar {
+  umbrella header "RxSugar.h"
+
+  export *
+  module * { export * }
+}
+
+module RxSugar.Swift {
+    header "RxSugar-Swift.h"
+    requires objc
+}

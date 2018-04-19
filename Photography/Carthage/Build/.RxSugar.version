@@ -1,0 +1,9 @@
+{
+  "commitish" : "4fbdf7754c3dcf5ba488807c27977e5c570d5d7f",
+  "iOS" : [
+    {
+      "hash" : "214ab89e4488c1ca7cee4522bd8c9e9726ba3204497c14cbfce2577d4f228789",
+      "name" : "RxSugar"
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import XCTest
 import Lambent
 
 class DemoTests: XCTestCase {
-    let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: [], exercises: [], instructions: ["","","","","",""], updatedInstructions: ["","","","","",""], modeIntroductions: [])
+    let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: [], exercises: [], instructions: ["", "", "", "", "", ""], updatedInstructions: ["", "", "", "", "", ""], modeIntroductions: [])
 
     func testNoImageDisplayedWhenNotDemo() {
         var testObject: String?
@@ -66,6 +66,4 @@ class DemoTests: XCTestCase {
         demo.configureDemo(sliderValue: 22)
         XCTAssertEqual(testObject, 8)
     }
-    
-
 }
