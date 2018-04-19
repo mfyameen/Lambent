@@ -90,7 +90,7 @@ class ContentView: UIView, UIScrollViewDelegate {
         switch (currentPage, currentSegment) {
         case (.overview, _): return true
         case (.modes, _): return false
-        case (_ , .practice): return false
+        case (_, .practice): return false
         default: return true
         }
     }

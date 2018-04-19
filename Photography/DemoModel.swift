@@ -67,7 +67,7 @@ public class DemoModel {
     private func configureSectionsWhenSliderValueChanged(_ sliderValue: Int) -> DemoSettings {
         switch sliderValue {
         case 3:
-            return DemoSettings(apertureImage: "fountain2.8", apertureText: "f/2.8", cameraOpeningSize: 38, cameraSensorSize: 44, shutterImage: "waterfall2.8", shutterIcon: "shutter1.2", shutterText: "1/2", isoImage: "iso100", isoIcon: "isoicon100", isoText: "100",focalImage: "focal18", focalIcon: "focalicon18", focalText: "18mm")
+            return DemoSettings(apertureImage: "fountain2.8", apertureText: "f/2.8", cameraOpeningSize: 38, cameraSensorSize: 44, shutterImage: "waterfall2.8", shutterIcon: "shutter1.2", shutterText: "1/2", isoImage: "iso100", isoIcon: "isoicon100", isoText: "100", focalImage: "focal18", focalIcon: "focalicon18", focalText: "18mm")
         case 4:
             return DemoSettings(apertureImage: "fountain4", apertureText: "f/4", cameraOpeningSize: 34, cameraSensorSize: 44, shutterImage: "waterfall4", shutterIcon: "shutter1.4", shutterText: "1/4", isoImage: "iso200", isoIcon: "isoicon200", isoText: "200", focalImage: "focal25", focalIcon: "focalicon25", focalText: "25mm")
         case 6:
@@ -79,7 +79,7 @@ public class DemoModel {
         case 16:
             return DemoSettings(apertureImage: "fountain16", apertureText: "f/16", cameraOpeningSize: 12, cameraSensorSize: 44, shutterImage: "waterfall16", shutterIcon: "shutter1.60", shutterText: "1/60", isoImage: "iso3200", isoIcon: "isoicon3200", isoText: "3200", focalImage: "focal80", focalIcon: "focalicon80", focalText: "80mm")
         case 22:
-            return DemoSettings(apertureImage: "fountain22", apertureText: "f/22", cameraOpeningSize: 8, cameraSensorSize: 44, shutterImage: "waterfall22", shutterIcon: "shutter1.125", shutterText: "1/125", isoImage: "iso6400", isoIcon: "isoicon6400", isoText: "6400", focalImage: "focal100", focalIcon: "focalicon100",focalText: "100mm")
+            return DemoSettings(apertureImage: "fountain22", apertureText: "f/22", cameraOpeningSize: 8, cameraSensorSize: 44, shutterImage: "waterfall22", shutterIcon: "shutter1.125", shutterText: "1/125", isoImage: "iso6400", isoIcon: "isoicon6400", isoText: "6400", focalImage: "focal100", focalIcon: "focalicon100", focalText: "100mm")
         default:
             return demoSettings
         }

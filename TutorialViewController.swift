@@ -51,7 +51,7 @@ class TutorialViewController: GAITrackedViewController {
         return button
     }
 
-    func pushNextTutorialViewController(_ setUp: TutorialSetUp) -> Void {
+    func pushNextTutorialViewController(_ setUp: TutorialSetUp) {
         _ = navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: content, imageContent: imageContent), animated: true)
     }
     
@@ -88,7 +88,7 @@ class TutorialViewController: GAITrackedViewController {
 }
 
 struct TutorialBinding {
-    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoModel: DemoModel, viewController: TutorialViewController){
+    static func bind(tutorialView: TutorialView, tutorialModel: TutorialModel, demoModel: DemoModel, viewController: TutorialViewController) {
         tutorialView.rxs.disposeBag
             ++ tutorialView.currentTutorialSettings <~ tutorialModel.currentTutorialSettings
             ++ { tutorialModel.registerSwipe($0) } <~ tutorialView.swipe

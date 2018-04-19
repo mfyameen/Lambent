@@ -36,7 +36,7 @@ class SectionContent: UIView, UIScrollViewDelegate {
         section.frame = CGRect(x: bounds.midX - sectionSize.width/2, y: bounds.minY, width: sectionSize.width, height: sectionSize.height)
         let sectionPadding = sectionSize == .zero ? 0 : Padding.small
         scrollView.frame = CGRect(x: bounds.minX, y: section.frame.maxY + sectionPadding, width: bounds.width, height: bounds.height)
-        scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -Padding.tiny)
+        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -Padding.tiny)
         let contentSize = content.sizeThatFits(bounds.size)
         scrollView.contentSize = CGSize(width: bounds.width, height: contentSize.height)
         content.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)

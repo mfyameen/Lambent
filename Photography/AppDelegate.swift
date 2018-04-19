@@ -41,4 +41,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //gai.logger.logLevel = .verbose
     }
 }
-

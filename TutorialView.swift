@@ -113,7 +113,7 @@ class TutorialView: UIScrollView {
         buttons.forEach({ $0.setTitleColor(UIColor.navigationTextColor(), for: .normal) })
     }
     
-    private func layoutToolBarArrows(_ images: [UIImageView]){
+    private func layoutToolBarArrows(_ images: [UIImageView]) {
         images.forEach({
             $0.image = UIImage(named: $0 == nextButtonArrow ? "nexticon" : "backicon")
             $0.contentMode = .scaleAspectFill

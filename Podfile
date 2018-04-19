@@ -7,4 +7,6 @@ target 'Lambent' do
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'GoogleAnalytics'
+pod 'SwiftLint'
+
 end

@@ -192,5 +192,3 @@ class SectionSlider: UIView {
         return CGSize(width: totalWidth, height: totalHeight)
     }
 }
-
-

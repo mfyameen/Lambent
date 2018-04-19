@@ -94,5 +94,3 @@ struct ServiceLayer {
         return value
     }
 }
-
-

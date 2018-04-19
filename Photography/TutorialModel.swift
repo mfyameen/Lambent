@@ -107,7 +107,7 @@ public class TutorialModel {
         _currentTutorialSettings.value = tutorial
     }
     
-    public func configureToolBarButtonTitles()  {
+    public func configureToolBarButtonTitles() {
         if setUp.currentPage == .overview {
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
             tutorial.backArrowHidden = true

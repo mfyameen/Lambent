@@ -16,7 +16,7 @@ class HomeCell: UITableViewCell {
     private let padding: CGFloat = 50
     private let buttonWidth: CGFloat
     
-    var pressButton: (Segment)->() = { _ in }
+    var pressButton: (Segment) -> Void = { _ in }
     
     override init (style: UITableViewCellStyle, reuseIdentifier: String?) {
         buttonWidth = (UIScreen.main.bounds.width - (insets * 2)) * 0.33
@@ -142,7 +142,7 @@ class HomeCell: UITableViewCell {
         rightVerticalSeparator.frame = CGRect(x: buttonWidth * 2, y: separatorYOffset, width: 1, height: padding)
         
         startButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
-        leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY , width: buttonWidth, height: buttonHeight)
+        leftButton.frame = CGRect(x: bounds.minX, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         middleButton.frame = CGRect(x: bounds.midX - buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
         rightButton.frame = CGRect(x: bounds.midX + buttonWidth/2, y: horizontalSeparator.frame.maxY, width: buttonWidth, height: buttonHeight)
     } 

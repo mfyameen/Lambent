@@ -117,6 +117,3 @@ class CameraPreview: UIView {
         return CGSize(width: size.width, height: height)
     }
 }
-
-
-

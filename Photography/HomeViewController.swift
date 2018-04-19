@@ -54,9 +54,7 @@ final class HomeViewController: GAITrackedViewController {
         screenName = "Home"
     }
 
-    func pushTutorialViewController(_ setUp: TutorialSetUp) -> Void {
+    func pushTutorialViewController(_ setUp: TutorialSetUp) {
         navigationController?.pushViewController(TutorialViewController(setUp: setUp, content: _content.value, imageContent: _imageContent.value), animated: true)
     }
 }
-
-

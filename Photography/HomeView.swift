@@ -4,12 +4,12 @@ import RxSwift
 
 extension UIView {
     func addSubviews(_ views: [UIView]) {
-        views.forEach{ addSubview($0) }
+        views.forEach { addSubview($0) }
     }
 }
 
 struct CellBinding {
-    static func bind(view: HomeCell, handler: @escaping (Segment)->()) {
+    static func bind(view: HomeCell, handler: @escaping (Segment) -> Void) {
         view.pressButton = handler
     }
 }
@@ -120,6 +120,3 @@ public class HomeView: UIView, UITableViewDelegate, UITableViewDataSource {
         return cellContent
     }
 }
-
-
-

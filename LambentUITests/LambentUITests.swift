@@ -37,67 +37,67 @@ class LambentUITests: XCTestCase {
         XCTAssertTrue(aperturePracticeSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Shutter Speed").buttons["Intro"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Shutter Speed").buttons["Intro"].tap()
         XCTAssert(app.staticTexts["Shutter Speed"].exists)
         let shutterSpeedIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(shutterSpeedIntroSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Shutter Speed").buttons["Demo"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Shutter Speed").buttons["Demo"].tap()
         XCTAssert(app.staticTexts["Shutter Speed"].exists)
         let shutterSpeedDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(shutterSpeedDemoSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Shutter Speed").buttons["Practice"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Shutter Speed").buttons["Practice"].tap()
         XCTAssert(app.staticTexts["Shutter Speed"].exists)
         let shutterSpeedPracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(shutterSpeedPracticeSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"ISO").buttons["Intro"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "ISO").buttons["Intro"].tap()
         XCTAssert(app.staticTexts["ISO"].exists)
         let isoIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(isoIntroSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"ISO").buttons["Demo"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "ISO").buttons["Demo"].tap()
         XCTAssert(app.staticTexts["ISO"].exists)
         let isoDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(isoDemoSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"ISO").buttons["Practice"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "ISO").buttons["Practice"].tap()
         XCTAssert(app.staticTexts["ISO"].exists)
         let isoPracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(isoPracticeSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Focal Length").buttons["Intro"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Focal Length").buttons["Intro"].tap()
         XCTAssert(app.staticTexts["Focal Length"].exists)
         let focalLengthIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(focalLengthIntroSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Focal Length").buttons["Demo"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Focal Length").buttons["Demo"].tap()
         XCTAssert(app.staticTexts["Focal Length"].exists)
         let focalLengthDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(focalLengthDemoSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Focal Length").buttons["Practice"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Focal Length").buttons["Practice"].tap()
         XCTAssert(app.staticTexts["Focal Length"].exists)
         let focalLengthPracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(focalLengthPracticeSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Modes").buttons["Aperture"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Modes").buttons["Aperture"].tap()
         XCTAssert(app.staticTexts["Modes"].exists)
         let apertureModeSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(apertureModeSelected)
         homeButton.tap()
         
-        tablesQuery.cells.containing(.staticText, identifier:"Modes").buttons["Manual"].tap()
+        tablesQuery.cells.containing(.staticText, identifier: "Modes").buttons["Manual"].tap()
         XCTAssert(app.staticTexts["Modes"].exists)
         let manualModeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(manualModeSelected)
@@ -106,7 +106,7 @@ class LambentUITests: XCTestCase {
     
     func testDemoShowCorrectContentWhenUserMovesSlider() {
         let app = XCUIApplication()
-        app.tables.cells.containing(.staticText, identifier:"Aperture").buttons["Demo"].tap()
+        app.tables.cells.containing(.staticText, identifier: "Aperture").buttons["Demo"].tap()
         let scrollViewsQuery = app.scrollViews
         let slider = scrollViewsQuery.otherElements.sliders.element
         
@@ -122,7 +122,7 @@ class LambentUITests: XCTestCase {
         XCTAssert(app.staticTexts["f/22"].exists)
         XCTAssert(app.images["fountain22"].exists)
         
-        scrollViewsQuery.otherElements.containing(.staticText, identifier:"f/22").children(matching: .image).element(boundBy: 0).swipeLeft()
+        scrollViewsQuery.otherElements.containing(.staticText, identifier: "f/22").children(matching: .image).element(boundBy: 0).swipeLeft()
         XCTAssert(app.staticTexts["Press and move the slider to see how shutter speed affects the above photo"].exists)
         XCTAssert(app.staticTexts["1/2"].exists)
         XCTAssert(app.images["waterfall2.8"].exists)
@@ -138,7 +138,7 @@ class LambentUITests: XCTestCase {
         XCTAssert(app.images["waterfall22"].exists)
         XCTAssert(app.images["shutter1.125"].exists)
         
-        scrollViewsQuery.otherElements.containing(.staticText, identifier:"1/125").children(matching: .image).element(boundBy: 0).swipeLeft()
+        scrollViewsQuery.otherElements.containing(.staticText, identifier: "1/125").children(matching: .image).element(boundBy: 0).swipeLeft()
         XCTAssert(app.staticTexts["Press and move the slider to see how the ISO affects the above photo"].exists)
         XCTAssert(app.staticTexts["100"].exists)
         XCTAssert(app.images["iso100"].exists)
@@ -153,7 +153,7 @@ class LambentUITests: XCTestCase {
         XCTAssert(app.staticTexts["6400"].exists)
         XCTAssert(app.images["isoicon6400"].exists)
         
-        scrollViewsQuery.otherElements.containing(.staticText, identifier:"6400").children(matching: .image).element(boundBy: 0).swipeLeft()
+        scrollViewsQuery.otherElements.containing(.staticText, identifier: "6400").children(matching: .image).element(boundBy: 0).swipeLeft()
         XCTAssert(app.staticTexts["Press and move the slider to see how focal length affects the above photo"].exists)
         XCTAssert(app.staticTexts["18mm"].exists)
         XCTAssert(app.images["focal18"].exists)
