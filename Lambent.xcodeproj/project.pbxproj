@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		014776D066AEB01367CF671C /* Pods_LambentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75108FFE0A144536F8AEB40A /* Pods_LambentUITests.framework */; };
 		161DE3322088150E00D6FD9E /* RxSugar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161DE3312088150E00D6FD9E /* RxSugar.framework */; };
 		161DE3342088151900D6FD9E /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161DE3332088151900D6FD9E /* RxSwift.framework */; };
 		161DE3352088152C00D6FD9E /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 161DE3332088151900D6FD9E /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -27,6 +28,7 @@
 		17C283661DF0788600E7BC29 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283651DF0788600E7BC29 /* HomeView.swift */; };
 		17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283671DF07CA400E7BC29 /* PhotographyModel.swift */; };
 		17C2836A1DF07F2000E7BC29 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C283691DF07F2000E7BC29 /* HomeCell.swift */; };
+		33E07ACA4BCEBB0B9A63F8C9 /* Pods_LambentUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52B3C1972F4D7CCFAAC526D /* Pods_LambentUnitTests.framework */; };
 		AFA17C86AD1B331060216B61 /* Pods_Lambent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B495D5F1189E61A417A526 /* Pods_Lambent.framework */; };
 		BD0DCAC31F74600400631C69 /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DCAC21F74600400631C69 /* CameraHandler.swift */; };
 		BD3771621F5F4545004E8D28 /* LambentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3771611F5F4545004E8D28 /* LambentUITests.swift */; };
@@ -34,7 +36,6 @@
 		BDA428DF1F5F3EFC003CE8CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDA428DE1F5F3EFC003CE8CA /* GoogleService-Info.plist */; };
 		BDA4290B1F5F4009003CE8CA /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177DD3491E07761E00605146 /* DemoTests.swift */; };
 		BDA4290C1F5F4015003CE8CA /* TutorialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1766336D1E1B3B9800E2A05E /* TutorialTests.swift */; };
-		BDA4290D1F5F4019003CE8CA /* HomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CF63BE1E253AA800D987A7 /* HomeTests.swift */; };
 		BDBC7D6F1F7C09A70042845D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBC7D6E1F7C09A70042845D /* ContentView.swift */; };
 		BDD865111F9505560099212A /* SectionContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD865101F9505560099212A /* SectionContent.swift */; };
 		BDD8FF901F9549FF00139907 /* CameraOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD8FF8F1F9549FF00139907 /* CameraOverlay.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0518875EA3610EFC0754D137 /* Pods-LambentUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambentUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambentUnitTests/Pods-LambentUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		161DE3312088150E00D6FD9E /* RxSugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSugar.framework; path = Carthage/Build/iOS/RxSugar.framework; sourceTree = "<group>"; };
 		161DE3332088151900D6FD9E /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		171C257C1E413A6C00DED91F /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -96,10 +98,13 @@
 		17C283651DF0788600E7BC29 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		17C283671DF07CA400E7BC29 /* PhotographyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotographyModel.swift; sourceTree = "<group>"; };
 		17C283691DF07F2000E7BC29 /* HomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
-		17CF63BE1E253AA800D987A7 /* HomeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeTests.swift; path = PhotographyTests/HomeTests.swift; sourceTree = SOURCE_ROOT; };
 		17F6DAD91E399A3700DDD5D2 /* Photography.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Photography.entitlements; sourceTree = "<group>"; };
+		55B5FA6511A824899E7F858B /* Pods-LambentUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambentUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LambentUnitTests/Pods-LambentUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BA1DF4361318A62FDEDDD3A /* Pods-Lambent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lambent.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lambent/Pods-Lambent.release.xcconfig"; sourceTree = "<group>"; };
 		65B495D5F1189E61A417A526 /* Pods_Lambent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lambent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75108FFE0A144536F8AEB40A /* Pods_LambentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		88597F513541802D53FC46A4 /* Pods-LambentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambentUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LambentUITests/Pods-LambentUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B5A7A9E99046AEFE5C590210 /* Pods-LambentUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambentUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambentUITests/Pods-LambentUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BD0DCAC21F74600400631C69 /* CameraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
 		BD3771611F5F4545004E8D28 /* LambentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambentUITests.swift; sourceTree = "<group>"; };
 		BD3771631F5F4545004E8D28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,6 +119,7 @@
 		BDEF97951F72EDF4004F61BE /* LambentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDEF97961F72EDF4004F61BE /* LambentUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LambentUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDFE4D371F7BE92100CF26CD /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		D52B3C1972F4D7CCFAAC526D /* Pods_LambentUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambentUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				014776D066AEB01367CF671C /* Pods_LambentUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33E07ACA4BCEBB0B9A63F8C9 /* Pods_LambentUnitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +157,10 @@
 			children = (
 				BD812E83F0E8C4FFF14574BC /* Pods-Lambent.debug.xcconfig */,
 				5BA1DF4361318A62FDEDDD3A /* Pods-Lambent.release.xcconfig */,
+				88597F513541802D53FC46A4 /* Pods-LambentUITests.debug.xcconfig */,
+				B5A7A9E99046AEFE5C590210 /* Pods-LambentUITests.release.xcconfig */,
+				55B5FA6511A824899E7F858B /* Pods-LambentUnitTests.debug.xcconfig */,
+				0518875EA3610EFC0754D137 /* Pods-LambentUnitTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -258,6 +270,8 @@
 			isa = PBXGroup;
 			children = (
 				65B495D5F1189E61A417A526 /* Pods_Lambent.framework */,
+				75108FFE0A144536F8AEB40A /* Pods_LambentUITests.framework */,
+				D52B3C1972F4D7CCFAAC526D /* Pods_LambentUnitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -276,7 +290,6 @@
 			children = (
 				177DD3491E07761E00605146 /* DemoTests.swift */,
 				1766336D1E1B3B9800E2A05E /* TutorialTests.swift */,
-				17CF63BE1E253AA800D987A7 /* HomeTests.swift */,
 				BDA429051F5F3FFD003CE8CA /* Info.plist */,
 			);
 			path = LambentUnitTests;
@@ -330,6 +343,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD3771661F5F4545004E8D28 /* Build configuration list for PBXNativeTarget "LambentUITests" */;
 			buildPhases = (
+				592F183820CC55A1AB04D009 /* [CP] Check Pods Manifest.lock */,
 				BD37715B1F5F4545004E8D28 /* Sources */,
 				BD37715C1F5F4545004E8D28 /* Frameworks */,
 				BD37715D1F5F4545004E8D28 /* Resources */,
@@ -348,6 +362,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDA429081F5F3FFD003CE8CA /* Build configuration list for PBXNativeTarget "LambentUnitTests" */;
 			buildPhases = (
+				2962A7F93C0468DA12AC8E6E /* [CP] Check Pods Manifest.lock */,
 				BDA428FD1F5F3FFD003CE8CA /* Sources */,
 				BDA428FE1F5F3FFD003CE8CA /* Frameworks */,
 				BDA428FF1F5F3FFD003CE8CA /* Resources */,
@@ -461,6 +476,42 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
+		2962A7F93C0468DA12AC8E6E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LambentUnitTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		592F183820CC55A1AB04D009 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LambentUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5DA931B5B2EA860188B34F34 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -544,7 +595,6 @@
 			files = (
 				BDA4290B1F5F4009003CE8CA /* DemoTests.swift in Sources */,
 				BDA4290C1F5F4015003CE8CA /* TutorialTests.swift in Sources */,
-				BDA4290D1F5F4019003CE8CA /* HomeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +672,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -675,7 +725,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Lambent-Bridging-Header.h";
@@ -732,12 +782,13 @@
 		};
 		BD3771671F5F4545004E8D28 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88597F513541802D53FC46A4 /* Pods-LambentUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = LambentUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -748,12 +799,13 @@
 		};
 		BD3771681F5F4545004E8D28 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5A7A9E99046AEFE5C590210 /* Pods-LambentUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = HV2ZKQRMWU;
 				INFOPLIST_FILE = LambentUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -764,6 +816,7 @@
 		};
 		BDA429091F5F3FFD003CE8CA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55B5FA6511A824899E7F858B /* Pods-LambentUnitTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -771,7 +824,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/**";
 				INFOPLIST_FILE = LambentUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -782,6 +835,7 @@
 		};
 		BDA4290A1F5F3FFD003CE8CA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0518875EA3610EFC0754D137 /* Pods-LambentUnitTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -789,7 +843,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/**";
 				INFOPLIST_FILE = LambentUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lauren.eisdorfer.LambentUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;

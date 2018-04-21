@@ -78,7 +78,7 @@ public class TutorialModel {
         configureToolBarButtonTitles()
     }
     
-    public func configureContent() {
+    @discardableResult public func configureContent() -> TutorialSettings {
         if setUp.currentPage == .overview {
             tutorial.content = content.introductions[setUp.currentPage.rawValue]
             tutorial.title = "Lighting"
@@ -86,6 +86,7 @@ public class TutorialModel {
             configureAppropriateSegment(setUp.currentSegment)
         }
         _currentTutorialSettings.value = tutorial
+        return tutorial
     }
     
     func configureAppropriateSegment(_ segment: Segment) {
@@ -107,7 +108,7 @@ public class TutorialModel {
         _currentTutorialSettings.value = tutorial
     }
     
-    public func configureToolBarButtonTitles() {
+    @discardableResult public func configureToolBarButtonTitles() -> TutorialSettings {
         if setUp.currentPage == .overview {
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
             tutorial.backArrowHidden = true
@@ -119,6 +120,7 @@ public class TutorialModel {
             tutorial.nextButtonTitle = obtainSectionTitleFor(nextSection: 1)
         }
         _currentTutorialSettings.value = tutorial
+        return tutorial
     }
     
     private func obtainSectionTitleFor(nextSection: Int) -> String {
@@ -126,25 +128,30 @@ public class TutorialModel {
         return section.briefDescription()
     }
 
-    public func registerSwipe(_ direction: Direction) {
+    @discardableResult public func registerSwipe(_ direction: Direction) -> Page? {
         let pageMinLimit = 0
         let pageMaxLimit = content.sections.count - 1
         if direction == .left && setUp.currentPage.rawValue >= pageMinLimit {
-            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue + 1) else { return }
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue + 1) else { return nil }
             _selectNext.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
+            return currentPage
         } else if direction == .right && setUp.currentPage.rawValue <= pageMaxLimit {
-            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue - 1) else { return }
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue - 1) else { return nil }
             _selectPrevious.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
+            return currentPage
         }
+        return nil
     }
     
-    public func configurePageControlMovement(_ currentPageControlPage: Int) {
+    @discardableResult public func configurePageControlMovement(_ currentPageControlPage: Int) -> Page? {
         if currentPageControlPage > setUp.currentPage.rawValue {
-            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue + 1) else { return }
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue + 1) else { return nil }
             _selectNext.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
+            return currentPage
         } else {
-            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue - 1) else { return }
+            guard let currentPage = Page(rawValue: setUp.currentPage.rawValue - 1) else { return nil }
             _selectPrevious.onNext(TutorialSetUp(currentPage: currentPage, currentSegment: setUp.currentSegment))
+            return currentPage
         }
     }
 }

@@ -2,138 +2,109 @@ import XCTest
 import Lambent
 
 class TutorialTests: XCTestCase {
-    let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: ["Overview intro", "Aperture intro", "Shutter intro", "ISO intro", "Focal length intro", "Modes intro"], exercises: ["No exercise", "Aperture exercise", "Shutter exercise", "ISO exercise", "Focal length exercise", "Modes exercise"], instructions: [], updatedInstructions: [], modeIntroductions: [])
+    let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: ["Overview intro", "Aperture intro", "Shutter intro", "ISO intro", "Focal length intro", "Modes intro"], exercises: ["No exercise", "Aperture exercise", "Shutter exercise", "ISO exercise", "Focal length exercise", "Modes exercise"], instructions: [], updatedInstructions: [], modeIntroductions: ["modeIntroduction1", "modeIntroduction2", "modeIntroduction3"])
     
     func testDemoRegisteredWhenDemo() {
-        var testObject: Bool?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject = $0.isDemoScreen }
-        tutorial.configureContent()
-        XCTAssertEqual(testObject, true)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureContent()
+        XCTAssertTrue(tutorialSettings.isDemoScreen)
     }
     
     func testDemoNotRegisteredWhenIntro() {
-        var testObject: Bool?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject = $0.isDemoScreen }
-        tutorial.configureContent()
-        XCTAssertEqual(testObject, false)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureContent()
+        XCTAssertFalse(tutorialSettings.isDemoScreen)
     }
 
     func testIntroContentDisplayedWhenOverviewPage() {
-        var testObject: String?
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject = $0.content }
-        tutorial.configureContent()
-        let expectedValue = content.introductions[Page.overview.rawValue]
-        XCTAssertEqual(testObject, expectedValue)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureContent()
+        let expected = content.introductions[Page.overview.rawValue]
+        XCTAssertEqual(tutorialSettings.content, expected)
     }
 
     func testPracticeContentDisplayedWhenAperturePracticeSegment() {
-        var testObject: String?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .practice)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject = $0.content }
-        tutorial.configureContent()
-        let expectedValue = content.exercises[Page.aperture.rawValue]
-        XCTAssertEqual(testObject, expectedValue)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureContent()
+        let expected = content.exercises[Page.aperture.rawValue]
+        XCTAssertEqual(tutorialSettings.content, expected)
     }
-    
+
     func testAppropriateNextButtonTitleDisplayedWhenShutterPage() {
-        var testObject: String?
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject = $0.nextButtonTitle }
-        tutorial.configureToolBarButtonTitles()
-        let expectedValue = content.sections[Page.iso.rawValue]
-        XCTAssertEqual(testObject, expectedValue)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureToolBarButtonTitles()
+        let expected = content.sections[Page.iso.rawValue]
+        XCTAssertEqual(tutorialSettings.nextButtonTitle, expected)
     }
 
     func testAppropriateBackButtonTitleDisplayedWhenAperturePageDemoSegment() {
-        var testObject: String?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject = $0.backButtonTitle }
-        tutorial.configureToolBarButtonTitles()
-        XCTAssertEqual(testObject, "Intro")
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureToolBarButtonTitles()
+        XCTAssertEqual(tutorialSettings.backButtonTitle, "Intro")
     }
 
     func testOnlyNextButtonDisplayedWhenOverviewPage() {
-        var testObject = TutorialSettings()
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
-        tutorial.configureToolBarButtonTitles()
-        let expectedValue = content.sections[Page.aperture.rawValue]
-        XCTAssertEqual(testObject.nextButtonTitle, expectedValue)
-        XCTAssertEqual(testObject.backButtonTitle, "")
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureToolBarButtonTitles()
+        let expected = content.sections[Page.aperture.rawValue]
+        XCTAssertEqual(tutorialSettings.nextButtonTitle, expected)
+        XCTAssertEqual(tutorialSettings.backButtonTitle, "")
     }
 
     func testOnlyBackButtonDisplayedWhenModesPage() {
-        var testObject = TutorialSettings()
         let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.shareTutorialSettings = { testObject.nextButtonTitle = $0.nextButtonTitle; testObject.backButtonTitle = $0.backButtonTitle }
-        tutorial.configureToolBarButtonTitles()
-        XCTAssertEqual(testObject.nextButtonTitle, "")
-        XCTAssertEqual(testObject.backButtonTitle, "Focal")
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let tutorialSettings = testObject.configureToolBarButtonTitles()
+        XCTAssertEqual(tutorialSettings.nextButtonTitle, "")
+        XCTAssertEqual(tutorialSettings.backButtonTitle, "Focal")
     }
 
     func testPageIncrementsWhenSwipingToTheLeft() {
-        var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { (page, _) in testObject = page }
-        tutorial.configureSwipe(direction: .left)
-        XCTAssertEqual(testObject, Page.shutter)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let nextPage = testObject.registerSwipe(.left)
+        XCTAssertEqual(nextPage, .shutter)
     }
 
     func testPageDecrementsWhenSwipingToTheRight() {
-        var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.previousSection = { (page, _) in testObject = page }
-        tutorial.configureSwipe(direction: .right)
-        XCTAssertEqual(testObject, Page.aperture)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let previousPage = testObject.registerSwipe(.right)
+        XCTAssertEqual(previousPage, .aperture)
     }
-    
+
     func testPageDoesNotSwipeToTheLeftIfNextPageDoesNotExist() {
-        var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .modes, currentSegment: .practice)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { (page, _) in testObject = page }
-        tutorial.configureSwipe(direction: .left)
-        XCTAssertEqual(testObject, nil)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let nextPage = testObject.registerSwipe(.left)
+        XCTAssertEqual(nextPage, nil)
     }
-   
+
     func testPageDoesNotSwipeToTheRightIfPreviousPageDoesNotExist() {
-        var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { (page, _) in testObject = page }
-        tutorial.configureSwipe(direction: .right)
-        XCTAssertEqual(testObject, nil)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let previousPage = testObject.registerSwipe(.right)
+        XCTAssertEqual(previousPage, nil)
     }
-    
+
     func testPageIncrementsWhenRightSideOfPageControlPressed() {
-        var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .overview, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.nextSection = { (page, _) in testObject = page }
-        tutorial.configurePageControlMovement(currentPageControlPage: 1)
-        XCTAssertEqual(testObject, Page.aperture)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let nextPage = testObject.configurePageControlMovement(1)
+        XCTAssertEqual(nextPage, .aperture)
     }
-    
+
     func testPageDecrementsWhenLeftSideOfPageControlPressed() {
-        var testObject: Page?
         let setUp = TutorialSetUp(currentPage: .focal, currentSegment: .intro)
-        let tutorial = TutorialModel(setUp: setUp, content: content)
-        tutorial.previousSection = { (page, _) in testObject = page }
-        tutorial.configurePageControlMovement(currentPageControlPage: 2)
-        XCTAssertEqual(testObject, Page.iso)
+        let testObject = TutorialModel(setUp: setUp, content: content)
+        let previousPage = testObject.configurePageControlMovement(2)
+        XCTAssertEqual(previousPage, .iso)
     }
-    
 }

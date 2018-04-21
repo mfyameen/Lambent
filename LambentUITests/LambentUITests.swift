@@ -20,85 +20,85 @@ class LambentUITests: XCTestCase {
         let homeButton = app.navigationBars.buttons["Home"]
         
         tablesQuery.cells.containing(.staticText, identifier: "Aperture").buttons["Intro"].tap()
-        XCTAssert(app.staticTexts["Aperture"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Aperture")
         let apertureIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(apertureIntroSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Aperture").buttons["Demo"].tap()
-        XCTAssert(app.staticTexts["Aperture"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Aperture")
         let apertureDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(apertureDemoSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Aperture").buttons["Practice"].tap()
-        XCTAssert(app.staticTexts["Aperture"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Aperture")
         let aperturePracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(aperturePracticeSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Shutter Speed").buttons["Intro"].tap()
-        XCTAssert(app.staticTexts["Shutter Speed"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Shutter Speed")
         let shutterSpeedIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(shutterSpeedIntroSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Shutter Speed").buttons["Demo"].tap()
-        XCTAssert(app.staticTexts["Shutter Speed"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Shutter Speed")
         let shutterSpeedDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(shutterSpeedDemoSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Shutter Speed").buttons["Practice"].tap()
-        XCTAssert(app.staticTexts["Shutter Speed"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Shutter Speed")
         let shutterSpeedPracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(shutterSpeedPracticeSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "ISO").buttons["Intro"].tap()
-        XCTAssert(app.staticTexts["ISO"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "ISO")
         let isoIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(isoIntroSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "ISO").buttons["Demo"].tap()
-        XCTAssert(app.staticTexts["ISO"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "ISO")
         let isoDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(isoDemoSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "ISO").buttons["Practice"].tap()
-        XCTAssert(app.staticTexts["ISO"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "ISO")
         let isoPracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(isoPracticeSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Focal Length").buttons["Intro"].tap()
-        XCTAssert(app.staticTexts["Focal Length"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Focal Length")
         let focalLengthIntroSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(focalLengthIntroSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Focal Length").buttons["Demo"].tap()
-        XCTAssert(app.staticTexts["Focal Length"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Focal Length")
         let focalLengthDemoSelected = app.segmentedControls.buttons.element(boundBy: 1).isSelected
         XCTAssertTrue(focalLengthDemoSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Focal Length").buttons["Practice"].tap()
-        XCTAssert(app.staticTexts["Focal Length"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Focal Length")
         let focalLengthPracticeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(focalLengthPracticeSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Modes").buttons["Aperture"].tap()
-        XCTAssert(app.staticTexts["Modes"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Modes")
         let apertureModeSelected = app.segmentedControls.buttons.element(boundBy: 0).isSelected
         XCTAssertTrue(apertureModeSelected)
         homeButton.tap()
         
         tablesQuery.cells.containing(.staticText, identifier: "Modes").buttons["Manual"].tap()
-        XCTAssert(app.staticTexts["Modes"].exists)
+        XCTAssertEqual(app.navigationBars.allElementsBoundByIndex[0].identifier, "Modes")
         let manualModeSelected = app.segmentedControls.buttons.element(boundBy: 2).isSelected
         XCTAssertTrue(manualModeSelected)
         homeButton.tap()

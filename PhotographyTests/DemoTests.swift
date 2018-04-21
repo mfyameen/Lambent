@@ -4,66 +4,27 @@ import Lambent
 class DemoTests: XCTestCase {
     let content = Content(sections: ["Get Started", "Aperture", "Shutter Speed", "ISO", "Focal Length", "Modes"], descriptions: [], introductions: [], exercises: [], instructions: ["", "", "", "", "", ""], updatedInstructions: ["", "", "", "", "", ""], modeIntroductions: [])
 
-    func testNoImageDisplayedWhenNotDemo() {
-        var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.image }
-        demo.configureDemo(sliderValue: nil)
-        XCTAssertEqual(testObject, nil)
-    }
-    
-    func testNoTextDisplayedWhenNotDemo() {
-        var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .intro)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.text }
-        demo.configureDemo(sliderValue: nil)
-        XCTAssertEqual(testObject, nil)
-    }
-    
-    func testImageDisplayedWhenDemo() {
-        var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .demo)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.image }
-        demo.configureDemo(sliderValue: 0)
-        XCTAssertEqual(testObject, "waterfall2.8")
-    }
-    
     func testCorrectShutterImageDisplayedWhenSliderValueChanged() {
-        var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .shutter, currentSegment: .demo)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.image }
-        demo.configureDemo(sliderValue: 8)
-        XCTAssertEqual(testObject, "waterfall8")
+        let testObject = DemoModel(currentPage: .shutter, content: content)
+        let demoSettings = testObject.configureDemo(8)
+        XCTAssertEqual(demoSettings.shutterImage, "waterfall8")
     }
-    
+
     func testCorrectApertureImageDisplayedWhenSliderValueChanged() {
-        var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.image }
-        demo.configureDemo(sliderValue: 6)
-        XCTAssertEqual(testObject, "fountain5.6")
+        let testObject = DemoModel(currentPage: .aperture, content: content)
+        let demoSettings = testObject.configureDemo(6)
+        XCTAssertEqual(demoSettings.apertureImage, "fountain5.6")
     }
-    
+
     func testCorrectISOTextDisplayedWhenSliderValueChanged() {
-        var testObject: String?
-        let setUp = TutorialSetUp(currentPage: .iso, currentSegment: .demo)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.text }
-        demo.configureDemo(sliderValue: 16)
-        XCTAssertEqual(testObject, "3200")
+        let testObject = DemoModel(currentPage: .iso, content: content)
+        let demoSettings = testObject.configureDemo(16)
+        XCTAssertEqual(demoSettings.isoText, "3200")
     }
-    
+
     func testCorrectCameraSizeWhenApertureSliderValueChanged() {
-        var testObject: Int?
-        let setUp = TutorialSetUp(currentPage: .aperture, currentSegment: .demo)
-        let demo = DemoModel(setUp: setUp, content: content)
-        demo.shareInformation = { testObject = $0.cameraOpeningSize }
-        demo.configureDemo(sliderValue: 22)
-        XCTAssertEqual(testObject, 8)
+        let testObject = DemoModel(currentPage: .aperture, content: content)
+        let demoSettings = testObject.configureDemo(22)
+        XCTAssertEqual(demoSettings.cameraOpeningSize, 8)
     }
 }

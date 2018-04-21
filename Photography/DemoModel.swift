@@ -2,29 +2,29 @@ import Foundation
 import RxSugar
 import RxSwift
 
-struct DemoSettings {
-    var apertureImage: String = "fountain2.8"
-    var apertureText: String = "f/2.8"
-    var cameraOpeningSize: Int? = 38
-    var cameraSensorSize: Int? = 44
-    var shutterImage: String = "waterfall2.8"
-    var shutterIcon: String = "shutter1.2"
-    var shutterText: String = "1/2"
-    var isoImage: String = "iso100"
-    var isoIcon: String = "isoicon100"
-    var isoText: String = "100"
-    var focalImage: String = "focal18"
-    var focalIcon: String = "focalicon18"
-    var focalText: String = "18mm"
+public struct DemoSettings {
+    public var apertureImage: String = "fountain2.8"
+    public var apertureText: String = "f/2.8"
+    public var cameraOpeningSize: Int? = 38
+    public var cameraSensorSize: Int? = 44
+    public var shutterImage: String = "waterfall2.8"
+    public var shutterIcon: String = "shutter1.2"
+    public var shutterText: String = "1/2"
+    public var isoImage: String = "iso100"
+    public var isoIcon: String = "isoicon100"
+    public var isoText: String = "100"
+    public var focalImage: String = "focal18"
+    public var focalIcon: String = "focalicon18"
+    public var focalText: String = "18mm"
 }
 
-public struct CameraSectionDemoSettings {
-    public var image: String?
-    public var text: String?
-    public var cameraOpeningSize: Int?
-    public var cameraSensorSize: Int?
-    public var icon: String?
-    public var instructions: String?
+struct CameraSectionDemoSettings {
+    var image: String?
+    var text: String?
+    var cameraOpeningSize: Int?
+    var cameraSensorSize: Int?
+    var icon: String?
+    var instructions: String?
 }
 
 public class DemoModel {
@@ -43,9 +43,10 @@ public class DemoModel {
         _currentDemoSettings.value = configureCurrentSection(content.sections[currentPage.rawValue])
     }
     
-    public func configureDemo(_ sliderValue: Int) {
+    @discardableResult public func configureDemo(_ sliderValue: Int) -> DemoSettings {
         demoSettings = configureSectionsWhenSliderValueChanged(sliderValue)
         _currentDemoSettings.value  = configureCurrentSection(content.sections[currentPage.rawValue])
+        return demoSettings
     }
     
     private func configureCurrentSection(_ section: String?) -> CameraSectionDemoSettings {
