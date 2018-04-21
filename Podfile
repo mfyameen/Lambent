@@ -9,4 +9,12 @@ pod 'Firebase/Database'
 pod 'GoogleAnalytics'
 pod 'SwiftLint'
 
+target 'LambentUITests' do
+    inherit! :search_paths
+end
+
+target 'LambentUnitTests' do
+    inherit! :search_paths
+end
+
 end
