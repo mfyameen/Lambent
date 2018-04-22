@@ -12,6 +12,7 @@
 		161DE3342088151900D6FD9E /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161DE3332088151900D6FD9E /* RxSwift.framework */; };
 		161DE3352088152C00D6FD9E /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 161DE3332088151900D6FD9E /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		161DE3362088153700D6FD9E /* RxSugar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 161DE3312088150E00D6FD9E /* RxSugar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		169F5E6D208C0FA000C3569E /* FadingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169F5E6C208C0F9F00C3569E /* FadingScrollView.swift */; };
 		171C257D1E413A6C00DED91F /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C257C1E413A6C00DED91F /* Cache.swift */; };
 		172F513E1E01CFD60048E8E3 /* HelperMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172F513D1E01CFD60048E8E3 /* HelperMethods.swift */; };
 		173D112E1E3928AD00706B80 /* ServiceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173D112D1E3928AD00706B80 /* ServiceLayer.swift */; };
@@ -78,6 +79,7 @@
 		0518875EA3610EFC0754D137 /* Pods-LambentUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambentUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambentUnitTests/Pods-LambentUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		161DE3312088150E00D6FD9E /* RxSugar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSugar.framework; path = Carthage/Build/iOS/RxSugar.framework; sourceTree = "<group>"; };
 		161DE3332088151900D6FD9E /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		169F5E6C208C0F9F00C3569E /* FadingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadingScrollView.swift; sourceTree = "<group>"; };
 		171C257C1E413A6C00DED91F /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		172F513D1E01CFD60048E8E3 /* HelperMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperMethods.swift; sourceTree = "<group>"; };
 		173D112D1E3928AD00706B80 /* ServiceLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceLayer.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			children = (
 				172F513D1E01CFD60048E8E3 /* HelperMethods.swift */,
 				177DD3511E09C02000605146 /* Colors.swift */,
+				169F5E6C208C0F9F00C3569E /* FadingScrollView.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				17C283661DF0788600E7BC29 /* HomeView.swift in Sources */,
 				177DD3561E0ADA2D00605146 /* DemoModel.swift in Sources */,
 				177DD3401E060BC800605146 /* DemoView.swift in Sources */,
+				169F5E6D208C0FA000C3569E /* FadingScrollView.swift in Sources */,
 				176958C41DF47FE50060941A /* TutorialView.swift in Sources */,
 				17C283681DF07CA400E7BC29 /* PhotographyModel.swift in Sources */,
 				BDD8FF901F9549FF00139907 /* CameraOverlay.swift in Sources */,

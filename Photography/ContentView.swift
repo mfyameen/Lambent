@@ -2,7 +2,7 @@ import UIKit
 import RxSugar
 import RxSwift
 
-class ContentView: UIView, UIScrollViewDelegate {
+class ContentView: UIView {
     private let container = UIView()
     let sectionContent = SectionContent()
     private var segmentedControl = UISegmentedControl()

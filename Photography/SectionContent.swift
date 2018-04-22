@@ -1,8 +1,8 @@
 import UIKit
 
-class SectionContent: UIView, UIScrollViewDelegate {
+class SectionContent: UIView {
     let section = UILabel()
-    private let scrollView = UIScrollView()
+    private let scrollView = FadingScrollView()
     let content = UILabel()
     
     override init(frame: CGRect) {
@@ -12,8 +12,9 @@ class SectionContent: UIView, UIScrollViewDelegate {
         addSubview(section)
         content.numberOfLines = 0
         content.font = UIFont.systemFont(ofSize: 14)
-        scrollView.delegate = self
         scrollView.bounces = false
+        scrollView.isEditable = false
+        scrollView.showsVerticalScrollIndicator = false
         addSubview(scrollView)
         scrollView.addSubview(content)
     }
