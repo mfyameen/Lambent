@@ -1,0 +1,248 @@
+# Lambent Photography Tutorial App - Complete Content Extract
+# Extracted from Firebase database for content migration
+# Generated: 2025-08-31
+
+================================================================================
+
+## GET STARTED (OVERVIEW)
+============================================================
+
+### HOME SCREEN DESCRIPTION:
+Start this tutorial to learn the basics of photography, or click around and explore any section that catches your eye.
+
+### INTRODUCTION (Intro Tab):
+A photograph, as the name suggests, is a record of light. The amount of light that reaches the camera’s sensor, known as the exposure, determines the darkness or brightness of a photo. If there is not enough light, the photo will appear dark (underexposed), and if there is too much light, the photo will appear bright (overexposed). You can control the exposure (e.g., more light if it is underexposed, less light if it is overexposed) by adjusting the aperture, shutter speed, and ISO. Don’t worry if you are unfamiliar with these terms - we’ll cover them in the tutorial! 
+
+While you learn how to dial the correct exposure settings in this tutorial, you will realize that you are already familiar with another important concept - Framing. Framing is the first decision that you already make when you take a photograph. When you aim, zoom, and position your camera to take a photo, you are framing the photo by deciding which elements to include or exclude.
+
+### DEMO INSTRUCTIONS (Demo Tab):
+No demo instructions for overview
+
+### DEMO UPDATED INSTRUCTIONS:
+No updated instruction for overview
+
+### PRACTICE EXERCISE (Practice Tab):
+No exercise for overview
+
+------------------------------------------------------------
+
+## APERTURE
+============================================================
+
+### HOME SCREEN DESCRIPTION:
+Aperture controls the amount of light that passes through the lens.
+
+### INTRODUCTION (Intro Tab):
+Aperture works like the pupil in your eye by controlling the amount of light that passes through the lens. You can control the amount of light that passes through the camera’s lens by adjusting the aperture’s f-stop. When you use a lower f-stop (f1.4, f2, f2.4, f4), the aperture becomes wider and lets in more light. This is similar to how your pupils expand to let in more light when you enter a dark space. Conversely, with a higher f-stop (f8, f11, f16, f22), the aperture becomes narrower and lets in less light. By moving one f-stop in either direction you can double or halve the amount of light the aperture admits. 
+
+Aperture also impacts the depth of field, the distance between the nearest and furthest object in-focus. Wider apertures (more light) create a shallow depth of field, where the subject is in-focus and the background is blurry, while narrower apertures (less light) create a large depth of field, where the majority of the image is in-focus. Many photographers artistically adjust the aperture to create blurry backgrounds in portraits and in-focus backgrounds in landscapes.
+
+### DEMO INSTRUCTIONS (Demo Tab):
+Press and move the slider to see how aperture affects the above photo
+
+### DEMO UPDATED INSTRUCTIONS:
+Notice how the image becomes darker and the background appears less blurry
+
+### PRACTICE EXERCISE (Practice Tab):
+Put your camera in aperture priority mode and find a subject to shoot. The subject should be clearly separated from its background (at least 10 meters away) and neither too close nor too far away from you (around 2 - 5 meters from you). Make sure you are focusing on the subject, not the background, and take pictures of the subject at all of the aperture's f-stops. While taking the pictures, pay attention to how the shutter speed compensates for changes in the aperture’s f-stop. Moving one f-stop in either direction should cause the shutter speed to either halve or double in order to keep a constant exposure. 
+
+Back on your computer, notice how the depth of field changes with aperture. The background should become more blurry as the f-stop decreases and more in-focus as the f-stop increases. Also compare the sharpness of images at your smallest and largest f-stop when you are 100% zoomed. The largest f-stop image should be noticeably less sharp than the smallest f-stop image.
+
+------------------------------------------------------------
+
+## SHUTTER SPEED
+============================================================
+
+### HOME SCREEN DESCRIPTION:
+Shutter speed controls how long the shutter remains open and the lens receives light.
+
+### INTRODUCTION (Intro Tab):
+Shutter speed, aka exposure time, works like your eyelid by controlling how long the shutter/eye remains open and the lens receives light. It is measured in stops and typically ranges from 1/1000th of a second, a fast shutter speed with a short exposure time, to several seconds, a slow shutter speed with a long exposure time. The longer the shutter is open, the more light reaches the camera's sensor and vice versa. Photographers usually use a fast shutter speed to freeze and capture fast moving subjects (e.g., wildlife and sports) and a slow shutter speed to capture motion blur (e.g., flowing water). 
+
+Motion blur can be an effective artistic tool to convey movement, but it can also make a static subject appear blurry if you are unable to hold the camera steady while taking the photo. Try using a tripod to stabilize the camera when a shot requires a long shutter speed. Without a tripod, an acceptable shutter speed is slow enough for the sensor to receive enough light and fast enough that the camera doesn’t shake.
+
+### DEMO INSTRUCTIONS (Demo Tab):
+Press and move the slider to see how shutter speed affects the above photo
+
+### DEMO UPDATED INSTRUCTIONS:
+Notice how the image becomes darker and the water appears to have less motion blur
+
+### PRACTICE EXERCISE (Practice Tab):
+Put your camera in shutter speed priority mode and choose a well lit, static subject. Without a tripod, take pictures of the subject at all of the available shutter speeds, and pay attention to how the aperture compensates for changes in the shutter speed. Moving the shutter speed one stop in either direction should cause the aperture to adjust by one stop in order to keep a constant exposure. 
+
+Back on your computer, view the images at 100% magnification. The images that have a slower shutter speed should appear brighter and more blurred than the ones with a faster shutter speed. Find the speed at which you go from blurred to in-focus images. This is your handheld limit, the limit at which you can take in-focus images without using a tripod.
+
+------------------------------------------------------------
+
+## ISO
+============================================================
+
+### HOME SCREEN DESCRIPTION:
+ISO controls your camera’s level of sensitivity to available light.
+
+### INTRODUCTION (Intro Tab):
+ISO is your camera’s level of sensitivity to available light. It is measured in numbers typically ranging from 100 to 6400. A lower ISO is less sensitive to available light, meaning that more light is required to maintain the exposure and vice versa. In fact, each time you halve the ISO (ex. from 400 to 200), the camera requires a slower shutter speed (ex. from 1/4 to 1/2) or a lower aperture f-stop (ex. from f/4 to f/2.8) to compensate for the lower sensitivity by receiving twice as much light.
+
+Low ISOs, like 100 or 200, are most often used in bright situations (like sunlight) or when the camera is mounted on a tripod. If you don't have a lot of light or need a fast shutter speed, you should raise the ISO. 
+
+High ISOs, like 3200 or 6400, come at a cost. As the ISO increases, images often become “noisy”, in that they become grainy or contain discoloration. As a rule of thumb, ISO is set to the lowest possible value that can achieve the desired shutter speed and aperture.
+
+### DEMO INSTRUCTIONS (Demo Tab):
+Press and move the slider to see how the ISO affects the above photo
+
+### DEMO UPDATED INSTRUCTIONS:
+Notice how the image becomes lighter and appears to be more grainy
+
+### PRACTICE EXERCISE (Practice Tab):
+Put your camera in shutter speed priority mode or aperture priority mode and find a well lit subject. Take pictures of the subject at every ISO your camera offers, starting at the base ISO and ending at the highest ISO. If you are on aperture priority mode, notice how the shutter speed becomes shorter as the ISO increases. On shutter speed priority mode, take note of how the ISO impacts the aperture. 
+
+Back on your computer, look at your images and take note of the ISO level at which you start noticing noise and the level at which you notice an unacceptable amount of noise. Some noise is inevitable, especially if you are shooting photos in tough situations like at nighttime. Finding your highest level of acceptable noise should help you produce bright enough photos that have an acceptable amount of noise.
+
+------------------------------------------------------------
+
+## FOCAL LENGTH
+============================================================
+
+### HOME SCREEN DESCRIPTION:
+Focal length controls the zoom of your lens and how much of the scene will be captured.
+
+### INTRODUCTION (Intro Tab):
+Focal length determines how much of the scene will be captured (angle of view) and how large individual elements will be (magnification). The longer the focal length, the narrower the angle of view and the higher the magnification. The shorter the focal length, the wider the angle of view and the lower the magnification. 
+
+When an element is magnified, the element can more easily appear out of focus due to camera shake. To prevent the camera from shaking, you should either use a tripod or a shutter speed that is faster than 1/focal length. For example, if you are trying to shoot a subject at 70mm, you should use a shutter speed faster than 1/70 of a second. 
+
+Focal length also affects the perspective of the picture. Low focal lengths can distort the scene, while high focal lengths can compress the view. If you are using a high focal length like 300mm, then the image will appear flattened and have less depth, meaning that the background will appear closer to the subject.
+
+### DEMO INSTRUCTIONS (Demo Tab):
+Press and move the slider to see how focal length affects the above photo
+
+### DEMO UPDATED INSTRUCTIONS:
+Notice how the distance between the tree trunks appears to decrease as you zoom
+
+### PRACTICE EXERCISE (Practice Tab):
+Without moving, take pictures of the same subject at 5mm increments of your lens’ focal length range. Then, move as close to the subject as your most zoomed in image. If your lens has a focal length of 18-55mm, move towards the subject in order to replicate the frame of the 55mm image that you shot. Take a picture of this similar frame with your camera’s widest focal length. 
+
+Back on your computer, compare the last two images. Take note of the similarities and the differences between the two. Also, try to spot compression in the series of photos that you shot while you were immobile and distortion in the wide angle picture.
+
+------------------------------------------------------------
+
+## MODES
+============================================================
+
+### HOME SCREEN DESCRIPTION:
+Explore Aperture-Priority, Shutter-Priority, and Manual mode to learn how and when you should use each mode.
+
+### DEMO INSTRUCTIONS (Demo Tab):
+Press and move the slider to see how focal length affects the above photo
+
+### DEMO UPDATED INSTRUCTIONS:
+No updated instruction for modes
+
+------------------------------------------------------------
+
+## CAMERA MODES - DETAILED CONTENT
+============================================================
+
+### APERTURE-PRIORITY MODE:
+In Aperture-Priority mode (A on Nikon, Av on Canon), you can manually set the aperture and ISO, while the camera automatically sets the shutter speed for you. The camera will set the shutter speed to a value that maintains the exposure based on the aperture and ISO values that you selected. If there is too much light, the camera will use a faster shutter speed, and if there is not enough light, the camera will use a slower shutter speed.
+
+Use Aperture-Priority mode when you want to control depth of field as your top priority. For example, Aperture-Priority mode can help you take a portrait that has a shallow depth of field and a blurred background.
+
+### SHUTTER-PRIORITY MODE:
+In Shutter-Priority mode (S on Nikon, Tv on Canon), you can manually set the shutter speed and the ISO, while the camera automatically sets the aperture for you. The camera will set the aperture to a value that maintains the exposure based on the shutter speed and ISO values that you selected. If there is too much light, the camera will use a higher aperture, and if there is not enough light, the camera will use a lower aperture. Some cameras do not have a low enough aperture number to compensate for a fast shutter speed, so your image may be underexposed.
+
+Use Shutter-Priority mode when you want to freeze action (e.g, sports or wildlife photography) or when you want to intentionally blur motion (e.g., flowing water).
+
+### MANUAL MODE:
+In Manual mode, the camera puts you in full control of the exposure, allowing you to manually set the aperture, the shutter speed, and the ISO. Shutter-Priority or Aperture-priority mode should be sufficient for most of the photographs that you will take, but Manual mode can be extremely helpful in extreme lighting situations. For example, if you are taking a picture of a bright subject, the camera might incorrectly guess the exposure and either overexpose or underexpose other elements in the image.
+
+Manual mode also maintains consistency by enabling you to use the same settings across multiple exposures. This tends to be useful when creating a panorama, as all of the images will have the same amount of darkness or brightness depending entirely on the parameters that you set.
+
+------------------------------------------------------------
+
+## IMAGE ASSETS REFERENCE
+============================================================
+
+### Demo Images by Photography Concept:
+
+**Aperture Examples:**
+- fountain11 (Aperture demo)
+- fountain16 (Aperture demo)
+- fountain2.8 (Aperture demo)
+- fountain22 (Aperture demo)
+- fountain4 (Aperture demo)
+- fountain5.6 (Aperture demo)
+- fountain8 (Aperture demo)
+
+**Shutter Speed Examples:**
+- waterfall11 (Shutter speed demo)
+- waterfall16 (Shutter speed demo)
+- waterfall2.8 (Shutter speed demo)
+- waterfall22 (Shutter speed demo)
+- waterfall4 (Shutter speed demo)
+- waterfall6 (Shutter speed demo)
+- waterfall8 (Shutter speed demo)
+
+**ISO Examples:**
+- iso100 (ISO demo)
+- iso1600 (ISO demo)
+- iso200 (ISO demo)
+- iso3200 (ISO demo)
+- iso400 (ISO demo)
+- iso6400 (ISO demo)
+- iso800 (ISO demo)
+
+**Focal Length Examples:**
+- focal100 (Focal length demo)
+- focal18 (Focal length demo)
+- focal25 (Focal length demo)
+- focal35 (Focal length demo)
+- focal45 (Focal length demo)
+- focal55 (Focal length demo)
+- focal80 (Focal length demo)
+
+**UI Icons:**
+- focalicon100 (UI icon)
+- focalicon18 (UI icon)
+- focalicon25 (UI icon)
+- focalicon35 (UI icon)
+- focalicon45 (UI icon)
+- focalicon55 (UI icon)
+- focalicon80 (UI icon)
+- isoicon100 (UI icon)
+- isoicon1600 (UI icon)
+- isoicon200 (UI icon)
+- isoicon3200 (UI icon)
+- isoicon400 (UI icon)
+- isoicon6400 (UI icon)
+- isoicon800 (UI icon)
+- shutter1.125 (UI icon)
+- shutter1.15 (UI icon)
+- shutter1.2 (UI icon)
+- shutter1.30 (UI icon)
+- shutter1.60 (UI icon)
+- shutter1.8 (UI icon)
+
+------------------------------------------------------------
+
+## APP STRUCTURE NOTES
+============================================================
+
+### Navigation Structure:
+- Home Screen → 6 Photography Sections
+- Each Section → 3 Tabs (Intro/Demo/Practice) except:
+  - Overview: No tabs (intro content only)
+  - Modes: 3 Mode-specific tabs (Aperture/Shutter/Manual modes)
+
+### Content Types:
+- **Descriptions**: Brief text for home screen section cards
+- **Introductions**: Educational content (Intro tab)
+- **Instructions**: Demo slider guidance (Demo tab)
+- **Updated Instructions**: Additional demo feedback text
+- **Exercises**: Hands-on practice instructions (Practice tab)
+- **Mode Introductions**: Camera mode explanations (Modes section)
+
+### Interactive Elements:
+- Demo sliders with real-time image changes
+- Camera sensor visualization
+- Parameter value displays (f-stop, shutter speed, ISO values)
